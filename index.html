@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f766e" />
+  <title>DairyVerse</title>
+  <style>
+    :root{
+      --bg: #f5faf8;
+      --panel: #ffffff;
+      --panel-2: #eef7f4;
+      --text: #0f172a;
+      --muted: #5b6b73;
+      --primary: #0f766e;
+      --primary-2: #14b8a6;
+      --border: rgba(15, 118, 110, 0.14);
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --ok: #0f9d58;
+      --warn: #d97706;
+      --danger: #dc2626;
+      --radius: 22px;
+    }
+
+    [data-theme="dark"]{
+      --bg: #071114;
+      --panel: #0d1a1d;
+      --panel-2: #102328;
+      --text: #e6f1f1;
+      --muted: #9fb2b8;
+      --primary: #2dd4bf;
+      --primary-2: #14b8a6;
+      --border: rgba(45, 212, 191, 0.12);
+      --shadow: 0 14px 34px rgba(0, 0, 0, 0.36);
+      --ok: #34d399;
+      --warn: #fbbf24;
+      --danger: #f87171;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, rgba(20,184,166,0.12), transparent 30%), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .app{
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom: 18px;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, rgba(20,184,166,0.14), rgba(15,118,110,0.06));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
+
+    .logo{
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(145deg, var(--primary), var(--primary-2));
+      color: white;
+      font-size: 24px;
+      box-shadow: 0 10px 20px rgba(20,184,166,0.25);
+      flex: 0 0 auto;
+    }
+
+    .brand h1{
+      margin:0;
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .brand p{
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    button, .chip, input, textarea, select{
+      font: inherit;
+    }
+
+    button{
+      border: 0;
+      border-radius: 14px;
+      padding: 11px 14px;
+      cursor: pointer;
+      background: var(--panel);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform .15s ease, background .2s ease;
+    }
+    button:hover{transform: translateY(-1px)}
+    button.primary{
+      background: linear-gradient(145deg, var(--primary), var(--primary-2));
+      color: white;
+      font-weight: 700;
+    }
+    button.ghost{
+      background: transparent;
+      box-shadow:none;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    .sidebar, .main{
+      background: transparent;
+    }
+
+    .sidecard, .card, .panel{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .sidecard{
+      padding: 14px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .nav{
+      display:grid;
+      gap:10px;
+    }
+
+    .nav button{
+      width:100%;
+      text-align:left;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--panel-2);
+      box-shadow:none;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .nav button.active{
+      background: linear-gradient(145deg, var(--primary), var(--primary-2));
+      color: white;
+      font-weight: 700;
+    }
+
+    .mini{
+      margin-top:14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+    }
+    .mini h3{
+      margin:0 0 8px;
+      font-size: 1rem;
+    }
+    .mini p{
+      margin:0;
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    .section{
+      display:none;
+      animation: fadeIn .18s ease;
+    }
+    .section.active{display:block;}
+    @keyframes fadeIn{
+      from{opacity:.4; transform: translateY(4px)}
+      to{opacity:1; transform: translateY(0)}
+    }
+
+    .hero{
+      padding: 20px;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(20,184,166,0.16), rgba(15,118,110,0.05));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero h2{
+      margin:0 0 6px;
+      font-size: 1.6rem;
+    }
+
+    .hero p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .grid-4{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric{
+      padding: 16px;
+      min-height: 112px;
+    }
+
+    .metric .label{
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 8px;
+    }
+    .metric .value{
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .metric .hint{
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card{
+      padding: 18px;
+    }
+
+    .card h3{
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .muted{color: var(--muted);}
+    .small{font-size:.92rem}
+    .stack{display:grid; gap:12px;}
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .field{
+      display:grid;
+      gap:6px;
+    }
+
+    .field label{
+      font-size: .88rem;
+      color: var(--muted);
+    }
+
+    input, textarea, select{
+      width:100%;
+      padding: 12px 13px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea{min-height: 110px; resize: vertical;}
+
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .result{
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(20,184,166,0.10), rgba(20,184,166,0.05));
+      border: 1px dashed var(--border);
+      line-height: 1.6;
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+    }
+
+    .task{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      padding: 12px 13px;
+      border-radius: 14px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+    }
+
+    .task-left{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .task input[type="checkbox"]{
+      width:18px;
+      height:18px;
+      margin-top:3px;
+      accent-color: var(--primary);
+    }
+
+    .task.done .task-text{
+      text-decoration: line-through;
+      opacity: .65;
+    }
+
+    .task-text{
+      font-weight: 600;
+    }
+
+    .task-meta{
+      font-size: .85rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .footer-note{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    @media (max-width: 1000px){
+      .layout{grid-template-columns: 1fr;}
+      .sidecard{position:static;}
+      .grid-4, .grid-2{grid-template-columns: repeat(2, minmax(0, 1fr));}
+    }
+
+    @media (max-width: 640px){
+      .app{padding: 12px;}
+      .topbar{padding: 14px;}
+      .grid-4, .grid-2, .form-grid{grid-template-columns: 1fr;}
+      .hero h2{font-size: 1.35rem;}
+      .brand{min-width: unset;}
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🥛</div>
+        <div>
+          <h1>DairyVerse</h1>
+          <p>Your dairy learning and process workspace</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <span class="pill">📱 Ready for PWA later</span>
+        <button class="ghost" id="themeBtn" type="button">🌙 Theme</button>
+        <button class="primary" id="resetBtn" type="button">Reset Demo Data</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidecard">
+          <nav class="nav" id="nav">
+            <button class="active" data-target="dashboard">🏠 Dashboard</button>
+            <button data-target="calculators">🧮 Calculators</button>
+            <button data-target="process">🏭 Process Tools</button>
+            <button data-target="notes">📝 Notes</button>
+            <button data-target="tasks">✅ Tasks</button>
+            <button data-target="about">ℹ️ About</button>
+          </nav>
+
+          <div class="mini">
+            <h3>Today’s focus</h3>
+            <p id="focusText">Build the app step by step. First get it working, then make it installable.</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="section active" id="dashboard">
+          <div class="hero">
+            <h2>Welcome to DairyVerse</h2>
+            <p>
+              A simple, mobile-friendly starter app for dairy calculators, process planning, notes, and tasks.
+              Everything here is kept in one file so it is easy to paste, test, and improve.
+            </p>
+          </div>
+
+          <div class="grid-4">
+            <div class="card metric">
+              <div class="label">Saved notes</div>
+              <div class="value" id="noteCount">0</div>
+              <div class="hint">Stored locally in your browser</div>
+            </div>
+            <div class="card metric">
+              <div class="label">Pending tasks</div>
+              <div class="value" id="taskCount">0</div>
+              <div class="hint">Small checklist for work</div>
+            </div>
+            <div class="card metric">
+              <div class="label">Mode</div>
+              <div class="value" id="modeLabel">Light</div>
+              <div class="hint">You can toggle theme anytime</div>
+            </div>
+            <div class="card metric">
+              <div class="label">App type</div>
+              <div class="value">Single file</div>
+              <div class="hint">Easy to run and update</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Quick start</h3>
+              <div class="stack small">
+                <div>1. Open the Calculators section.</div>
+                <div>2. Try the milk value and standardization tools.</div>
+                <div>3. Add notes and tasks.</div>
+                <div>4. Later we will add manifest.json and sw.js for install.</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>What this app can do</h3>
+              <div class="stack small">
+                <div>• Dairy-friendly calculation tools</div>
+                <div>• Simple process planning sections</div>
+                <div>• Saved notes and tasks</div>
+                <div>• Responsive layout for mobile</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="calculators">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Milk revenue calculator</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="liters">Milk quantity (liters)</label>
+                  <input id="liters" type="number" step="0.01" value="100" />
+                </div>
+                <div class="field">
+                  <label for="rate">Rate per liter</label>
+                  <input id="rate" type="number" step="0.01" value="42" />
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="result" id="milkRevenueResult">Total revenue will appear here.</div>
+            </div>
+
+            <div class="card">
+              <h3>Standardization calculator</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="milkA">Milk A quantity (liters)</label>
+                  <input id="milkA" type="number" step="0.01" value="60" />
+                </div>
+                <div class="field">
+                  <label for="fatA">Milk A fat %</label>
+                  <input id="fatA" type="number" step="0.01" value="3.5" />
+                </div>
+                <div class="field">
+                  <label for="milkB">Milk B quantity (liters)</label>
+                  <input id="milkB" type="number" step="0.01" value="40" />
+                </div>
+                <div class="field">
+                  <label for="fatB">Milk B fat %</label>
+                  <input id="fatB" type="number" step="0.01" value="6.0" />
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="result" id="standardResult">Standardized fat result will appear here.</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Product cost calculator</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="rawCost">Raw milk cost per liter</label>
+                  <input id="rawCost" type="number" step="0.01" value="34" />
+                </div>
+                <div class="field">
+                  <label for="processingCost">Processing cost per liter</label>
+                  <input id="processingCost" type="number" step="0.01" value="4" />
+                </div>
+                <div class="field">
+                  <label for="packCost">Packaging cost per liter</label>
+                  <input id="packCost" type="number" step="0.01" value="3" />
+                </div>
+                <div class="field">
+                  <label for="margin">Target margin %</label>
+                  <input id="margin" type="number" step="0.01" value="12" />
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="result" id="costResult">Selling price will appear here.</div>
+            </div>
+
+            <div class="card">
+              <h3>Batch yield estimator</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="inputQty">Input milk (liters)</label>
+                  <input id="inputQty" type="number" step="0.01" value="500" />
+                </div>
+                <div class="field">
+                  <label for="yieldPct">Expected yield %</label>
+                  <input id="yieldPct" type="number" step="0.01" value="10" />
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="result" id="yieldResult">Estimated output will appear here.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="process">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Process steps</h3>
+              <div class="stack small">
+                <div>📥 Reception</div>
+                <div>🧪 Testing</div>
+                <div>🧼 Filtration / clarification</div>
+                <div>🔥 Pasteurization</div>
+                <div>🧊 Cooling</div>
+                <div>📦 Packaging</div>
+                <div>🚚 Storage / dispatch</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Process checklist</h3>
+              <div class="field">
+                <label for="processName">Add a process step</label>
+                <input id="processName" type="text" placeholder="Example: Homogenization" />
+              </div>
+              <div style="height:10px"></div>
+              <button class="primary" id="addProcessBtn" type="button">Add step</button>
+              <div class="divider"></div>
+              <div class="list" id="processList"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="notes">
+          <div class="card">
+            <h3>Notes</h3>
+            <div class="field">
+              <label for="noteInput">Write something useful</label>
+              <textarea id="noteInput" placeholder="Store formulas, reminders, or ideas here..."></textarea>
+            </div>
+            <div class="row">
+              <button class="primary" id="saveNoteBtn" type="button">Save note</button>
+              <button id="clearNotesBtn" type="button">Clear notes</button>
+            </div>
+            <div class="divider"></div>
+            <div class="list" id="notesList"></div>
+          </div>
+        </section>
+
+        <section class="section" id="tasks">
+          <div class="grid-2">
+            <div class="card">
+              <h3>Add task</h3>
+              <div class="field">
+                <label for="taskInput">Task title</label>
+                <input id="taskInput" type="text" placeholder="Example: Test calculator values" />
+              </div>
+              <div style="height:10px"></div>
+              <button class="primary" id="addTaskBtn" type="button">Add task</button>
+            </div>
+
+            <div class="card">
+              <h3>Task list</h3>
+              <div class="list" id="taskList"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="about">
+          <div class="card">
+            <h3>About this starter app</h3>
+            <div class="stack small">
+              <div>
+                This is a clean single-file version so you can build first without complicated setup.
+              </div>
+              <div>
+                Later, we can add <strong>manifest.json</strong>, <strong>sw.js</strong>, and an icon to make it installable.
+              </div>
+              <div>
+                The app saves notes, tasks, and theme in your browser using localStorage.
+              </div>
+              <div>
+                Once this file works, the next step is to add the PWA files.
+              </div>
+            </div>
+            <p class="footer-note">
+              Tip: after pasting the code, open the file in your browser and test the buttons.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      theme: localStorage.getItem("dairyverse_theme") || "light",
+      notes: JSON.parse(localStorage.getItem("dairyverse_notes") || "[]"),
+      tasks: JSON.parse(localStorage.getItem("dairyverse_tasks") || "[]"),
+      process: JSON.parse(localStorage.getItem("dairyverse_process") || "[\"Reception\",\"Testing\",\"Filtration\",\"Pasteurization\",\"Cooling\",\"Packaging\",\"Storage\"]")
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function save() {
+      localStorage.setItem("dairyverse_theme", state.theme);
+      localStorage.setItem("dairyverse_notes", JSON.stringify(state.notes));
+      localStorage.setItem("dairyverse_tasks", JSON.stringify(state.tasks));
+      localStorage.setItem("dairyverse_process", JSON.stringify(state.process));
+    }
+
+    function setTheme(theme) {
+      state.theme = theme;
+      document.documentElement.setAttribute("data-theme", theme === "dark" ? "dark" : "light");
+      $("themeBtn").textContent = theme === "dark" ? "☀️ Theme" : "🌙 Theme";
+      $("modeLabel").textContent = theme === "dark" ? "Dark" : "Light";
+      save();
+    }
+
+    function formatMoney(value) {
+      return "₹" + Number(value).toFixed(2);
+    }
+
+    function calcRevenue() {
+      const liters = parseFloat($("liters").value || 0);
+      const rate = parseFloat($("rate").value || 0);
+      const total = liters * rate;
+      $("milkRevenueResult").innerHTML = `
+        <strong>Total revenue:</strong> ${formatMoney(total)}<br>
+        <span class="muted">Formula: liters × rate = ${liters} × ${rate}</span>
+      `;
+    }
+
+    function calcStandardization() {
+      const qa = parseFloat($("milkA").value || 0);
+      const fa = parseFloat($("fatA").value || 0);
+      const qb = parseFloat($("milkB").value || 0);
+      const fb = parseFloat($("fatB").value || 0);
+      const totalQty = qa + qb;
+      const avgFat = totalQty > 0 ? ((qa * fa) + (qb * fb)) / totalQty : 0;
+      $("standardResult").innerHTML = `
+        <strong>Final quantity:</strong> ${totalQty.toFixed(2)} liters<br>
+        <strong>Weighted fat:</strong> ${avgFat.toFixed(2)}%<br>
+        <span class="muted">Useful for basic standardization mixing.</span>
+      `;
+    }
+
+    function calcCost() {
+      const raw = parseFloat($("rawCost").value || 0);
+      const proc = parseFloat($("processingCost").value || 0);
+      const pack = parseFloat($("packCost").value || 0);
+      const margin = parseFloat($("margin").value || 0);
+      const base = raw + proc + pack;
+      const selling = base * (1 + margin / 100);
+      $("costResult").innerHTML = `
+        <strong>Base cost:</strong> ${formatMoney(base)} / liter<br>
+        <strong>Suggested selling price:</strong> ${formatMoney(selling)} / liter<br>
+        <span class="muted">Margin added on total cost.</span>
+      `;
+    }
+
+    function calcYield() {
+      const qty = parseFloat($("inputQty").value || 0);
+      const pct = parseFloat($("yieldPct").value || 0);
+      const output = qty * pct / 100;
+      $("yieldResult").innerHTML = `
+        <strong>Estimated output:</strong> ${output.toFixed(2)} liters / kg<br>
+        <span class="muted">Simple yield estimate from input quantity.</span>
+      `;
+    }
+
+    function renderNotes() {
+      $("notesList").innerHTML = "";
+      if (!state.notes.length) {
+        $("notesList").innerHTML = '<div class="muted small">No notes yet.</div>';
+      } else {
+        state.notes.slice().reverse().forEach((note, index) => {
+          const item = document.createElement("div");
+          item.className = "task";
+          item.innerHTML = `
+            <div>
+              <div class="task-text">${escapeHtml(note.text)}</div>
+              <div class="task-meta">${new Date(note.time).toLocaleString()}</div>
+            </div>
+            <button type="button" data-delete-note="${index}">Delete</button>
+          `;
+          $("notesList").appendChild(item);
+        });
+      }
+      $("noteCount").textContent = state.notes.length;
+    }
+
+    function renderTasks() {
+      $("taskList").innerHTML = "";
+      if (!state.tasks.length) {
+        $("taskList").innerHTML = '<div class="muted small">No tasks yet.</div>';
+      } else {
+        state.tasks.slice().reverse().forEach((task, index) => {
+          const realIndex = state.tasks.length - 1 - index;
+          const item = document.createElement("div");
+          item.className = "task" + (task.done ? " done" : "");
+          item.innerHTML = `
+            <div class="task-left">
+              <input type="checkbox" ${task.done ? "checked" : ""} data-task-done="${realIndex}">
+              <div>
+                <div class="task-text">${escapeHtml(task.text)}</div>
+                <div class="task-meta">${new Date(task.time).toLocaleString()}</div>
+              </div>
+            </div>
+            <button type="button" data-delete-task="${realIndex}">Delete</button>
+          `;
+          $("taskList").appendChild(item);
+        });
+      }
+      const pending = state.tasks.filter(t => !t.done).length;
+      $("taskCount").textContent = pending;
+    }
+
+    function renderProcess() {
+      $("processList").innerHTML = "";
+      state.process.forEach((step, index) => {
+        const item = document.createElement("div");
+        item.className = "task";
+        item.innerHTML = `
+          <div class="task-left">
+            <div class="pill">${index + 1}</div>
+            <div>
+              <div class="task-text">${escapeHtml(step)}</div>
+              <div class="task-meta">Process step</div>
+            </div>
+          </div>
+          <button type="button" data-delete-process="${index}">Remove</button>
+        `;
+        $("processList").appendChild(item);
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function addNote() {
+      const text = $("noteInput").value.trim();
+      if (!text) return;
+      state.notes.push({ text, time: Date.now() });
+      $("noteInput").value = "";
+      save();
+      renderNotes();
+    }
+
+    function addTask() {
+      const text = $("taskInput").value.trim();
+      if (!text) return;
+      state.tasks.push({ text, done: false, time: Date.now() });
+      $("taskInput").value = "";
+      save();
+      renderTasks();
+    }
+
+    function addProcessStep() {
+      const text = $("processName").value.trim();
+      if (!text) return;
+      state.process.push(text);
+      $("processName").value = "";
+      save();
+      renderProcess();
+    }
+
+    function resetDemoData() {
+      if (!confirm("Reset notes, tasks, and process steps?")) return;
+      state.notes = [];
+      state.tasks = [];
+      state.process = ["Reception","Testing","Filtration","Pasteurization","Cooling","Packaging","Storage"];
+      save();
+      renderAll();
+    }
+
+    function renderAll() {
+      renderNotes();
+      renderTasks();
+      renderProcess();
+      calcRevenue();
+      calcStandardization();
+      calcCost();
+      calcYield();
+    }
+
+    // Navigation
+    $("nav").addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-target]");
+      if (!btn) return;
+      const target = btn.dataset.target;
+      document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      $(target).classList.add("active");
+    });
+
+    // Theme
+    $("themeBtn").addEventListener("click", () => {
+      setTheme(state.theme === "dark" ? "light" : "dark");
+    });
+
+    // Buttons
+    $("saveNoteBtn").addEventListener("click", addNote);
+    $("addTaskBtn").addEventListener("click", addTask);
+    $("addProcessBtn").addEventListener("click", addProcessStep);
+    $("clearNotesBtn").addEventListener("click", () => {
+      state.notes = [];
+      save();
+      renderNotes();
+    });
+    $("resetBtn").addEventListener("click", resetDemoData);
+
+    // Calculator events
+    ["liters","rate"].forEach(id => $(id).addEventListener("input", calcRevenue));
+    ["milkA","fatA","milkB","fatB"].forEach(id => $(id).addEventListener("input", calcStandardization));
+    ["rawCost","processingCost","packCost","margin"].forEach(id => $(id).addEventListener("input", calcCost));
+    ["inputQty","yieldPct"].forEach(id => $(id).addEventListener("input", calcYield));
+
+    // List actions
+    document.addEventListener("click", (e) => {
+      const deleteNote = e.target.closest("[data-delete-note]");
+      const deleteTask = e.target.closest("[data-delete-task]");
+      const deleteProcess = e.target.closest("[data-delete-process]");
+      const taskDone = e.target.closest("[data-task-done]");
+
+      if (deleteNote) {
+        const index = Number(deleteNote.dataset.deleteNote);
+        state.notes.splice(index, 1);
+        save();
+        renderNotes();
+      }
+
+      if (deleteTask) {
+        const index = Number(deleteTask.dataset.deleteTask);
+        state.tasks.splice(index, 1);
+        save();
+        renderTasks();
+      }
+
+      if (deleteProcess) {
+        const index = Number(deleteProcess.dataset.deleteProcess);
+        state.process.splice(index, 1);
+        save();
+        renderProcess();
+      }
+
+      if (taskDone) {
+        const index = Number(taskDone.dataset.taskDone);
+        state.tasks[index].done = taskDone.checked;
+        save();
+        renderTasks();
+      }
+    });
+
+    // Enter key convenience
+    $("taskInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addTask();
+    });
+    $("processName").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addProcessStep();
+    });
+    $("noteInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) addNote();
+    });
+
+    // PWA service worker registration (works later when sw.js exists)
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+      });
+    }
+
+    // Init
+    setTheme(state.theme);
+    renderAll();
+  </script>
+</body>
+      </html>
