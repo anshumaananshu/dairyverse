@@ -1,962 +1,1911 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f766e" />
-  <title>DairyVerse</title>
-  <style>
-    :root{
-      --bg: #f5faf8;
-      --panel: #ffffff;
-      --panel-2: #eef7f4;
-      --text: #0f172a;
-      --muted: #5b6b73;
-      --primary: #0f766e;
-      --primary-2: #14b8a6;
-      --border: rgba(15, 118, 110, 0.14);
-      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      --ok: #0f9d58;
-      --warn: #d97706;
-      --danger: #dc2626;
-      --radius: 22px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b766e">
+<meta name="description" content="DairyVerse — a learning, process, equipment and engineering workspace for Dairy Technology students.">
+<title>DairyVerse — Dairy Technology Student Hub</title>
 
-    [data-theme="dark"]{
-      --bg: #071114;
-      --panel: #0d1a1d;
-      --panel-2: #102328;
-      --text: #e6f1f1;
-      --muted: #9fb2b8;
-      --primary: #2dd4bf;
-      --primary-2: #14b8a6;
-      --border: rgba(45, 212, 191, 0.12);
-      --shadow: 0 14px 34px rgba(0, 0, 0, 0.36);
-      --ok: #34d399;
-      --warn: #fbbf24;
-      --danger: #f87171;
-    }
-
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, rgba(20,184,166,0.12), transparent 30%), var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    .app{
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 18px;
-    }
-
-    .topbar{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      margin-bottom: 18px;
-      padding: 16px 18px;
-      background: linear-gradient(135deg, rgba(20,184,166,0.14), rgba(15,118,110,0.06));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 220px;
-    }
-
-    .logo{
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      display:grid;
-      place-items:center;
-      background: linear-gradient(145deg, var(--primary), var(--primary-2));
-      color: white;
-      font-size: 24px;
-      box-shadow: 0 10px 20px rgba(20,184,166,0.25);
-      flex: 0 0 auto;
-    }
-
-    .brand h1{
-      margin:0;
-      font-size: 1.35rem;
-      line-height: 1.1;
-    }
-
-    .brand p{
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-
-    button, .chip, input, textarea, select{
-      font: inherit;
-    }
-
-    button{
-      border: 0;
-      border-radius: 14px;
-      padding: 11px 14px;
-      cursor: pointer;
-      background: var(--panel);
-      color: var(--text);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: transform .15s ease, background .2s ease;
-    }
-    button:hover{transform: translateY(-1px)}
-    button.primary{
-      background: linear-gradient(145deg, var(--primary), var(--primary-2));
-      color: white;
-      font-weight: 700;
-    }
-    button.ghost{
-      background: transparent;
-      box-shadow:none;
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns: 280px 1fr;
-      gap: 18px;
-      align-items:start;
-    }
-
-    .sidebar, .main{
-      background: transparent;
-    }
-
-    .sidecard, .card, .panel{
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .sidecard{
-      padding: 14px;
-      position: sticky;
-      top: 18px;
-    }
-
-    .nav{
-      display:grid;
-      gap:10px;
-    }
-
-    .nav button{
-      width:100%;
-      text-align:left;
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: var(--panel-2);
-      box-shadow:none;
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    .nav button.active{
-      background: linear-gradient(145deg, var(--primary), var(--primary-2));
-      color: white;
-      font-weight: 700;
-    }
-
-    .mini{
-      margin-top:14px;
-      padding: 14px;
-      border-radius: 18px;
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-    }
-    .mini h3{
-      margin:0 0 8px;
-      font-size: 1rem;
-    }
-    .mini p{
-      margin:0;
-      color: var(--muted);
-      font-size: .92rem;
-      line-height: 1.5;
-    }
-
-    .section{
-      display:none;
-      animation: fadeIn .18s ease;
-    }
-    .section.active{display:block;}
-    @keyframes fadeIn{
-      from{opacity:.4; transform: translateY(4px)}
-      to{opacity:1; transform: translateY(0)}
-    }
-
-    .hero{
-      padding: 20px;
-      margin-bottom: 18px;
-      background: linear-gradient(135deg, rgba(20,184,166,0.16), rgba(15,118,110,0.05));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero h2{
-      margin:0 0 6px;
-      font-size: 1.6rem;
-    }
-
-    .hero p{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .grid-4{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .metric{
-      padding: 16px;
-      min-height: 112px;
-    }
-
-    .metric .label{
-      color: var(--muted);
-      font-size: .9rem;
-      margin-bottom: 8px;
-    }
-    .metric .value{
-      font-size: 1.55rem;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-    .metric .hint{
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .card{
-      padding: 18px;
-    }
-
-    .card h3{
-      margin: 0 0 12px;
-      font-size: 1.1rem;
-    }
-
-    .muted{color: var(--muted);}
-    .small{font-size:.92rem}
-    .stack{display:grid; gap:12px;}
-
-    .form-grid{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .field{
-      display:grid;
-      gap:6px;
-    }
-
-    .field label{
-      font-size: .88rem;
-      color: var(--muted);
-    }
-
-    input, textarea, select{
-      width:100%;
-      padding: 12px 13px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: var(--panel-2);
-      color: var(--text);
-      outline: none;
-    }
-
-    textarea{min-height: 110px; resize: vertical;}
-
-    .row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .result{
-      padding: 14px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, rgba(20,184,166,0.10), rgba(20,184,166,0.05));
-      border: 1px dashed var(--border);
-      line-height: 1.6;
-    }
-
-    .list{
-      display:grid;
-      gap:10px;
-    }
-
-    .task{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      justify-content:space-between;
-      padding: 12px 13px;
-      border-radius: 14px;
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-    }
-
-    .task-left{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-    }
-
-    .task input[type="checkbox"]{
-      width:18px;
-      height:18px;
-      margin-top:3px;
-      accent-color: var(--primary);
-    }
-
-    .task.done .task-text{
-      text-decoration: line-through;
-      opacity: .65;
-    }
-
-    .task-text{
-      font-weight: 600;
-    }
-
-    .task-meta{
-      font-size: .85rem;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .divider{
-      height:1px;
-      background: var(--border);
-      margin: 14px 0;
-    }
-
-    .footer-note{
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: .88rem;
-      line-height: 1.5;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: .85rem;
-    }
-
-    @media (max-width: 1000px){
-      .layout{grid-template-columns: 1fr;}
-      .sidecard{position:static;}
-      .grid-4, .grid-2{grid-template-columns: repeat(2, minmax(0, 1fr));}
-    }
-
-    @media (max-width: 640px){
-      .app{padding: 12px;}
-      .topbar{padding: 14px;}
-      .grid-4, .grid-2, .form-grid{grid-template-columns: 1fr;}
-      .hero h2{font-size: 1.35rem;}
-      .brand{min-width: unset;}
-    }
-  </style>
+<style>
+:root{
+  --bg:#f4f8f7;
+  --surface:#ffffff;
+  --surface2:#edf5f3;
+  --surface3:#e4efed;
+  --text:#102027;
+  --muted:#60747b;
+  --primary:#087f72;
+  --primary2:#13a58f;
+  --primarySoft:#d9f2ed;
+  --accent:#dca84b;
+  --border:rgba(8,127,114,.13);
+  --danger:#c83b45;
+  --success:#15845d;
+  --shadow:0 16px 45px rgba(16,32,39,.08);
+  --shadow2:0 8px 24px rgba(16,32,39,.07);
+  --radius:22px;
+}
+[data-theme="dark"]{
+  --bg:#071416;
+  --surface:#0d2023;
+  --surface2:#11292d;
+  --surface3:#173338;
+  --text:#e8f5f3;
+  --muted:#9eb4b8;
+  --primary:#36c8b0;
+  --primary2:#19a58f;
+  --primarySoft:#113b38;
+  --accent:#e5b45b;
+  --border:rgba(54,200,176,.14);
+  --shadow:0 18px 45px rgba(0,0,0,.28);
+  --shadow2:0 8px 25px rgba(0,0,0,.24);
+  --danger:#ff777e;
+  --success:#4bd19d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(19,165,143,.12),transparent 28%),
+    radial-gradient(circle at 90% 15%,rgba(220,168,75,.08),transparent 25%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(19,165,143,.28);
+  outline-offset:2px;
+}
+a{color:inherit}
+.app{max-width:1500px;margin:auto;padding:18px}
+.topbar{
+  position:sticky;top:10px;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:13px 16px;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(18px);
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:var(--shadow2);
+  margin-bottom:18px;
+}
+[data-theme="dark"] .topbar{background:rgba(13,32,35,.86)}
+.brand{display:flex;align-items:center;gap:12px;min-width:220px}
+.logo{
+  width:48px;height:48px;border-radius:16px;
+  display:grid;place-items:center;
+  color:white;font-size:25px;
+  background:linear-gradient(145deg,var(--primary),var(--primary2));
+  box-shadow:0 10px 24px rgba(8,127,114,.22);
+}
+.brand h1{margin:0;font-size:1.28rem;letter-spacing:-.02em}
+.brand p{margin:3px 0 0;color:var(--muted);font-size:.8rem}
+.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.iconbtn,.btn{
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:13px;
+  padding:10px 13px;
+  box-shadow:var(--shadow2);
+  transition:.18s;
+}
+.iconbtn:hover,.btn:hover{transform:translateY(-1px)}
+.btn.primary{
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  border-color:transparent;
+  font-weight:700;
+}
+.btn.soft{background:var(--surface2);box-shadow:none}
+.btn.danger{color:var(--danger)}
+.layout{
+  display:grid;
+  grid-template-columns:270px minmax(0,1fr);
+  gap:18px;
+  align-items:start;
+}
+.sidebar{
+  position:sticky;top:90px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:12px;
+}
+.nav{display:grid;gap:6px}
+.nav button{
+  width:100%;
+  text-align:left;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:11px 12px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  transition:.16s;
+}
+.nav button:hover{background:var(--surface2);color:var(--text)}
+.nav button.active{
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  box-shadow:0 9px 20px rgba(8,127,114,.18);
+}
+.sidebar-footer{
+  margin-top:12px;padding:13px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:16px;
+}
+.sidebar-footer strong{font-size:.85rem}
+.sidebar-footer p{font-size:.76rem;color:var(--muted);line-height:1.5;margin:5px 0 0}
+.main{min-width:0}
+.section{display:none;animation:appear .2s ease}
+.section.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:30px;
+  border-radius:28px;
+  background:
+    linear-gradient(135deg,rgba(8,127,114,.95),rgba(19,165,143,.88)),
+    var(--primary);
+  color:#fff;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:280px;height:280px;
+  right:-90px;top:-100px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  box-shadow:0 0 0 45px rgba(255,255,255,.03),0 0 0 90px rgba(255,255,255,.025);
+}
+.hero .eyebrow{
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:.72rem;
+  opacity:.78;
+  font-weight:800;
+}
+.hero h2{
+  margin:8px 0 8px;
+  font-size:clamp(1.7rem,3vw,2.7rem);
+  line-height:1.05;
+  max-width:800px;
+}
+.hero p{margin:0;max-width:760px;line-height:1.65;color:rgba(255,255,255,.84)}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.hero .btn{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.2);color:#fff;box-shadow:none}
+.hero .btn.primary{background:#fff;color:#075e56}
+.grid{display:grid;gap:14px}
+.grid4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow2);
+  padding:18px;
+}
+.card h3{margin:0 0 8px;font-size:1.05rem}
+.card h4{margin:14px 0 7px}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+.tiny{font-size:.75rem}
+.metric{min-height:125px}
+.metric-icon{font-size:1.35rem;margin-bottom:8px}
+.metric-label{color:var(--muted);font-size:.8rem}
+.metric-value{font-size:1.65rem;font-weight:850;margin-top:5px}
+.metric-note{font-size:.77rem;color:var(--muted);margin-top:4px}
+.section-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+  margin:8px 0 14px;
+}
+.section-head h2{margin:0;font-size:1.45rem}
+.section-head p{margin:5px 0 0;color:var(--muted);font-size:.88rem}
+.searchbar{
+  display:flex;gap:8px;align-items:center;
+  padding:10px 12px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow2);
+}
+.searchbar input{
+  flex:1;min-width:0;
+  border:0;background:transparent;color:var(--text);outline:0;
+}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.select,.input,.textarea{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--surface2);
+  color:var(--text);
+}
+.field{display:grid;gap:6px}
+.field label{font-size:.78rem;color:var(--muted);font-weight:650}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.full{grid-column:1/-1}
+.result{
+  margin-top:12px;padding:14px;
+  border-radius:15px;
+  background:var(--primarySoft);
+  border:1px dashed var(--border);
+  line-height:1.6;
+}
+.tag{
+  display:inline-flex;align-items:center;
+  padding:5px 8px;border-radius:999px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--muted);
+  font-size:.7rem;font-weight:750;
+}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.list{display:grid;gap:9px}
+.item{
+  padding:13px;
+  border-radius:15px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+}
+.item-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.item h4{margin:0 0 5px}
+.item p{margin:0;color:var(--muted);line-height:1.5;font-size:.84rem}
+.clickable{cursor:pointer}
+.clickable:hover{border-color:rgba(19,165,143,.4)}
+.divider{height:1px;background:var(--border);margin:15px 0}
+.statline{
+  display:flex;justify-content:space-between;gap:12px;
+  padding:8px 0;border-bottom:1px solid var(--border);
+  font-size:.84rem;
+}
+.statline:last-child{border-bottom:0}
+.badge{
+  padding:5px 8px;border-radius:8px;
+  font-size:.7rem;font-weight:800;
+  background:var(--primarySoft);color:var(--primary);
+}
+.timeline{display:grid;gap:8px}
+.timeline-step{
+  display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;
+}
+.stepnum{
+  width:30px;height:30px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--primarySoft);color:var(--primary);
+  font-weight:850;font-size:.75rem;
+}
+.flow{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  padding:14px;border-radius:15px;background:var(--surface2);
+  border:1px solid var(--border);
+}
+.flow span{
+  padding:7px 9px;border-radius:9px;
+  background:var(--surface);border:1px solid var(--border);
+  font-size:.75rem;font-weight:700;
+}
+.arrow{color:var(--primary);font-weight:900}
+.modal{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:rgba(3,14,16,.62);
+  backdrop-filter:blur(7px);
+  padding:18px;
+  align-items:center;justify-content:center;
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(900px,100%);
+  max-height:90vh;overflow:auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:25px;
+  box-shadow:0 30px 90px rgba(0,0,0,.28);
+  padding:22px;
+}
+.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.modal-head h2{margin:0}
+.close{border:0;background:var(--surface2);border-radius:10px;padding:8px 10px;color:var(--text)}
+.article h3{margin-top:20px}
+.article p,.article li{line-height:1.7;color:var(--muted);font-size:.9rem}
+.article strong{color:var(--text)}
+.diagram{
+  padding:15px;border-radius:17px;
+  background:linear-gradient(135deg,var(--surface2),var(--surface));
+  border:1px solid var(--border);
+}
+.footer{
+  text-align:center;color:var(--muted);
+  font-size:.76rem;padding:25px 5px 10px;
+}
+.empty{
+  padding:25px;text-align:center;color:var(--muted);
+  border:1px dashed var(--border);border-radius:17px;
+}
+.checkrow{display:flex;gap:9px;align-items:flex-start;padding:9px 0}
+.checkrow input{accent-color:var(--primary);margin-top:4px}
+.note-text{white-space:pre-wrap;line-height:1.6}
+@media(max-width:1100px){
+  .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .layout{grid-template-columns:230px minmax(0,1fr)}
+}
+@media(max-width:800px){
+  .app{padding:10px}
+  .topbar{position:relative;top:0}
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:relative;top:0}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid3,.grid2{grid-template-columns:1fr}
+  .hero{padding:22px}
+}
+@media(max-width:560px){
+  .grid4{grid-template-columns:1fr}
+  .formgrid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+  .nav{grid-template-columns:1fr}
+  .topbar{align-items:flex-start}
+  .brand{min-width:0}
+}
+</style>
 </head>
+
 <body>
-  <div class="app" id="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo">🥛</div>
-        <div>
-          <h1>DairyVerse</h1>
-          <p>Your dairy learning and process workspace</p>
-        </div>
-      </div>
+<div class="app">
 
-      <div class="actions">
-        <span class="pill">📱 Ready for PWA later</span>
-        <button class="ghost" id="themeBtn" type="button">🌙 Theme</button>
-        <button class="primary" id="resetBtn" type="button">Reset Demo Data</button>
-      </div>
-    </header>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">🥛</div>
+    <div>
+      <h1>DairyVerse</h1>
+      <p>Dairy Technology Student Hub</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="iconbtn" id="globalSearchBtn">🔎 Search</button>
+    <button class="iconbtn" id="themeBtn">🌙</button>
+  </div>
+</header>
 
-    <div class="layout">
-      <aside class="sidebar">
-        <div class="sidecard">
-          <nav class="nav" id="nav">
-            <button class="active" data-target="dashboard">🏠 Dashboard</button>
-            <button data-target="calculators">🧮 Calculators</button>
-            <button data-target="process">🏭 Process Tools</button>
-            <button data-target="notes">📝 Notes</button>
-            <button data-target="tasks">✅ Tasks</button>
-            <button data-target="about">ℹ️ About</button>
-          </nav>
+<div class="layout">
 
-          <div class="mini">
-            <h3>Today’s focus</h3>
-            <p id="focusText">Build the app step by step. First get it working, then make it installable.</p>
-          </div>
-        </div>
-      </aside>
+<aside class="sidebar">
+<nav class="nav" id="nav">
+  <button class="active" data-section="home">🏠 <span>Dashboard</span></button>
+  <button data-section="curriculum">🗺️ <span>Curriculum</span></button>
+  <button data-section="concepts">🧠 <span>Concept Library</span></button>
+  <button data-section="processes">🥛 <span>Process Library</span></button>
+  <button data-section="equipment">⚙️ <span>Equipment</span></button>
+  <button data-section="tools">🧮 <span>Tools & Calculators</span></button>
+  <button data-section="practicals">🧪 <span>Practical Centre</span></button>
+  <button data-section="questions">📝 <span>Question Bank</span></button>
+  <button data-section="assignments">📄 <span>Assignment Help</span></button>
+  <button data-section="projects">🔬 <span>Projects</span></button>
+  <button data-section="career">💼 <span>Career Centre</span></button>
+  <button data-section="resources">📚 <span>Resources</span></button>
+  <button data-section="personal">👨‍💻 <span>My Space</span></button>
+  <button data-section="notes">📌 <span>My Notes</span></button>
+</nav>
 
-      <main class="main">
-        <section class="section active" id="dashboard">
-          <div class="hero">
-            <h2>Welcome to DairyVerse</h2>
-            <p>
-              A simple, mobile-friendly starter app for dairy calculators, process planning, notes, and tasks.
-              Everything here is kept in one file so it is easy to paste, test, and improve.
-            </p>
-          </div>
+<div class="sidebar-footer">
+  <strong>Built around a simple idea</strong>
+  <p>Come with a Dairy Technology problem. Leave with a useful next step.</p>
+</div>
+</aside>
 
-          <div class="grid-4">
-            <div class="card metric">
-              <div class="label">Saved notes</div>
-              <div class="value" id="noteCount">0</div>
-              <div class="hint">Stored locally in your browser</div>
-            </div>
-            <div class="card metric">
-              <div class="label">Pending tasks</div>
-              <div class="value" id="taskCount">0</div>
-              <div class="hint">Small checklist for work</div>
-            </div>
-            <div class="card metric">
-              <div class="label">Mode</div>
-              <div class="value" id="modeLabel">Light</div>
-              <div class="hint">You can toggle theme anytime</div>
-            </div>
-            <div class="card metric">
-              <div class="label">App type</div>
-              <div class="value">Single file</div>
-              <div class="hint">Easy to run and update</div>
-            </div>
-          </div>
+<main class="main">
 
-          <div class="grid-2">
-            <div class="card">
-              <h3>Quick start</h3>
-              <div class="stack small">
-                <div>1. Open the Calculators section.</div>
-                <div>2. Try the milk value and standardization tools.</div>
-                <div>3. Add notes and tasks.</div>
-                <div>4. Later we will add manifest.json and sw.js for install.</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h3>What this app can do</h3>
-              <div class="stack small">
-                <div>• Dairy-friendly calculation tools</div>
-                <div>• Simple process planning sections</div>
-                <div>• Saved notes and tasks</div>
-                <div>• Responsive layout for mobile</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="calculators">
-          <div class="grid-2">
-            <div class="card">
-              <h3>Milk revenue calculator</h3>
-              <div class="form-grid">
-                <div class="field">
-                  <label for="liters">Milk quantity (liters)</label>
-                  <input id="liters" type="number" step="0.01" value="100" />
-                </div>
-                <div class="field">
-                  <label for="rate">Rate per liter</label>
-                  <input id="rate" type="number" step="0.01" value="42" />
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="result" id="milkRevenueResult">Total revenue will appear here.</div>
-            </div>
-
-            <div class="card">
-              <h3>Standardization calculator</h3>
-              <div class="form-grid">
-                <div class="field">
-                  <label for="milkA">Milk A quantity (liters)</label>
-                  <input id="milkA" type="number" step="0.01" value="60" />
-                </div>
-                <div class="field">
-                  <label for="fatA">Milk A fat %</label>
-                  <input id="fatA" type="number" step="0.01" value="3.5" />
-                </div>
-                <div class="field">
-                  <label for="milkB">Milk B quantity (liters)</label>
-                  <input id="milkB" type="number" step="0.01" value="40" />
-                </div>
-                <div class="field">
-                  <label for="fatB">Milk B fat %</label>
-                  <input id="fatB" type="number" step="0.01" value="6.0" />
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="result" id="standardResult">Standardized fat result will appear here.</div>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="card">
-              <h3>Product cost calculator</h3>
-              <div class="form-grid">
-                <div class="field">
-                  <label for="rawCost">Raw milk cost per liter</label>
-                  <input id="rawCost" type="number" step="0.01" value="34" />
-                </div>
-                <div class="field">
-                  <label for="processingCost">Processing cost per liter</label>
-                  <input id="processingCost" type="number" step="0.01" value="4" />
-                </div>
-                <div class="field">
-                  <label for="packCost">Packaging cost per liter</label>
-                  <input id="packCost" type="number" step="0.01" value="3" />
-                </div>
-                <div class="field">
-                  <label for="margin">Target margin %</label>
-                  <input id="margin" type="number" step="0.01" value="12" />
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="result" id="costResult">Selling price will appear here.</div>
-            </div>
-
-            <div class="card">
-              <h3>Batch yield estimator</h3>
-              <div class="form-grid">
-                <div class="field">
-                  <label for="inputQty">Input milk (liters)</label>
-                  <input id="inputQty" type="number" step="0.01" value="500" />
-                </div>
-                <div class="field">
-                  <label for="yieldPct">Expected yield %</label>
-                  <input id="yieldPct" type="number" step="0.01" value="10" />
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="result" id="yieldResult">Estimated output will appear here.</div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="process">
-          <div class="grid-2">
-            <div class="card">
-              <h3>Process steps</h3>
-              <div class="stack small">
-                <div>📥 Reception</div>
-                <div>🧪 Testing</div>
-                <div>🧼 Filtration / clarification</div>
-                <div>🔥 Pasteurization</div>
-                <div>🧊 Cooling</div>
-                <div>📦 Packaging</div>
-                <div>🚚 Storage / dispatch</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <h3>Process checklist</h3>
-              <div class="field">
-                <label for="processName">Add a process step</label>
-                <input id="processName" type="text" placeholder="Example: Homogenization" />
-              </div>
-              <div style="height:10px"></div>
-              <button class="primary" id="addProcessBtn" type="button">Add step</button>
-              <div class="divider"></div>
-              <div class="list" id="processList"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="notes">
-          <div class="card">
-            <h3>Notes</h3>
-            <div class="field">
-              <label for="noteInput">Write something useful</label>
-              <textarea id="noteInput" placeholder="Store formulas, reminders, or ideas here..."></textarea>
-            </div>
-            <div class="row">
-              <button class="primary" id="saveNoteBtn" type="button">Save note</button>
-              <button id="clearNotesBtn" type="button">Clear notes</button>
-            </div>
-            <div class="divider"></div>
-            <div class="list" id="notesList"></div>
-          </div>
-        </section>
-
-        <section class="section" id="tasks">
-          <div class="grid-2">
-            <div class="card">
-              <h3>Add task</h3>
-              <div class="field">
-                <label for="taskInput">Task title</label>
-                <input id="taskInput" type="text" placeholder="Example: Test calculator values" />
-              </div>
-              <div style="height:10px"></div>
-              <button class="primary" id="addTaskBtn" type="button">Add task</button>
-            </div>
-
-            <div class="card">
-              <h3>Task list</h3>
-              <div class="list" id="taskList"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="about">
-          <div class="card">
-            <h3>About this starter app</h3>
-            <div class="stack small">
-              <div>
-                This is a clean single-file version so you can build first without complicated setup.
-              </div>
-              <div>
-                Later, we can add <strong>manifest.json</strong>, <strong>sw.js</strong>, and an icon to make it installable.
-              </div>
-              <div>
-                The app saves notes, tasks, and theme in your browser using localStorage.
-              </div>
-              <div>
-                Once this file works, the next step is to add the PWA files.
-              </div>
-            </div>
-            <p class="footer-note">
-              Tip: after pasting the code, open the file in your browser and test the buttons.
-            </p>
-          </div>
-        </section>
-      </main>
+<!-- HOME -->
+<section class="section active" id="home">
+  <div class="hero">
+    <div class="eyebrow">Learn • Practice • Build</div>
+    <h2>Dairy Technology, organized around the way students actually learn.</h2>
+    <p>
+      Explore your curriculum, understand concepts, study dairy processes and equipment,
+      solve engineering calculations, prepare practicals, find resources and build projects.
+    </p>
+    <div class="hero-actions">
+      <button class="btn primary" data-go="curriculum">Explore Curriculum</button>
+      <button class="btn" data-go="concepts">Learn a Concept</button>
+      <button class="btn" data-go="tools">Open Calculators</button>
     </div>
   </div>
 
-  <script>
-    const state = {
-      theme: localStorage.getItem("dairyverse_theme") || "light",
-      notes: JSON.parse(localStorage.getItem("dairyverse_notes") || "[]"),
-      tasks: JSON.parse(localStorage.getItem("dairyverse_tasks") || "[]"),
-      process: JSON.parse(localStorage.getItem("dairyverse_process") || "[\"Reception\",\"Testing\",\"Filtration\",\"Pasteurization\",\"Cooling\",\"Packaging\",\"Storage\"]")
-    };
+  <div class="grid grid4">
+    <div class="card metric">
+      <div class="metric-icon">🗺️</div>
+      <div class="metric-label">Curriculum areas</div>
+      <div class="metric-value" id="metricSubjects">0</div>
+      <div class="metric-note">Structured by semester and subject</div>
+    </div>
+    <div class="card metric">
+      <div class="metric-icon">🧠</div>
+      <div class="metric-label">Learning topics</div>
+      <div class="metric-value" id="metricConcepts">0</div>
+      <div class="metric-note">Concepts with dairy context</div>
+    </div>
+    <div class="card metric">
+      <div class="metric-icon">⚙️</div>
+      <div class="metric-label">Equipment</div>
+      <div class="metric-value" id="metricEquipment">0</div>
+      <div class="metric-note">Principles, components and applications</div>
+    </div>
+    <div class="card metric">
+      <div class="metric-icon">📌</div>
+      <div class="metric-label">Saved notes</div>
+      <div class="metric-value" id="metricNotes">0</div>
+      <div class="metric-note">Stored on this device</div>
+    </div>
+  </div>
 
-    const $ = (id) => document.getElementById(id);
+  <div class="grid grid2" style="margin-top:14px">
+    <div class="card">
+      <h3>Start with a problem</h3>
+      <div class="list">
+        <div class="item clickable" data-go="concepts">
+          <div class="item-row"><div><h4>“I don't understand this topic.”</h4><p>Open the Concept Library for structured explanations.</p></div><span>→</span></div>
+        </div>
+        <div class="item clickable" data-go="processes">
+          <div class="item-row"><div><h4>“How does this dairy process work?”</h4><p>Explore raw material → process → equipment → quality.</p></div><span>→</span></div>
+        </div>
+        <div class="item clickable" data-go="tools">
+          <div class="item-row"><div><h4>“I need to calculate something.”</h4><p>Use the dairy engineering and process tools.</p></div><span>→</span></div>
+        </div>
+      </div>
+    </div>
 
-    function save() {
-      localStorage.setItem("dairyverse_theme", state.theme);
-      localStorage.setItem("dairyverse_notes", JSON.stringify(state.notes));
-      localStorage.setItem("dairyverse_tasks", JSON.stringify(state.tasks));
-      localStorage.setItem("dairyverse_process", JSON.stringify(state.process));
-    }
+    <div class="card">
+      <h3>Learning path</h3>
+      <div class="timeline">
+        <div class="timeline-step"><div class="stepnum">1</div><div><strong>Find the topic</strong><div class="small muted">Use Curriculum or Search.</div></div></div>
+        <div class="timeline-step"><div class="stepnum">2</div><div><strong>Understand</strong><div class="small muted">Concept → mathematics → application.</div></div></div>
+        <div class="timeline-step"><div class="stepnum">3</div><div><strong>Practice</strong><div class="small muted">Questions, numericals and practicals.</div></div></div>
+        <div class="timeline-step"><div class="stepnum">4</div><div><strong>Build</strong><div class="small muted">Apply the idea to a dairy process or project.</div></div></div>
+      </div>
+    </div>
+  </div>
 
-    function setTheme(theme) {
-      state.theme = theme;
-      document.documentElement.setAttribute("data-theme", theme === "dark" ? "dark" : "light");
-      $("themeBtn").textContent = theme === "dark" ? "☀️ Theme" : "🌙 Theme";
-      $("modeLabel").textContent = theme === "dark" ? "Dark" : "Light";
-      save();
-    }
+  <div class="card" style="margin-top:14px">
+    <h3>Featured dairy pathway</h3>
+    <div class="flow">
+      <span>Milk Reception</span><b class="arrow">→</b>
+      <span>Testing</span><b class="arrow">→</b>
+      <span>Clarification</span><b class="arrow">→</b>
+      <span>Separation</span><b class="arrow">→</b>
+      <span>Standardization</span><b class="arrow">→</b>
+      <span>Heat Treatment</span><b class="arrow">→</b>
+      <span>Homogenization</span><b class="arrow">→</b>
+      <span>Packaging</span>
+    </div>
+  </div>
+</section>
 
-    function formatMoney(value) {
-      return "₹" + Number(value).toFixed(2);
-    }
+<!-- CURRICULUM -->
+<section class="section" id="curriculum">
+  <div class="section-head">
+    <div>
+      <h2>Curriculum Explorer</h2>
+      <p>A structured reference map for B.Tech Dairy Technology.</p>
+    </div>
+    <span class="tag">8-semester framework</span>
+  </div>
 
-    function calcRevenue() {
-      const liters = parseFloat($("liters").value || 0);
-      const rate = parseFloat($("rate").value || 0);
-      const total = liters * rate;
-      $("milkRevenueResult").innerHTML = `
-        <strong>Total revenue:</strong> ${formatMoney(total)}<br>
-        <span class="muted">Formula: liters × rate = ${liters} × ${rate}</span>
-      `;
-    }
+  <div class="card">
+    <div class="toolbar">
+      <select class="select" id="semesterFilter" style="max-width:260px">
+        <option value="all">All semesters</option>
+      </select>
+      <input class="input" id="curriculumSearch" placeholder="Search subjects or topics...">
+    </div>
+    <div id="curriculumList" class="list"></div>
+  </div>
 
-    function calcStandardization() {
-      const qa = parseFloat($("milkA").value || 0);
-      const fa = parseFloat($("fatA").value || 0);
-      const qb = parseFloat($("milkB").value || 0);
-      const fb = parseFloat($("fatB").value || 0);
-      const totalQty = qa + qb;
-      const avgFat = totalQty > 0 ? ((qa * fa) + (qb * fb)) / totalQty : 0;
-      $("standardResult").innerHTML = `
-        <strong>Final quantity:</strong> ${totalQty.toFixed(2)} liters<br>
-        <strong>Weighted fat:</strong> ${avgFat.toFixed(2)}%<br>
-        <span class="muted">Useful for basic standardization mixing.</span>
-      `;
-    }
+  <div class="card" style="margin-top:14px">
+    <h3>How to use this map</h3>
+    <p class="small muted">
+      Select a subject to see its topic set. Then open an individual topic in the Concept Library.
+      The map is deliberately broader than one college's timetable: institutions can differ in exact
+      semester placement and course nomenclature.
+    </p>
+  </div>
+</section>
 
-    function calcCost() {
-      const raw = parseFloat($("rawCost").value || 0);
-      const proc = parseFloat($("processingCost").value || 0);
-      const pack = parseFloat($("packCost").value || 0);
-      const margin = parseFloat($("margin").value || 0);
-      const base = raw + proc + pack;
-      const selling = base * (1 + margin / 100);
-      $("costResult").innerHTML = `
-        <strong>Base cost:</strong> ${formatMoney(base)} / liter<br>
-        <strong>Suggested selling price:</strong> ${formatMoney(selling)} / liter<br>
-        <span class="muted">Margin added on total cost.</span>
-      `;
-    }
+<!-- CONCEPTS -->
+<section class="section" id="concepts">
+  <div class="section-head">
+    <div>
+      <h2>Concept Library</h2>
+      <p>Structured explanations with a Dairy Technology perspective.</p>
+    </div>
+  </div>
 
-    function calcYield() {
-      const qty = parseFloat($("inputQty").value || 0);
-      const pct = parseFloat($("yieldPct").value || 0);
-      const output = qty * pct / 100;
-      $("yieldResult").innerHTML = `
-        <strong>Estimated output:</strong> ${output.toFixed(2)} liters / kg<br>
-        <span class="muted">Simple yield estimate from input quantity.</span>
-      `;
-    }
+  <div class="searchbar">
+    🔎 <input id="conceptSearch" placeholder="Search Bernoulli, pasteurization, Reynolds number, heat transfer...">
+  </div>
+  <div class="toolbar" style="margin-top:10px">
+    <select class="select" id="conceptCategory" style="max-width:240px">
+      <option value="all">All areas</option>
+    </select>
+  </div>
+  <div id="conceptList" class="grid grid3"></div>
+</section>
 
-    function renderNotes() {
-      $("notesList").innerHTML = "";
-      if (!state.notes.length) {
-        $("notesList").innerHTML = '<div class="muted small">No notes yet.</div>';
-      } else {
-        state.notes.slice().reverse().forEach((note, index) => {
-          const item = document.createElement("div");
-          item.className = "task";
-          item.innerHTML = `
-            <div>
-              <div class="task-text">${escapeHtml(note.text)}</div>
-              <div class="task-meta">${new Date(note.time).toLocaleString()}</div>
-            </div>
-            <button type="button" data-delete-note="${index}">Delete</button>
-          `;
-          $("notesList").appendChild(item);
-        });
-      }
-      $("noteCount").textContent = state.notes.length;
-    }
+<!-- PROCESSES -->
+<section class="section" id="processes">
+  <div class="section-head">
+    <div>
+      <h2>Dairy Process Library</h2>
+      <p>From raw material to finished product — with engineering context.</p>
+    </div>
+  </div>
+  <div class="searchbar">
+    🔎 <input id="processSearch" placeholder="Search pasteurization, CIP, homogenization, cheese...">
+  </div>
+  <div id="processList" class="grid grid2" style="margin-top:14px"></div>
+</section>
 
-    function renderTasks() {
-      $("taskList").innerHTML = "";
-      if (!state.tasks.length) {
-        $("taskList").innerHTML = '<div class="muted small">No tasks yet.</div>';
-      } else {
-        state.tasks.slice().reverse().forEach((task, index) => {
-          const realIndex = state.tasks.length - 1 - index;
-          const item = document.createElement("div");
-          item.className = "task" + (task.done ? " done" : "");
-          item.innerHTML = `
-            <div class="task-left">
-              <input type="checkbox" ${task.done ? "checked" : ""} data-task-done="${realIndex}">
-              <div>
-                <div class="task-text">${escapeHtml(task.text)}</div>
-                <div class="task-meta">${new Date(task.time).toLocaleString()}</div>
-              </div>
-            </div>
-            <button type="button" data-delete-task="${realIndex}">Delete</button>
-          `;
-          $("taskList").appendChild(item);
-        });
-      }
-      const pending = state.tasks.filter(t => !t.done).length;
-      $("taskCount").textContent = pending;
-    }
+<!-- EQUIPMENT -->
+<section class="section" id="equipment">
+  <div class="section-head">
+    <div>
+      <h2>Dairy Equipment Encyclopedia</h2>
+      <p>Purpose, principle, construction, operation, parameters and applications.</p>
+    </div>
+  </div>
+  <div class="searchbar">
+    🔎 <input id="equipmentSearch" placeholder="Search separator, homogenizer, PHE, pump, evaporator...">
+  </div>
+  <div id="equipmentList" class="grid grid3" style="margin-top:14px"></div>
+</section>
 
-    function renderProcess() {
-      $("processList").innerHTML = "";
-      state.process.forEach((step, index) => {
-        const item = document.createElement("div");
-        item.className = "task";
-        item.innerHTML = `
-          <div class="task-left">
-            <div class="pill">${index + 1}</div>
-            <div>
-              <div class="task-text">${escapeHtml(step)}</div>
-              <div class="task-meta">Process step</div>
-            </div>
+<!-- TOOLS -->
+<section class="section" id="tools">
+  <div class="section-head">
+    <div>
+      <h2>Dairy Technology Tools</h2>
+      <p>Inputs → calculation → result → formula → interpretation.</p>
+    </div>
+  </div>
+
+  <div class="grid grid2">
+
+    <div class="card">
+      <h3>🥛 Milk Revenue</h3>
+      <div class="formgrid">
+        <div class="field"><label>Milk quantity (L)</label><input class="input" id="tLitres" type="number" value="100"></div>
+        <div class="field"><label>Rate (₹/L)</label><input class="input" id="tRate" type="number" value="42"></div>
+      </div>
+      <div class="result" id="tRevenue"></div>
+    </div>
+
+    <div class="card">
+      <h3>🧪 Milk Mixing / Weighted Fat</h3>
+      <div class="formgrid">
+        <div class="field"><label>Milk A (L)</label><input class="input" id="mA" type="number" value="60"></div>
+        <div class="field"><label>Fat A (%)</label><input class="input" id="fA" type="number" value="3.5"></div>
+        <div class="field"><label>Milk B (L)</label><input class="input" id="mB" type="number" value="40"></div>
+        <div class="field"><label>Fat B (%)</label><input class="input" id="fB" type="number" value="6"></div>
+      </div>
+      <div class="result" id="tMix"></div>
+    </div>
+
+    <div class="card">
+      <h3>⚙️ Pump Hydraulic Power</h3>
+      <div class="formgrid">
+        <div class="field"><label>Flow Q (m³/s)</label><input class="input" id="pQ" type="number" step="0.0001" value="0.01"></div>
+        <div class="field"><label>Pressure rise ΔP (Pa)</label><input class="input" id="pP" type="number" value="200000"></div>
+        <div class="field"><label>Efficiency (%)</label><input class="input" id="pEta" type="number" value="70"></div>
+      </div>
+      <div class="result" id="tPump"></div>
+    </div>
+
+    <div class="card">
+      <h3>🌡️ Sensible Heat</h3>
+      <div class="formgrid">
+        <div class="field"><label>Mass (kg)</label><input class="input" id="hMass" type="number" value="1000"></div>
+        <div class="field"><label>Specific heat (kJ/kg·K)</label><input class="input" id="hCp" type="number" value="3.9"></div>
+        <div class="field"><label>Temperature change (K)</label><input class="input" id="hDT" type="number" value="10"></div>
+      </div>
+      <div class="result" id="tHeat"></div>
+    </div>
+
+    <div class="card">
+      <h3>🌊 Reynolds Number</h3>
+      <div class="formgrid">
+        <div class="field"><label>Density ρ (kg/m³)</label><input class="input" id="rRho" type="number" value="1000"></div>
+        <div class="field"><label>Velocity v (m/s)</label><input class="input" id="rV" type="number" value="1"></div>
+        <div class="field"><label>Diameter D (m)</label><input class="input" id="rD" type="number" value="0.05"></div>
+        <div class="field"><label>Dynamic viscosity μ (Pa·s)</label><input class="input" id="rMu" type="number" value="0.001"></div>
+      </div>
+      <div class="result" id="tRe"></div>
+    </div>
+
+    <div class="card">
+      <h3>💨 Continuity</h3>
+      <div class="formgrid">
+        <div class="field"><label>Area A₁ (m²)</label><input class="input" id="cA1" type="number" value="0.01"></div>
+        <div class="field"><label>Velocity v₁ (m/s)</label><input class="input" id="cV1" type="number" value="2"></div>
+        <div class="field"><label>Area A₂ (m²)</label><input class="input" id="cA2" type="number" value="0.005"></div>
+      </div>
+      <div class="result" id="tContinuity"></div>
+    </div>
+
+    <div class="card">
+      <h3>💰 Product Cost + Margin</h3>
+      <div class="formgrid">
+        <div class="field"><label>Raw milk cost/L</label><input class="input" id="costRaw" type="number" value="34"></div>
+        <div class="field"><label>Processing/L</label><input class="input" id="costProc" type="number" value="4"></div>
+        <div class="field"><label>Packaging/L</label><input class="input" id="costPack" type="number" value="3"></div>
+        <div class="field"><label>Margin (%)</label><input class="input" id="costMargin" type="number" value="12"></div>
+      </div>
+      <div class="result" id="tCost"></div>
+    </div>
+
+    <div class="card">
+      <h3>📦 Yield Estimator</h3>
+      <div class="formgrid">
+        <div class="field"><label>Input quantity</label><input class="input" id="yInput" type="number" value="500"></div>
+        <div class="field"><label>Yield (%)</label><input class="input" id="yPct" type="number" value="10"></div>
+      </div>
+      <div class="result" id="tYield"></div>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Important note</h3>
+    <p class="small muted">
+      These are educational calculators. Engineering design, food-safety decisions, plant operation,
+      legal compliance and industrial specifications require validated data, appropriate standards,
+      professional review and the actual operating conditions.
+    </p>
+  </div>
+</section>
+
+<!-- PRACTICALS -->
+<section class="section" id="practicals">
+  <div class="section-head">
+    <div>
+      <h2>Practical & Laboratory Centre</h2>
+      <p>Objective → principle → apparatus → procedure → calculation → result → viva.</p>
+    </div>
+  </div>
+  <div id="practicalList" class="grid grid2"></div>
+</section>
+
+<!-- QUESTIONS -->
+<section class="section" id="questions">
+  <div class="section-head">
+    <div>
+      <h2>Question Bank</h2>
+      <p>Conceptual, numerical, short-answer and viva-style practice.</p>
+    </div>
+  </div>
+  <div class="toolbar">
+    <select class="select" id="questionType" style="max-width:220px">
+      <option value="all">All question types</option>
+      <option value="MCQ">MCQ</option>
+      <option value="Short">Short Answer</option>
+      <option value="Numerical">Numerical</option>
+      <option value="Viva">Viva</option>
+    </select>
+    <select class="select" id="questionTopic" style="max-width:240px">
+      <option value="all">All topics</option>
+    </select>
+  </div>
+  <div id="questionList" class="list"></div>
+</section>
+
+<!-- ASSIGNMENTS -->
+<section class="section" id="assignments">
+  <div class="section-head">
+    <div>
+      <h2>Assignment & Essay Help</h2>
+      <p>Research → understand → structure → write.</p>
+    </div>
+  </div>
+  <div class="grid grid2">
+    <div class="card">
+      <h3>Assignment structure generator</h3>
+      <div class="field">
+        <label>Topic</label>
+        <input class="input" id="assignmentTopic" placeholder="Example: Pasteurization of milk">
+      </div>
+      <div style="height:10px"></div>
+      <button class="btn primary" id="generateAssignment">Generate structure</button>
+      <div class="result" id="assignmentResult" style="display:none"></div>
+    </div>
+    <div class="card">
+      <h3>Recommended structure</h3>
+      <div class="list small">
+        <div class="item"><strong>1. Introduction</strong><p>Define the problem and establish context.</p></div>
+        <div class="item"><strong>2. Core theory</strong><p>Explain the science/engineering principles.</p></div>
+        <div class="item"><strong>3. Dairy application</strong><p>Connect theory to actual processing.</p></div>
+        <div class="item"><strong>4. Equipment/process</strong><p>Use a flowchart or labelled diagram.</p></div>
+        <div class="item"><strong>5. Quality & safety</strong><p>Discuss relevant controls and limitations.</p></div>
+        <div class="item"><strong>6. Conclusion + references</strong><p>Summarize without simply repeating the introduction.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-head">
+    <div>
+      <h2>Project Centre</h2>
+      <p>Ideas designed to turn classroom knowledge into useful work.</p>
+    </div>
+  </div>
+  <div id="projectList" class="grid grid3"></div>
+</section>
+
+<!-- CAREER -->
+<section class="section" id="career">
+  <div class="section-head">
+    <div>
+      <h2>Career Centre</h2>
+      <p>Understand where Dairy Technology can take you.</p>
+    </div>
+  </div>
+  <div id="careerList" class="grid grid3"></div>
+</section>
+
+<!-- RESOURCES -->
+<section class="section" id="resources">
+  <div class="section-head">
+    <div>
+      <h2>Resource Library</h2>
+      <p>Use the platform as a filter — then go deeper into authoritative sources.</p>
+    </div>
+  </div>
+  <div id="resourceList" class="grid grid2"></div>
+</section>
+
+<!-- PERSONAL -->
+<section class="section" id="personal">
+  <div class="hero">
+    <div class="eyebrow">Creator</div>
+    <h2>Ansuman Anshu</h2>
+    <p>
+      DairyVerse is designed as a practical learning ecosystem for Dairy Technology students —
+      combining structured learning, engineering tools, process knowledge and project thinking.
+    </p>
+  </div>
+
+  <div class="grid grid3">
+    <div class="card">
+      <h3>🌐 Portfolio</h3>
+      <p class="small muted">Your personal website.</p>
+      <a class="btn primary" style="display:inline-block;text-decoration:none;margin-top:8px"
+         href="https://anshumaananshu.github.io/" target="_blank" rel="noopener">Open Website</a>
+    </div>
+    <div class="card">
+      <h3>🧮 Featured Project</h3>
+      <p class="small muted">Dairy Plant Process Calculator — a practical engineering tool inside DairyVerse.</p>
+    </div>
+    <div class="card">
+      <h3>🔗 LinkedIn</h3>
+      <p class="small muted">Add your LinkedIn URL here later. The app structure is ready for it.</p>
+      <button class="btn soft" id="linkedinPlaceholder">Add LinkedIn</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Why DairyVerse?</h3>
+    <p class="small muted">
+      The goal is not to become another PDF repository. It is to help a student move from
+      “I don't understand this” to “I understand the idea, I can solve a problem, and I know
+      where to learn more.”
+    </p>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section class="section" id="notes">
+  <div class="section-head">
+    <div>
+      <h2>My Notes & Tasks</h2>
+      <p>Personal workspace stored locally in your browser.</p>
+    </div>
+  </div>
+
+  <div class="grid grid2">
+    <div class="card">
+      <h3>Save a note</h3>
+      <div class="field">
+        <label>Note</label>
+        <textarea class="textarea" id="noteInput" placeholder="Formula, reminder, project idea, lecture point..."></textarea>
+      </div>
+      <div style="height:10px"></div>
+      <button class="btn primary" id="saveNote">Save Note</button>
+    </div>
+
+    <div class="card">
+      <h3>Add a task</h3>
+      <div class="field">
+        <label>Task</label>
+        <input class="input" id="taskInput" placeholder="Example: Revise Bernoulli equation">
+      </div>
+      <div style="height:10px"></div>
+      <button class="btn primary" id="addTask">Add Task</button>
+    </div>
+  </div>
+
+  <div class="grid grid2" style="margin-top:14px">
+    <div class="card">
+      <h3>Saved notes</h3>
+      <div id="savedNotes" class="list"></div>
+    </div>
+    <div class="card">
+      <h3>Tasks</h3>
+      <div id="savedTasks" class="list"></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  DairyVerse • Built as a learning and exploration platform • Content should be verified against current institutional syllabi and applicable standards.
+</div>
+
+</main>
+</div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="modalTitle"></h2>
+      <button class="close" id="modalClose">✕</button>
+    </div>
+    <div id="modalBody" class="article"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   DAIRYVERSE DATA
+   ========================================================= */
+
+const curriculum = [
+  {sem:1,subject:"Engineering Mathematics",topics:["Functions and graphs","Differentiation","Integration","Vectors","Basic differential equations"]},
+  {sem:1,subject:"Engineering Physics",topics:["Units and dimensions","Mechanics","Fluid basics","Thermal physics","Electricity and magnetism"]},
+  {sem:1,subject:"Engineering Chemistry",topics:["Atomic structure","Chemical bonding","Solutions","Thermodynamics","Organic chemistry fundamentals"]},
+  {sem:1,subject:"Dairy Chemistry",topics:["Composition of milk","Carbohydrates","Proteins","Lipids","Minerals and vitamins","Physicochemical properties of milk"]},
+  {sem:1,subject:"Fluid Mechanics",topics:["Fluid properties","Pressure","Hydrostatics","Continuity equation","Bernoulli equation","Reynolds number","Pipe flow","Pumps"]},
+  {sem:1,subject:"Engineering Drawing & Workshop",topics:["Orthographic projection","Sectional views","Basic workshop operations"]},
+
+  {sem:2,subject:"Thermodynamics",topics:["System and surroundings","First law","Second law","Enthalpy","Entropy","Cycles"]},
+  {sem:2,subject:"Heat & Mass Transfer",topics:["Conduction","Convection","Radiation","Heat exchangers","Diffusion","Mass transfer coefficients"]},
+  {sem:2,subject:"Boilers and Steam Generation",topics:["Steam properties","Boilers","Steam tables","Steam economy","Condensate"]},
+  {sem:2,subject:"Basic Electrical Engineering",topics:["DC circuits","AC circuits","Power","Motors","Electrical safety"]},
+  {sem:2,subject:"Market Milk",topics:["Milk reception","Milk testing","Clarification","Separation","Standardization","Pasteurization","Homogenization","Packaging"]},
+  {sem:2,subject:"Dairy Microbiology",topics:["Microbial growth","Spoilage","Starter cultures","Pathogens","Hygiene"]},
+
+  {sem:3,subject:"Dairy Engineering",topics:["Unit operations","Pumps","Heat exchangers","Evaporation","Drying","Refrigeration"]},
+  {sem:3,subject:"Instrumentation & Process Control",topics:["Sensors","Temperature measurement","Pressure measurement","Flow measurement","Control loops"]},
+  {sem:3,subject:"Food Technology",topics:["Food preservation","Food processing","Packaging","Quality attributes"]},
+  {sem:3,subject:"Traditional Indian Dairy Products",topics:["Dahi","Paneer","Khoa","Chhana","Ghee","Traditional sweets"]},
+  {sem:3,subject:"Fat Rich Dairy Products",topics:["Cream","Butter","Ghee","Fat separation","Churning"]},
+  {sem:3,subject:"Food Quality & Safety",topics:["HACCP","GMP","GHP","Quality control","Food hazards"]},
+
+  {sem:4,subject:"Dairy Process Engineering",topics:["Process design","Material balance","Energy balance","Piping","Equipment selection"]},
+  {sem:4,subject:"Cheese Technology",topics:["Milk preparation","Starter culture","Coagulation","Cutting","Whey drainage","Ripening"]},
+  {sem:4,subject:"Ice Cream & Frozen Desserts",topics:["Mix formulation","Homogenization","Freezing","Overrun","Hardening"]},
+  {sem:4,subject:"Packaging of Dairy Products",topics:["Packaging materials","Aseptic packaging","Shelf life","Package integrity"]},
+  {sem:4,subject:"Refrigeration & Air Conditioning",topics:["Vapour compression","Refrigerants","COP","Evaporator","Condenser"]},
+
+  {sem:5,subject:"Condensed and Dried Milks",topics:["Evaporation","Concentration","Spray drying","Powder properties","Instantization"]},
+  {sem:5,subject:"Byproducts Technology",topics:["Whey","Lactose","Casein","Whey proteins","Utilization"]},
+  {sem:5,subject:"Sensory Evaluation",topics:["Sensory attributes","Panel selection","Difference tests","Hedonic testing"]},
+  {sem:5,subject:"Process Control",topics:["Control variables","Feedback","PID concept","Automation"]},
+
+  {sem:6,subject:"Dairy Plant Design & Layout",topics:["Plant location","Layout principles","Material flow","Utilities","Hygienic design"]},
+  {sem:6,subject:"Dairy Plant Management",topics:["Production planning","Costing","Inventory","Maintenance","Human resources"]},
+  {sem:6,subject:"Environmental Engineering",topics:["Effluent","Wastewater","Biogas","Pollution control","Water conservation"]},
+  {sem:6,subject:"Energy Conservation",topics:["Energy audit","Heat recovery","Steam economy","Refrigeration efficiency"]},
+
+  {sem:7,subject:"Advanced Dairy Processing",topics:["Membrane processing","High pressure processing","Alternative technologies","Process optimization"]},
+  {sem:7,subject:"Research & Product Development",topics:["Literature review","Experimental design","Product formulation","Data analysis"]},
+  {sem:7,subject:"Industrial Training",topics:["Plant operation","Quality systems","Production documentation","Industrial safety"]},
+
+  {sem:8,subject:"In-Plant Training / Project",topics:["Plant operations","Process troubleshooting","Project work","Technical reporting","Presentation"]}
+];
+
+const concepts = [
+  {
+    title:"Fluid and Continuum",category:"Fluid Mechanics",
+    simple:"A fluid continuously deforms when a shear stress is applied. The continuum model treats matter as continuously distributed rather than tracking individual molecules.",
+    why:"Fluid mechanics provides the foundation for milk flow through pipes, valves, pumps and heat exchangers.",
+    formula:"Density ρ = m/V. Dynamic viscosity μ relates shear stress to velocity gradient for a Newtonian fluid.",
+    dairy:"Milk, cream, whey and cleaning solutions all move through dairy piping systems.",
+    mistakes:["Confusing density with specific gravity","Mixing dynamic and kinematic viscosity units"],
+    practice:["Define a fluid.","Why is viscosity important in dairy processing?"]
+  },
+  {
+    title:"Continuity Equation",category:"Fluid Mechanics",
+    simple:"For steady flow, mass entering a control volume equals mass leaving it.",
+    why:"It lets engineers relate pipe area and flow velocity.",
+    formula:"For incompressible flow: A₁v₁ = A₂v₂.",
+    dairy:"When a dairy pipeline diameter changes, the velocity changes even if the volumetric flow remains constant.",
+    mistakes:["Using area instead of diameter directly","Ignoring density when the flow is compressible"],
+    practice:["A pipe contracts from 0.01 m² to 0.005 m². If v₁ = 2 m/s, find v₂."]
+  },
+  {
+    title:"Bernoulli Equation",category:"Fluid Mechanics",
+    simple:"Bernoulli's equation connects pressure, velocity and elevation in an ideal steady incompressible flow.",
+    why:"It helps understand pressure changes through dairy pipelines and equipment.",
+    formula:"P/ρg + v²/2g + z = constant, before adding pump, loss and other terms.",
+    dairy:"Pump systems, pipe networks and elevation differences in dairy plants.",
+    mistakes:["Ignoring head losses in real systems","Using inconsistent units"],
+    practice:["What happens to velocity when flow enters a smaller area?"]
+  },
+  {
+    title:"Reynolds Number",category:"Fluid Mechanics",
+    simple:"Reynolds number compares inertial effects with viscous effects.",
+    why:"It helps characterize whether internal flow is more laminar or turbulent.",
+    formula:"Re = ρvD/μ.",
+    dairy:"Flow regime affects heat transfer, mixing and cleaning behaviour in dairy pipelines.",
+    mistakes:["Using kinematic viscosity where dynamic viscosity is required","Forgetting the characteristic length"],
+    practice:["Calculate Re for ρ=1000 kg/m³, v=1 m/s, D=0.05 m and μ=0.001 Pa·s."]
+  },
+  {
+    title:"Heat Transfer",category:"Heat & Mass Transfer",
+    simple:"Heat moves because of a temperature difference. The main modes are conduction, convection and radiation.",
+    why:"Heating and cooling are central to pasteurization, sterilization, evaporation and refrigeration.",
+    formula:"Sensible heat: Q = mCpΔT. Conduction: Q̇ = kAΔT/L in a simple steady wall.",
+    dairy:"Plate heat exchangers are widely used for heating and cooling milk.",
+    mistakes:["Mixing heat capacity units","Confusing heat with temperature"],
+    practice:["Why is counter-current heat exchange useful?"]
+  },
+  {
+    title:"Pasteurization",category:"Dairy Processing",
+    simple:"Pasteurization is a controlled heat treatment designed to reduce relevant microorganisms while preserving product quality.",
+    why:"It is a core milk-safety and shelf-life operation.",
+    formula:"The exact time-temperature schedule depends on the applicable product and regulation; do not treat one generic number as universal.",
+    dairy:"Market milk processing and many dairy products.",
+    mistakes:["Treating pasteurization as sterilization","Using an operating parameter without checking the applicable standard"],
+    practice:["Why must the heating and holding system be controlled carefully?"]
+  },
+  {
+    title:"Homogenization",category:"Dairy Processing",
+    simple:"Homogenization reduces fat globule size and changes the physical stability of milk.",
+    why:"It reduces creaming and improves product uniformity.",
+    formula:"The process involves high-pressure flow through a homogenizing valve; exact pressure depends on product and equipment.",
+    dairy:"Market milk, flavoured milk and many dairy formulations.",
+    mistakes:["Thinking homogenization is a microbial kill step","Ignoring product temperature and formulation"]
+  },
+  {
+    title:"Thermodynamics — First Law",category:"Thermodynamics",
+    simple:"Energy is conserved. A system's energy change is related to heat transfer and work.",
+    why:"Energy balances underpin heating, cooling, steam and refrigeration calculations.",
+    formula:"For a closed system under a common sign convention: ΔU = Q − W.",
+    dairy:"Boilers, pasteurizers, refrigeration and process heating.",
+    mistakes:["Changing sign conventions mid-calculation","Confusing enthalpy and internal energy"]
+  },
+  {
+    title:"CIP",category:"Dairy Processing",
+    simple:"Cleaning-in-place cleans process equipment without dismantling the system.",
+    why:"Hygienic design and repeatable cleaning are fundamental in dairy plants.",
+    formula:"CIP is a process system rather than one universal formula. Key variables include time, temperature, chemistry and mechanical action.",
+    dairy:"Milk lines, tanks, pasteurizers and filling systems.",
+    mistakes:["Assuming longer cleaning always means better cleaning","Ignoring concentration, temperature and flow conditions"]
+  }
+];
+
+const processes = [
+  {
+    title:"Milk Reception & Chilling",icon:"🥛",
+    raw:"Raw milk",
+    flow:["Reception","Sampling","Testing","Filtration","Chilling","Storage"],
+    principle:"Rapid cooling slows microbial growth and helps preserve raw milk quality before further processing.",
+    equipment:["Receiving dock","Milk reception tank","Filter/clarifier","Chilled storage tank","Milk pump"],
+    quality:"Temperature, acidity, adulteration screening, composition, microbial quality and sensory condition.",
+    problems:["Delayed chilling","Poor tank hygiene","Sampling errors"],
+    application:"Foundation of a controlled dairy collection and processing chain."
+  },
+  {
+    title:"Clarification",icon:"🌀",
+    raw:"Raw milk",
+    flow:["Milk","Preheating","Clarifier","Clean milk","Solids removal"],
+    principle:"Centrifugal clarification separates suspended extraneous matter from milk.",
+    equipment:["Centrifugal clarifier","Pump","Piping"],
+    quality:"Flow conditions, temperature, solids removal and sanitation.",
+    problems:["Overloading","Improper cleaning","Poor flow control"],
+    application:"Protects downstream processing equipment and improves physical cleanliness."
+  },
+  {
+    title:"Separation & Standardization",icon:"⚖️",
+    raw:"Milk",
+    flow:["Milk","Separator","Cream","Skim milk","Recombination","Standardized milk"],
+    principle:"Centrifugal separation divides milk into cream and skim phases; standardization adjusts composition toward a target.",
+    equipment:["Cream separator","Standardization system","Flow meters","Valves"],
+    quality:"Fat, SNF, temperature, flow and mixing accuracy.",
+    problems:["Incorrect standardization","Unstable flow","Poor separation efficiency"],
+    application:"Allows consistent composition of market milk and dairy products."
+  },
+  {
+    title:"Pasteurization",icon:"🔥",
+    raw:"Standardized milk",
+    flow:["Preheat","Regeneration","Heating","Holding","Cooling","Cold storage"],
+    principle:"Controlled heat treatment reduces relevant microorganisms while maintaining desired quality.",
+    equipment:["Plate heat exchanger","Holding tube","Control system","Flow diversion valve"],
+    quality:"Time-temperature control, flow rate, hygiene and regulatory compliance.",
+    problems:["Insufficient treatment","Overheating","Poor regeneration balance"],
+    application:"One of the central operations in liquid milk processing."
+  },
+  {
+    title:"Homogenization",icon:"⚙️",
+    raw:"Milk/emulsion",
+    flow:["Preheated product","High-pressure pump","Homogenizing valve","Homogenized product"],
+    principle:"High-pressure treatment reduces fat globule size and changes dispersion stability.",
+    equipment:["Homogenizer","High-pressure pump","Valve assembly"],
+    quality:"Pressure, temperature, product composition and equipment condition.",
+    problems:["Valve wear","Incorrect pressure","Poor feed conditions"],
+    application:"Improves physical stability and uniformity of many dairy beverages."
+  },
+  {
+    title:"CIP",icon:"🧼",
+    raw:"Process equipment",
+    flow:["Pre-rinse","Caustic wash","Intermediate rinse","Acid wash","Final rinse","Sanitization"],
+    principle:"Controlled cleaning cycles remove product residues and deposits while the equipment remains assembled.",
+    equipment:["CIP tank","Pump","Heat source","Chemical dosing","Return lines"],
+    quality:"Time, temperature, chemistry, flow/mechanical action and rinse quality.",
+    problems:["Insufficient flow","Wrong concentration","Inadequate coverage"],
+    application:"Critical for hygienic operation of dairy processing systems."
+  },
+  {
+    title:"Yogurt / Dahi Processing",icon:"🥣",
+    raw:"Standardized milk",
+    flow:["Standardization","Heat treatment","Cooling","Starter addition","Incubation","Cooling","Packing"],
+    principle:"Controlled fermentation by starter cultures produces the desired acidity, texture and flavour.",
+    equipment:["Pasteurizer","Fermentation tank","Filling system","Cold room"],
+    quality:"Starter culture, incubation conditions, acidity, texture and contamination control.",
+    problems:["Weak culture","Incorrect incubation","Post-process contamination"],
+    application:"Fermented dairy product manufacturing."
+  },
+  {
+    title:"Butter Manufacture",icon:"🧈",
+    raw:"Cream",
+    flow:["Cream preparation","Churning","Butter grain formation","Buttermilk drainage","Working","Packing"],
+    principle:"Churning destabilizes the fat emulsion and causes fat globules to aggregate into butter.",
+    equipment:["Cream tank","Butter churn","Working unit","Packing machine"],
+    quality:"Cream composition, temperature, churning conditions and moisture distribution.",
+    problems:["Poor churnability","Uneven moisture","Overworking"],
+    application:"Production of butter and related fat-rich products."
+  },
+  {
+    title:"Cheese Manufacture",icon:"🧀",
+    raw:"Milk",
+    flow:["Milk preparation","Starter","Coagulation","Cutting","Whey drainage","Moulding","Pressing","Ripening"],
+    principle:"Milk proteins are coagulated to form curd, followed by whey removal and controlled maturation.",
+    equipment:["Cheese vat","Knife/cutter","Moulds","Press","Ripening room"],
+    quality:"Milk quality, culture, coagulation, moisture, salt and ripening conditions.",
+    problems:["Weak curd","Incorrect acidity development","Moisture imbalance"],
+    application:"Value-added dairy product manufacture."
+  },
+  {
+    title:"Evaporation & Concentration",icon:"💧",
+    raw:"Milk or liquid dairy product",
+    flow:["Feed","Preheating","Evaporation","Vapour separation","Concentrate","Cooling"],
+    principle:"Water is removed as vapour to increase solids concentration.",
+    equipment:["Evaporator","Calandria/heat-transfer surface","Vapour separator","Condenser"],
+    quality:"Temperature, residence time, solids, viscosity and fouling.",
+    problems:["Fouling","Product scorching","Poor vapour economy"],
+    application:"Condensed milk and concentration before drying."
+  },
+  {
+    title:"Spray Drying",icon:"🌬️",
+    raw:"Concentrated dairy liquid",
+    flow:["Concentrate","Atomization","Hot-air contact","Droplet drying","Powder separation","Cooling/packing"],
+    principle:"Small droplets dry rapidly when exposed to a controlled hot-air stream.",
+    equipment:["Spray dryer","Atomizer","Air heater","Cyclone/bag filter","Powder handling"],
+    quality:"Feed solids, inlet/outlet air conditions, atomization and powder moisture.",
+    problems:["Poor powder flow","Wall deposition","Excess moisture"],
+    application:"Milk powder and other dairy powder manufacture."
+  },
+  {
+    title:"Refrigeration",icon:"❄️",
+    raw:"Heat load",
+    flow:["Evaporator","Compressor","Condenser","Expansion device","Evaporator"],
+    principle:"A refrigeration cycle transfers heat from a low-temperature region to a higher-temperature sink using work.",
+    equipment:["Compressor","Condenser","Expansion valve","Evaporator"],
+    quality:"Evaporating/condensing conditions, refrigerant, superheat and system efficiency.",
+    problems:["Poor heat transfer","Incorrect charge","Compressor issues"],
+    application:"Cold rooms, milk chilling and frozen dairy products."
+  }
+];
+
+const equipment = [
+  {name:"Cream Separator",category:"Separation",purpose:"Separate milk into cream and skim milk.",principle:"Centrifugal separation based on density difference.",components:["Bowl","Discs","Feed system","Cream outlet","Skim outlet"],parameters:"Flow, temperature, bowl speed, feed condition.",applications:"Cream production and milk standardization."},
+  {name:"Plate Heat Exchanger",category:"Heat Transfer",purpose:"Heat or cool dairy liquids efficiently.",principle:"Indirect heat transfer across thin plates between separate fluid streams.",components:["Plates","Gaskets","Frames","Ports","Flow channels"],parameters:"Flow rate, temperature program, pressure drop, fouling.",applications:"Pasteurization, regeneration, cooling and heating."},
+  {name:"Homogenizer",category:"Dairy Processing",purpose:"Reduce fat globule size and improve physical stability.",principle:"High-pressure flow through a homogenizing valve.",components:["Pump","Valve","Homogenizing head","Pressure system"],parameters:"Pressure, temperature, product properties.",applications:"Milk, flavoured milk and emulsified dairy products."},
+  {name:"Pasteurizer",category:"Heat Treatment",purpose:"Provide controlled heat treatment to dairy products.",principle:"Controlled time-temperature process using heat exchanger and holding section.",components:["PHE","Holding tube","Sensors","Control valves","Flow diversion valve"],parameters:"Product temperature, flow, holding conditions.",applications:"Market milk and other liquid dairy products."},
+  {name:"Milk Pump",category:"Fluid Handling",purpose:"Move milk and process fluids through the plant.",principle:"Mechanical energy is transferred to the fluid.",components:["Impeller/rotor","Casing","Shaft","Motor","Seals"],parameters:"Flow, head, speed, efficiency, NPSH considerations.",applications:"Milk transfer and process circulation."},
+  {name:"Evaporator",category:"Concentration",purpose:"Remove water to concentrate a dairy liquid.",principle:"Boiling/evaporation using heat transfer.",components:["Heating surface","Vapour space","Separator","Condenser connection"],parameters:"Pressure, temperature, feed solids, vapour economy.",applications:"Condensed milk and pre-concentration."},
+  {name:"Spray Dryer",category:"Drying",purpose:"Convert concentrated liquid into powder.",principle:"Atomized droplets dry rapidly in hot air.",components:["Feed system","Atomizer","Drying chamber","Air heater","Powder separator"],parameters:"Feed solids, air conditions, atomization.",applications:"Milk powder and whey powder."},
+  {name:"Butter Churn",category:"Fat Processing",purpose:"Convert cream into butter.",principle:"Mechanical agitation destabilizes the emulsion and aggregates fat.",components:["Churn","Drive","Baffles","Drain system"],parameters:"Cream temperature, fat content, agitation.",applications:"Butter manufacture."},
+  {name:"CIP System",category:"Hygiene",purpose:"Clean process circuits without dismantling equipment.",principle:"Controlled chemical, thermal and mechanical cleaning action.",components:["CIP tanks","Pump","Heat exchanger","Dosing","Return circuit"],parameters:"Time, temperature, chemistry, flow.",applications:"Pipelines, tanks, PHEs and filling systems."},
+  {name:"Refrigeration System",category:"Refrigeration",purpose:"Remove heat and maintain low temperatures.",principle:"Vapour-compression refrigeration cycle.",components:["Compressor","Condenser","Expansion device","Evaporator"],parameters:"Evaporation/condensation conditions, COP, load.",applications:"Milk chilling, cold storage and frozen products."}
+];
+
+const practicals = [
+  {title:"Determination of Milk Acidity",subject:"Dairy Chemistry",objective:"Estimate titratable acidity of a milk sample.",principle:"Acidic components react with a standardized alkali using a suitable indicator.",apparatus:"Burette, pipette, flask, indicator and reagents.",procedure:"Measure sample → add indicator → titrate against standard alkali → record endpoint.",calculation:"Use the validated laboratory formula and normality of the reagent.",viva:["What is titratable acidity?","Why is acidity important in milk quality?"]},
+  {title:"Determination of Fat by Gerber Method",subject:"Dairy Chemistry",objective:"Determine milk fat using the Gerber principle.",principle:"Protein is digested and fat is separated into a measurable column.",apparatus:"Gerber butyrometer, pipette, centrifuge and water bath.",procedure:"Add reagents carefully → add milk → mix → centrifuge → warm → read fat column.",calculation:"Read the butyrometer scale according to the method.",viva:["Why is sulfuric acid used?","Why is centrifugation required?"]},
+  {title:"Reynolds Number Experiment",subject:"Fluid Mechanics",objective:"Study flow regime using Reynolds number.",principle:"Reynolds number compares inertial and viscous effects.",apparatus:"Flow channel/pipe, measuring system and stopwatch.",procedure:"Measure flow → calculate velocity → use fluid properties → calculate Re.",calculation:"Re = ρvD/μ.",viva:["What does Re represent?","What factors increase Re?"]},
+  {title:"Heat Exchanger Performance",subject:"Dairy Engineering",objective:"Estimate heat transfer performance of a heat exchanger.",principle:"Heat lost by one stream is transferred to another subject to losses.",apparatus:"Heat exchanger, thermometers, flow meters.",procedure:"Stabilize flow → record inlet/outlet temperatures → measure flow → calculate heat duty.",calculation:"Q̇ ≈ ṁCpΔT for a single-phase stream.",viva:["Why is counter-current flow useful?","What is fouling?"]}
+];
+
+const questions = [
+  {type:"Short",topic:"Fluid Mechanics",q:"What is viscosity and why is it important in dairy pipeline design?"},
+  {type:"Numerical",topic:"Fluid Mechanics",q:"For ρ=1000 kg/m³, v=1 m/s, D=0.05 m and μ=0.001 Pa·s, calculate Reynolds number."},
+  {type:"Short",topic:"Heat & Mass Transfer",q:"Differentiate conduction, convection and radiation."},
+  {type:"Viva",topic:"Dairy Processing",q:"Why is milk cooled quickly after reception?"},
+  {type:"Short",topic:"Dairy Processing",q:"What is the purpose of homogenization?"},
+  {type:"Viva",topic:"Dairy Engineering",q:"What is the function of a plate heat exchanger in a dairy plant?"},
+  {type:"Numerical",topic:"Heat & Mass Transfer",q:"Calculate sensible heat for 1000 kg product with Cp=3.9 kJ/kg·K and ΔT=10 K."},
+  {type:"Short",topic:"Food Safety",q:"What is the difference between cleaning and sanitization?"},
+  {type:"MCQ",topic:"Thermodynamics",q:"Which quantity is a state function? A) Heat B) Work C) Enthalpy D) Path length"},
+  {type:"MCQ",topic:"Fluid Mechanics",q:"For steady incompressible flow, which relationship is correct? A) A/v=constant B) Av=constant C) A+v=constant D) A-v=constant"},
+  {type:"Viva",topic:"Milk Chemistry",q:"Why is milk considered a complex food system?"},
+  {type:"Short",topic:"Refrigeration",q:"What is COP and why is it important?"}
+];
+
+const projects = [
+  {title:"Milk Standardization Calculator",level:"Beginner",type:"Software",description:"Build a validated calculator for mixing milk streams to reach a target composition.",skills:["Mass balance","Algebra","UI design","Validation"]},
+  {title:"Dairy Plant Mass-Balance Model",level:"Intermediate",type:"Engineering",description:"Model material flows through reception, separation, standardization and packaging.",skills:["Mass balance","Process flow","Spreadsheets","Data visualization"]},
+  {title:"Heat Exchanger Performance Dashboard",level:"Intermediate",type:"Engineering + Software",description:"Record inlet/outlet temperatures and flow data and calculate heat duty and performance indicators.",skills:["Heat transfer","Data analysis","Charts","Instrumentation"]},
+  {title:"CIP Monitoring Assistant",level:"Intermediate",type:"Software",description:"Create a checklist and logging system for cleaning cycles and key process variables.",skills:["Hygiene","Process control","Database concepts"]},
+  {title:"Dairy Plant Energy Audit",level:"Advanced",type:"Research",description:"Map major energy consumers and identify opportunities for heat recovery and efficiency improvement.",skills:["Thermodynamics","Energy audit","Data analysis"]},
+  {title:"Milk Powder Process Simulation",level:"Advanced",type:"Engineering",description:"Develop a simplified model of concentration and drying and study how assumptions affect output.",skills:["Mass balance","Heat transfer","Drying","Programming"]}
+];
+
+const careers = [
+  {title:"Production & Plant Operations",icon:"🏭",text:"Work around production planning, process control, plant operation, troubleshooting and improvement."},
+  {title:"Quality Assurance / Quality Control",icon:"🧪",text:"Focus on laboratory testing, specifications, food safety systems, documentation and process quality."},
+  {title:"R&D / Product Development",icon:"🔬",text:"Develop or improve dairy products, formulations, processes, packaging and technologies."},
+  {title:"Dairy Engineering",icon:"⚙️",text:"Apply fluid mechanics, heat transfer, refrigeration, utilities, equipment and plant design."},
+  {title:"Technical Sales & Applications",icon:"🤝",text:"Combine dairy-process knowledge with equipment, ingredient or technical solution support."},
+  {title:"Higher Education & Research",icon:"🎓",text:"Consider postgraduate study, research projects, M.Tech/M.Sc., PhD and specialized technical careers."},
+  {title:"Data & Digital Dairy",icon:"💻",text:"Use programming, spreadsheets, process data, dashboards and automation to solve dairy-industry problems."},
+  {title:"Entrepreneurship",icon:"🚀",text:"Explore dairy products, processing services, equipment solutions, quality services and digital tools."},
+  {title:"Core Skills",icon:"🧰",text:"Develop Excel, technical writing, statistics, programming, CAD/process simulation, communication and industrial safety knowledge."}
+];
+
+const resources = [
+  {
+   title:"ICAR–National Dairy Research Institute",
+   level:"Authoritative",
+   type:"Institution",
+   description:"Use NDRI's Dairy Technology and academic pages to cross-check course structure, areas of study and research.",
+   url:"https://ndri.res.in/"
+  },
+  {
+    title:"NDRI Dairy Technology Division",
+    level:"Authoritative",
+    type:"Institution",
+    description:"Useful for understanding the scope of Dairy Technology education, processing research and B.Tech course areas.",
+    url:"https://ndri.res.in/dairy-technology"
+  },
+  {
+    title:"NDRI Dairy Engineering",
+    level:"Authoritative",
+    type:"Curriculum",
+    description:"Reference for engineering subjects such as fluid mechanics, thermodynamics, heat and mass transfer, refrigeration and dairy process engineering.",
+    url:"https://ndri.res.in/dairy-engineering"
+  },
+  {
+    title:"FSSAI Food Standards",
+    level:"Regulatory",
+    type:"Standards",
+    description:"Check current Indian food standards rather than relying on old notes when discussing compliance or product specifications.",
+    url:"https://www.fssai.gov.in/food-standards.php"
+  },
+  {
+    title:"FSSAI Dairy Products & Analogues",
+    level:"Regulatory",
+    type:"Standards",
+    description:"Current official dairy product standards and related regulatory material.",
+    url:"https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy%20products%20and%20analogues.pdf"
+  },
+  {
+    title:"FAO Milk Processing",
+    level:"Authoritative",
+    type:"Reference",
+    description:"A useful high-level reference on milk perishability, cooling, pasteurization and dairy processing.",
+    url:"https://www.fao.org/dairy-production-products/processing/milk-processing/en"
+  }
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+const state = {
+  theme: localStorage.getItem("dv_theme") || "light",
+  notes: JSON.parse(localStorage.getItem("dv_notes") || "[]"),
+  tasks: JSON.parse(localStorage.getItem("dv_tasks") || "[]")
+};
+
+const $ = id => document.getElementById(id);
+
+function saveState(){
+  localStorage.setItem("dv_theme",state.theme);
+  localStorage.setItem("dv_notes",JSON.stringify(state.notes));
+  localStorage.setItem("dv_tasks",JSON.stringify(state.tasks));
+}
+
+function escapeHTML(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function money(v){
+  return "₹"+Number(v).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function showSection(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  const target=$(id);
+  if(target) target.classList.add("active");
+
+  document.querySelectorAll("#nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.section===id);
+  });
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.querySelector("#nav").addEventListener("click",e=>{
+  const button=e.target.closest("button[data-section]");
+  if(button) showSection(button.dataset.section);
+});
+
+document.addEventListener("click",e=>{
+  const go=e.target.closest("[data-go]");
+  if(go) showSection(go.dataset.go);
+});
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
+function setTheme(){
+  document.documentElement.setAttribute("data-theme",state.theme);
+  $("themeBtn").textContent=state.theme==="dark"?"☀️":"🌙";
+  saveState();
+}
+$("themeBtn").addEventListener("click",()=>{
+  state.theme=state.theme==="dark"?"light":"dark";
+  setTheme();
+});
+
+/* =========================================================
+   CURRICULUM
+   ========================================================= */
+
+function initSemesterFilter(){
+  const semesters=[...new Set(curriculum.map(x=>x.sem))];
+  $("semesterFilter").innerHTML='<option value="all">All semesters</option>'+
+    semesters.map(s=>`<option value="${s}">Semester ${s}</option>`).join("");
+}
+
+function renderCurriculum(){
+  const semester=$("semesterFilter").value;
+  const query=$("curriculumSearch").value.toLowerCase().trim();
+
+  const filtered=curriculum.filter(x=>{
+    const semOK=semester==="all"||String(x.sem)===semester;
+    const text=(x.subject+" "+x.topics.join(" ")).toLowerCase();
+    return semOK && (!query||text.includes(query));
+  });
+
+  $("curriculumList").innerHTML=filtered.length?filtered.map((x,i)=>`
+    <div class="item clickable" data-curriculum="${curriculum.indexOf(x)}">
+      <div class="item-row">
+        <div>
+          <div class="tags"><span class="tag">Semester ${x.sem}</span><span class="tag">${x.topics.length} topics</span></div>
+          <h4 style="margin-top:8px">${escapeHTML(x.subject)}</h4>
+          <p>${x.topics.map(escapeHTML).join(" • ")}</p>
+        </div>
+        <span>→</span>
+      </div>
+    </div>
+  `).join(""):'<div class="empty">No matching curriculum entries.</div>';
+}
+
+$("semesterFilter").addEventListener("change",renderCurriculum);
+$("curriculumSearch").addEventListener("input",renderCurriculum);
+
+$("curriculumList").addEventListener("click",e=>{
+  const item=e.target.closest("[data-curriculum]");
+  if(!item)return;
+  const c=curriculum[Number(item.dataset.curriculum)];
+  openModal(c.subject,`
+    <div class="tags"><span class="tag">Semester ${c.sem}</span><span class="tag">Curriculum Map</span></div>
+    <h3>Topics</h3>
+    <ul>${c.topics.map(t=>`<li>${escapeHTML(t)}</li>`).join("")}</ul>
+    <h3>Next step</h3>
+    <p>Search the Concept Library for an individual topic, then connect it to processes, equipment, questions and projects.</p>
+  `);
+});
+
+/* =========================================================
+   CONCEPTS
+   ========================================================= */
+
+function initConceptCategories(){
+  const cats=[...new Set(concepts.map(x=>x.category))];
+  $("conceptCategory").innerHTML='<option value="all">All areas</option>'+
+    cats.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+}
+
+function renderConcepts(){
+  const q=$("conceptSearch").value.toLowerCase().trim();
+  const cat=$("conceptCategory").value;
+
+  const filtered=concepts.filter(c=>{
+    const text=(c.title+" "+c.category+" "+c.simple+" "+c.dairy).toLowerCase();
+    return (!q||text.includes(q))&&(cat==="all"||c.category===cat);
+  });
+
+  $("conceptList").innerHTML=filtered.length?filtered.map((c,i)=>`
+    <div class="card clickable" data-concept="${concepts.indexOf(c)}">
+      <div class="tags"><span class="tag">${escapeHTML(c.category)}</span></div>
+      <h3 style="margin-top:10px">${escapeHTML(c.title)}</h3>
+      <p class="small muted">${escapeHTML(c.simple)}</p>
+      <div class="divider"></div>
+      <p class="tiny muted"><strong>Dairy connection:</strong> ${escapeHTML(c.dairy)}</p>
+      <button class="btn soft" style="margin-top:10px">Open concept →</button>
+    </div>
+  `).join(""):'<div class="empty" style="grid-column:1/-1">No matching concepts.</div>';
+}
+
+$("conceptSearch").addEventListener("input",renderConcepts);
+$("conceptCategory").addEventListener("change",renderConcepts);
+
+$("conceptList").addEventListener("click",e=>{
+  const card=e.target.closest("[data-concept]");
+  if(!card)return;
+  const c=concepts[Number(card.dataset.concept)];
+  openModal(c.title,`
+    <div class="tags"><span class="tag">${escapeHTML(c.category)}</span><span class="tag">Concept</span></div>
+
+    <h3>What is it?</h3>
+    <p>${escapeHTML(c.simple)}</p>
+
+    <h3>Why do we study it?</h3>
+    <p>${escapeHTML(c.why)}</p>
+
+    <h3>Core mathematics</h3>
+    <div class="diagram"><strong>${escapeHTML(c.formula)}</strong></div>
+
+    <h3>Dairy application</h3>
+    <p>${escapeHTML(c.dairy)}</p>
+
+    <h3>Common mistakes</h3>
+    <ul>${(c.mistakes||[]).map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul>
+
+    <h3>Practice</h3>
+    <ul>${(c.practice||[]).map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul>
+
+    <h3>Further reading</h3>
+    <p>Use the Resource Library to move from this structured introduction to authoritative material and deeper study.</p>
+  `);
+});
+
+/* =========================================================
+   PROCESSES
+   ========================================================= */
+
+function renderProcesses(){
+  const q=$("processSearch").value.toLowerCase().trim();
+  const filtered=processes.filter(p=>
+    (p.title+" "+p.raw+" "+p.principle+" "+p.application).toLowerCase().includes(q)
+  );
+
+  $("processList").innerHTML=filtered.length?filtered.map((p,i)=>`
+    <div class="card clickable" data-process="${processes.indexOf(p)}">
+      <div style="font-size:1.7rem">${p.icon}</div>
+      <h3 style="margin-top:8px">${escapeHTML(p.title)}</h3>
+      <div class="tags"><span class="tag">Raw: ${escapeHTML(p.raw)}</span><span class="tag">${p.equipment.length} equipment items</span></div>
+      <p class="small muted" style="margin-top:9px">${escapeHTML(p.principle)}</p>
+      <div class="flow" style="margin-top:12px">
+        ${p.flow.map((x,j)=>`<span>${escapeHTML(x)}</span>${j<p.flow.length-1?'<b class="arrow">→</b>':''}`).join("")}
+      </div>
+    </div>
+  `).join(""):'<div class="empty" style="grid-column:1/-1">No matching processes.</div>';
+}
+
+$("processSearch").addEventListener("input",renderProcesses);
+
+$("processList").addEventListener("click",e=>{
+  const card=e.target.closest("[data-process]");
+  if(!card)return;
+  const p=processes[Number(card.dataset.process)];
+  openModal(p.title,`
+    <div class="tags"><span class="tag">${escapeHTML(p.raw)}</span><span class="tag">Dairy Process</span></div>
+
+    <h3>Process flow</h3>
+    <div class="flow">${p.flow.map((x,j)=>`<span>${escapeHTML(x)}</span>${j<p.flow.length-1?'<b class="arrow">→</b>':''}`).join("")}</div>
+
+    <h3>Principle</h3>
+    <p>${escapeHTML(p.principle)}</p>
+
+    <h3>Equipment</h3>
+    <ul>${p.equipment.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul>
+
+    <h3>Quality considerations</h3>
+    <p>${escapeHTML(p.quality)}</p>
+
+    <h3>Common problems</h3>
+    <ul>${p.problems.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul>
+
+    <h3>Dairy application</h3>
+    <p>${escapeHTML(p.application)}</p>
+
+    <h3>Related topics</h3>
+    <p>Explore the Equipment Encyclopedia, Concept Library and Tools section for connected learning.</p>
+  `);
+});
+
+/* =========================================================
+   EQUIPMENT
+   ========================================================= */
+
+function renderEquipment(){
+  const q=$("equipmentSearch").value.toLowerCase().trim();
+  const filtered=equipment.filter(x=>
+    (x.name+" "+x.category+" "+x.purpose+" "+x.principle+" "+x.applications).toLowerCase().includes(q)
+  );
+
+  $("equipmentList").innerHTML=filtered.length?filtered.map(e=>`
+    <div class="card clickable" data-equipment="${equipment.indexOf(e)}">
+      <div class="tags"><span class="tag">${escapeHTML(e.category)}</span></div>
+      <h3 style="margin-top:10px">${escapeHTML(e.name)}</h3>
+      <p class="small muted">${escapeHTML(e.purpose)}</p>
+      <div class="divider"></div>
+      <p class="tiny"><strong>Principle:</strong> ${escapeHTML(e.principle)}</p>
+      <button class="btn soft" style="margin-top:10px">Explore →</button>
+    </div>
+  `).join(""):'<div class="empty" style="grid-column:1/-1">No matching equipment.</div>';
+}
+
+$("equipmentSearch").addEventListener("input",renderEquipment);
+
+$("equipmentList").addEventListener("click",e=>{
+  const card=e.target.closest("[data-equipment]");
+  if(!card)return;
+  const x=equipment[Number(card.dataset.equipment)];
+  openModal(x.name,`
+    <div class="tags"><span class="tag">${escapeHTML(x.category)}</span><span class="tag">Equipment</span></div>
+
+    <h3>Purpose</h3><p>${escapeHTML(x.purpose)}</p>
+    <h3>Working principle</h3><p>${escapeHTML(x.principle)}</p>
+    <h3>Important components</h3>
+    <ul>${x.components.map(c=>`<li>${escapeHTML(c)}</li>`).join("")}</ul>
+    <h3>Operating parameters</h3><p>${escapeHTML(x.parameters)}</p>
+    <h3>Applications</h3><p>${escapeHTML(x.applications)}</p>
+    <h3>Maintenance & safety</h3>
+    <p>Follow the manufacturer's instructions, plant SOPs, hygienic-design requirements and applicable safety procedures. Never treat this page as a substitute for equipment-specific training.</p>
+  `);
+});
+
+/* =========================================================
+   CALCULATORS
+   ========================================================= */
+
+function updateTools(){
+  const litres=+($("tLitres").value||0), rate=+($("tRate").value||0);
+  $("tRevenue").innerHTML=`<strong>Revenue:</strong> ${money(litres*rate)}<br><span class="muted">Quantity × rate</span>`;
+
+  const a=+($("mA").value||0), fa=+($("fA").value||0), b=+($("mB").value||0), fb=+($("fB").value||0);
+  const total=a+b, fat=total?((a*fa+b*fb)/total):0;
+  $("tMix").innerHTML=`<strong>Total:</strong> ${total.toFixed(2)} L<br><strong>Weighted fat:</strong> ${fat.toFixed(3)}%<br><span class="muted">For a real standardization target, use a full validated mass-balance calculation.</span>`;
+
+  const Q=+($("pQ").value||0), dP=+($("pP").value||0), eta=(+($("pEta").value||0))/100;
+  const hydraulic=Q*dP, shaft=eta>0?hydraulic/eta:0;
+  $("tPump").innerHTML=`<strong>Hydraulic power:</strong> ${hydraulic.toFixed(2)} W<br><strong>Estimated shaft power:</strong> ${shaft.toFixed(2)} W<br><span class="muted">Idealized hydraulic relation P = QΔP.</span>`;
+
+  const mass=+($("hMass").value||0), cp=+($("hCp").value||0), dt=+($("hDT").value||0);
+  const heat=mass*cp*dt;
+  $("tHeat").innerHTML=`<strong>Heat:</strong> ${heat.toFixed(2)} kJ<br><strong>Equivalent:</strong> ${(heat/3600).toFixed(4)} kWh`;
+
+  const rho=+($("rRho").value||0), v=+($("rV").value||0), D=+($("rD").value||0), mu=+($("rMu").value||0);
+  const re=mu?rho*v*D/mu:0;
+  $("tRe").innerHTML=`<strong>Reynolds number:</strong> ${re.toLocaleString("en-IN",{maximumFractionDigits:2})}<br><span class="muted">Interpretation depends on geometry and flow conditions; for internal pipe flow, this number is commonly used to characterize regime.</span>`;
+
+  const A1=+($("cA1").value||0), V1=+($("cV1").value||0), A2=+($("cA2").value||0);
+  const V2=A2?A1*V1/A2:0;
+  $("tContinuity").innerHTML=`<strong>V₂:</strong> ${V2.toFixed(4)} m/s<br><span class="muted">Using A₁v₁=A₂v₂ for steady incompressible flow.</span>`;
+
+  const raw=+($("costRaw").value||0), proc=+($("costProc").value||0), pack=+($("costPack").value||0), margin=+($("costMargin").value||0);
+  const base=raw+proc+pack, sell=base*(1+margin/100);
+  $("tCost").innerHTML=`<strong>Base cost:</strong> ${money(base)}/L<br><strong>Price at ${margin}% markup:</strong> ${money(sell)}/L`;
+
+  const yi=+($("yInput").value||0), yp=+($("yPct").value||0);
+  $("tYield").innerHTML=`<strong>Estimated output:</strong> ${(yi*yp/100).toFixed(2)} units<br><span class="muted">Simple yield estimate.</span>`;
+}
+
+document.querySelectorAll("#tools input").forEach(i=>i.addEventListener("input",updateTools));
+
+/* =========================================================
+   PRACTICALS
+   ========================================================= */
+
+function renderPracticals(){
+  $("practicalList").innerHTML=practicals.map((p,i)=>`
+    <div class="card clickable" data-practical="${i}">
+      <div class="tags"><span class="tag">${escapeHTML(p.subject)}</span><span class="tag">Practical</span></div>
+      <h3 style="margin-top:10px">${escapeHTML(p.title)}</h3>
+      <p class="small muted">${escapeHTML(p.objective)}</p>
+      <button class="btn soft" style="margin-top:10px">Open practical →</button>
+    </div>
+  `).join("");
+}
+
+$("practicalList").addEventListener("click",e=>{
+  const c=e.target.closest("[data-practical]");
+  if(!c)return;
+  const p=practicals[Number(c.dataset.practical)];
+  openModal(p.title,`
+    <div class="tags"><span class="tag">${escapeHTML(p.subject)}</span></div>
+    <h3>Objective</h3><p>${escapeHTML(p.objective)}</p>
+    <h3>Principle</h3><p>${escapeHTML(p.principle)}</p>
+    <h3>Requirements</h3><p>${escapeHTML(p.apparatus)}</p>
+    <h3>Procedure</h3><p>${escapeHTML(p.procedure)}</p>
+    <h3>Calculation</h3><p>${escapeHTML(p.calculation)}</p>
+    <h3>Viva questions</h3><ul>${p.viva.map(v=>`<li>${escapeHTML(v)}</li>`).join("")}</ul>
+    <h3>Precaution</h3><p>Follow the laboratory SOP, use appropriate PPE, handle chemicals and equipment under supervision, and record observations accurately.</p>
+  `);
+});
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
+function initQuestionTopics(){
+  const topics=[...new Set(questions.map(q=>q.topic))];
+  $("questionTopic").innerHTML='<option value="all">All topics</option>'+
+    topics.map(t=>`<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`).join("");
+}
+
+function renderQuestions(){
+  const type=$("questionType").value, topic=$("questionTopic").value;
+  const list=questions.filter(q=>
+    (type==="all"||q.type===type)&&(topic==="all"||q.topic===topic)
+  );
+  $("questionList").innerHTML=list.map((q,i)=>`
+    <div class="item">
+      <div class="item-row">
+        <div>
+          <div class="tags"><span class="tag">${escapeHTML(q.type)}</span><span class="tag">${escapeHTML(q.topic)}</span></div>
+          <p style="margin-top:8px;color:var(--text);font-weight:650">${escapeHTML(q.q)}</p>
+        </div>
+      </div>
+    </div>
+  `).join("")||'<div class="empty">No questions match the filters.</div>';
+}
+
+$("questionType").addEventListener("change",renderQuestions);
+$("questionTopic").addEventListener("change",renderQuestions);
+
+/* =========================================================
+   ASSIGNMENTS
+   ========================================================= */
+
+$("generateAssignment").addEventListener("click",()=>{
+  const topic=$("assignmentTopic").value.trim();
+  if(!topic){
+    $("assignmentResult").style.display="block";
+    $("assignmentResult").innerHTML="Enter an assignment topic first.";
+    return;
+  }
+
+  $("assignmentResult").style.display="block";
+  $("assignmentResult").innerHTML=`
+    <strong>Suggested structure for “${escapeHTML(topic)}”</strong>
+    <ol>
+      <li>Introduction and relevance to dairy technology</li>
+      <li>Definitions and key terminology</li>
+      <li>Scientific / engineering principle</li>
+      <li>Process or equipment description</li>
+      <li>Diagram or flowchart</li>
+      <li>Dairy-industry application</li>
+      <li>Quality, safety and limitations</li>
+      <li>Example / calculation where relevant</li>
+      <li>Conclusion</li>
+      <li>References and further reading</li>
+    </ol>
+    <span class="muted">Use this as a framework for your own research and writing.</span>
+  `;
+});
+
+/* =========================================================
+   PROJECTS
+   ========================================================= */
+
+function renderProjects(){
+  $("projectList").innerHTML=projects.map((p,i)=>`
+    <div class="card clickable" data-project="${i}">
+      <div class="tags"><span class="tag">${escapeHTML(p.level)}</span><span class="tag">${escapeHTML(p.type)}</span></div>
+      <h3 style="margin-top:10px">${escapeHTML(p.title)}</h3>
+      <p class="small muted">${escapeHTML(p.description)}</p>
+      <div class="tags" style="margin-top:10px">${p.skills.map(s=>`<span class="tag">${escapeHTML(s)}</span>`).join("")}</div>
+    </div>
+  `).join("");
+}
+
+$("projectList").addEventListener("click",e=>{
+  const c=e.target.closest("[data-project]");
+  if(!c)return;
+  const p=projects[Number(c.dataset.project)];
+  openModal(p.title,`
+    <div class="tags"><span class="tag">${escapeHTML(p.level)}</span><span class="tag">${escapeHTML(p.type)}</span></div>
+    <h3>Problem</h3><p>${escapeHTML(p.description)}</p>
+    <h3>Suggested objective</h3><p>Define a measurable engineering or learning objective and decide what evidence will show that the project worked.</p>
+    <h3>Required knowledge</h3>
+    <ul>${p.skills.map(s=>`<li>${escapeHTML(s)}</li>`).join("")}</ul>
+    <h3>Possible extensions</h3>
+    <p>Add data logging, validation, visualization, uncertainty analysis or a real dairy-process case study.</p>
+  `);
+});
+
+/* =========================================================
+   CAREER
+   ========================================================= */
+
+function renderCareers(){
+  $("careerList").innerHTML=careers.map(c=>`
+    <div class="card">
+      <div style="font-size:1.7rem">${c.icon}</div>
+      <h3 style="margin-top:9px">${escapeHTML(c.title)}</h3>
+      <p class="small muted">${escapeHTML(c.text)}</p>
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   RESOURCES
+   ========================================================= */
+
+function renderResources(){
+  $("resourceList").innerHTML=resources.map(r=>`
+    <div class="card">
+      <div class="tags"><span class="tag">${escapeHTML(r.level)}</span><span class="tag">${escapeHTML(r.type)}</span></div>
+      <h3 style="margin-top:10px">${escapeHTML(r.title)}</h3>
+      <p class="small muted">${escapeHTML(r.description)}</p>
+      <a href="${r.url}" target="_blank" rel="noopener" class="btn primary" style="display:inline-block;text-decoration:none;margin-top:9px">Open resource ↗</a>
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   NOTES & TASKS
+   ========================================================= */
+
+function renderNotesTasks(){
+  $("metricNotes").textContent=state.notes.length;
+
+  $("savedNotes").innerHTML=state.notes.length?
+    state.notes.slice().reverse().map((n,i)=>`
+      <div class="item">
+        <div class="item-row">
+          <div>
+            <div class="note-text">${escapeHTML(n.text)}</div>
+            <div class="tiny muted" style="margin-top:6px">${new Date(n.time).toLocaleString()}</div>
           </div>
-          <button type="button" data-delete-process="${index}">Remove</button>
-        `;
-        $("processList").appendChild(item);
-      });
-    }
+          <button class="iconbtn" data-delete-note="${state.notes.length-1-i}">✕</button>
+        </div>
+      </div>
+    `).join("")
+    :'<div class="empty">No saved notes yet.</div>';
 
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+  $("savedTasks").innerHTML=state.tasks.length?
+    state.tasks.map((t,i)=>`
+      <div class="item">
+        <div class="item-row">
+          <label class="checkrow" style="padding:0">
+            <input type="checkbox" ${t.done?"checked":""} data-task-check="${i}">
+            <span style="${t.done?"text-decoration:line-through;opacity:.55":""}">${escapeHTML(t.text)}</span>
+          </label>
+          <button class="iconbtn" data-delete-task="${i}">✕</button>
+        </div>
+      </div>
+    `).join("")
+    :'<div class="empty">No tasks yet.</div>';
+}
 
-    function addNote() {
-      const text = $("noteInput").value.trim();
-      if (!text) return;
-      state.notes.push({ text, time: Date.now() });
-      $("noteInput").value = "";
-      save();
-      renderNotes();
-    }
+$("saveNote").addEventListener("click",()=>{
+  const text=$("noteInput").value.trim();
+  if(!text)return;
+  state.notes.push({text,time:Date.now()});
+  $("noteInput").value="";
+  saveState();
+  renderNotesTasks();
+});
 
-    function addTask() {
-      const text = $("taskInput").value.trim();
-      if (!text) return;
-      state.tasks.push({ text, done: false, time: Date.now() });
-      $("taskInput").value = "";
-      save();
-      renderTasks();
-    }
+$("addTask").addEventListener("click",()=>{
+  const text=$("taskInput").value.trim();
+  if(!text)return;
+  state.tasks.push({text,done:false});
+  $("taskInput").value="";
+  saveState();
+  renderNotesTasks();
+});
 
-    function addProcessStep() {
-      const text = $("processName").value.trim();
-      if (!text) return;
-      state.process.push(text);
-      $("processName").value = "";
-      save();
-      renderProcess();
-    }
+document.addEventListener("click",e=>{
+  const dn=e.target.closest("[data-delete-note]");
+  const dt=e.target.closest("[data-delete-task]");
+  if(dn){
+    state.notes.splice(Number(dn.dataset.deleteNote),1);
+    saveState();renderNotesTasks();
+  }
+  if(dt){
+    state.tasks.splice(Number(dt.dataset.deleteTask),1);
+    saveState();renderNotesTasks();
+  }
+});
 
-    function resetDemoData() {
-      if (!confirm("Reset notes, tasks, and process steps?")) return;
-      state.notes = [];
-      state.tasks = [];
-      state.process = ["Reception","Testing","Filtration","Pasteurization","Cooling","Packaging","Storage"];
-      save();
-      renderAll();
-    }
+document.addEventListener("change",e=>{
+  const check=e.target.closest("[data-task-check]");
+  if(check){
+    state.tasks[Number(check.dataset.taskCheck)].done=check.checked;
+    saveState();renderNotesTasks();
+  }
+});
 
-    function renderAll() {
-      renderNotes();
-      renderTasks();
-      renderProcess();
-      calcRevenue();
-      calcStandardization();
-      calcCost();
-      calcYield();
-    }
+/* =========================================================
+   SEARCH
+   ========================================================= */
 
-    // Navigation
-    $("nav").addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-target]");
-      if (!btn) return;
-      const target = btn.dataset.target;
-      document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-      $(target).classList.add("active");
-    });
+function globalSearch(){
+  const q=prompt("What are you looking for?");
+  if(!q)return;
 
-    // Theme
-    $("themeBtn").addEventListener("click", () => {
-      setTheme(state.theme === "dark" ? "light" : "dark");
-    });
+  const query=q.toLowerCase();
 
-    // Buttons
-    $("saveNoteBtn").addEventListener("click", addNote);
-    $("addTaskBtn").addEventListener("click", addTask);
-    $("addProcessBtn").addEventListener("click", addProcessStep);
-    $("clearNotesBtn").addEventListener("click", () => {
-      state.notes = [];
-      save();
-      renderNotes();
-    });
-    $("resetBtn").addEventListener("click", resetDemoData);
+  const results=[];
 
-    // Calculator events
-    ["liters","rate"].forEach(id => $(id).addEventListener("input", calcRevenue));
-    ["milkA","fatA","milkB","fatB"].forEach(id => $(id).addEventListener("input", calcStandardization));
-    ["rawCost","processingCost","packCost","margin"].forEach(id => $(id).addEventListener("input", calcCost));
-    ["inputQty","yieldPct"].forEach(id => $(id).addEventListener("input", calcYield));
+  concepts.forEach((c,i)=>{
+    if((c.title+" "+c.category+" "+c.simple+" "+c.dairy).toLowerCase().includes(query))
+      results.push({type:"Concept",title:c.title,action:()=>openModal(c.title,`
+        <h3>What is it?</h3><p>${escapeHTML(c.simple)}</p>
+        <h3>Why study it?</h3><p>${escapeHTML(c.why)}</p>
+        <h3>Dairy application</h3><p>${escapeHTML(c.dairy)}</p>
+        <h3>Core mathematics</h3><p>${escapeHTML(c.formula)}</p>
+      `)});
+  });
 
-    // List actions
-    document.addEventListener("click", (e) => {
-      const deleteNote = e.target.closest("[data-delete-note]");
-      const deleteTask = e.target.closest("[data-delete-task]");
-      const deleteProcess = e.target.closest("[data-delete-process]");
-      const taskDone = e.target.closest("[data-task-done]");
+  processes.forEach((p,i)=>{
+    if((p.title+" "+p.principle+" "+p.application).toLowerCase().includes(query))
+      results.push({type:"Process",title:p.title,action:()=>openModal(p.title,`
+        <h3>Principle</h3><p>${escapeHTML(p.principle)}</p>
+        <h3>Flow</h3><div class="flow">${p.flow.map(x=>`<span>${escapeHTML(x)}</span>`).join('<b class="arrow">→</b>')}</div>
+        <h3>Application</h3><p>${escapeHTML(p.application)}</p>
+      `)});
+  });
 
-      if (deleteNote) {
-        const index = Number(deleteNote.dataset.deleteNote);
-        state.notes.splice(index, 1);
-        save();
-        renderNotes();
-      }
+  equipment.forEach((x,i)=>{
+    if((x.name+" "+x.purpose+" "+x.principle+" "+x.applications).toLowerCase().includes(query))
+      results.push({type:"Equipment",title:x.name,action:()=>openModal(x.name,`
+        <h3>Purpose</h3><p>${escapeHTML(x.purpose)}</p>
+        <h3>Principle</h3><p>${escapeHTML(x.principle)}</p>
+        <h3>Applications</h3><p>${escapeHTML(x.applications)}</p>
+      `)});
+  });
 
-      if (deleteTask) {
-        const index = Number(deleteTask.dataset.deleteTask);
-        state.tasks.splice(index, 1);
-        save();
-        renderTasks();
-      }
+  curriculum.forEach(c=>{
+    if((c.subject+" "+c.topics.join(" ")).toLowerCase().includes(query))
+      results.push({type:"Curriculum",title:c.subject,action:()=>showSection("curriculum")});
+  });
 
-      if (deleteProcess) {
-        const index = Number(deleteProcess.dataset.deleteProcess);
-        state.process.splice(index, 1);
-        save();
-        renderProcess();
-      }
+  if(!results.length){
+    alert("No result found. Try a subject, process, equipment name or concept.");
+    return;
+  }
 
-      if (taskDone) {
-        const index = Number(taskDone.dataset.taskDone);
-        state.tasks[index].done = taskDone.checked;
-        save();
-        renderTasks();
-      }
-    });
+  openModal("Search results",`
+    <p class="muted">Found ${results.length} matching result(s).</p>
+    <div class="list">
+      ${results.slice(0,20).map((r,i)=>`
+        <button class="btn soft" style="text-align:left" data-search-result="${i}">
+          <span class="badge">${escapeHTML(r.type)}</span> ${escapeHTML(r.title)}
+        </button>
+      `).join("")}
+    </div>
+  `);
 
-    // Enter key convenience
-    $("taskInput").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") addTask();
-    });
-    $("processName").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") addProcessStep();
-    });
-    $("noteInput").addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) addNote();
-    });
+  window.__searchResults=results.slice(0,20);
+}
 
-    // PWA service worker registration (works later when sw.js exists)
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("sw.js").catch(() => {});
-      });
-    }
+$("globalSearchBtn").addEventListener("click",globalSearch);
 
-    // Init
-    setTheme(state.theme);
-    renderAll();
-  </script>
+document.addEventListener("click",e=>{
+  const r=e.target.closest("[data-search-result]");
+  if(r && window.__searchResults){
+    const result=window.__searchResults[Number(r.dataset.searchResult)];
+    closeModal();
+    result.action();
+  }
+});
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+function openModal(title,body){
+  $("modalTitle").textContent=title;
+  $("modalBody").innerHTML=body;
+  $("modal").classList.add("show");
+  document.body.style.overflow="hidden";
+}
+
+function closeModal(){
+  $("modal").classList.remove("show");
+  document.body.style.overflow="";
+}
+
+$("modalClose").addEventListener("click",closeModal);
+$("modal").addEventListener("click",e=>{
+  if(e.target===$("modal"))closeModal();
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeModal();
+});
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+function init(){
+  setTheme();
+  initSemesterFilter();
+  initConceptCategories();
+  initQuestionTopics();
+
+  renderCurriculum();
+  renderConcepts();
+  renderProcesses();
+  renderEquipment();
+  renderPracticals();
+  renderQuestions();
+  renderProjects();
+  renderCareers();
+  renderResources();
+  renderNotesTasks();
+  updateTools();
+
+  $("metricSubjects").textContent=curriculum.length;
+  $("metricConcepts").textContent=concepts.length;
+  $("metricEquipment").textContent=equipment.length;
+}
+
+init();
+</script>
+
 </body>
       </html>
