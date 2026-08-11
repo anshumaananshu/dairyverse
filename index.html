@@ -3,183 +3,1561 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="DairyVerse — a Dairy Technology learning, engineering, process and research hub.">
+<meta name="description" content="DairyVerse — Dairy Technology Student Hub for learning, engineering, process knowledge, practicals, projects and research.">
 <meta name="theme-color" content="#0b766e">
-<title>DairyVerse — Dairy Technology Student Hub</title>
+
+<title>DairyVerse | Dairy Technology Student Hub</title>
+
 <style>
+/* =========================================================
+   DAIRYVERSE DESIGN SYSTEM
+   ========================================================= */
+
 :root{
-  --bg:#f5f8f7;--surface:#fff;--surface2:#eef5f3;--surface3:#e2eeeb;
-  --text:#122129;--muted:#62767d;--line:#d7e4e0;
-  --primary:#0b766e;--primary2:#16a085;--primary3:#155e75;--gold:#b7832d;
-  --danger:#c63c4a;--success:#15845d;--shadow:0 18px 50px rgba(17,38,44,.09);
-  --shadow2:0 8px 25px rgba(17,38,44,.065);--radius:20px;
+  --bg:#f4f8f7;
+  --surface:#ffffff;
+  --surface-2:#eef5f3;
+  --surface-3:#e4eeec;
+  --text:#122129;
+  --muted:#65777d;
+  --line:#d7e3e0;
+
+  --primary:#0b766e;
+  --primary-2:#16a085;
+  --primary-dark:#075e58;
+  --blue:#155e75;
+  --gold:#b7832d;
+
+  --success:#16845d;
+  --danger:#c63c4a;
+
+  --shadow-sm:0 5px 18px rgba(18,33,41,.06);
+  --shadow:0 16px 42px rgba(18,33,41,.08);
+  --shadow-lg:0 25px 70px rgba(18,33,41,.13);
+
+  --radius-sm:12px;
+  --radius:18px;
+  --radius-lg:24px;
+
+  --header-height:70px;
 }
+
 [data-theme="dark"]{
-  --bg:#071316;--surface:#0d2024;--surface2:#11292d;--surface3:#17353a;
-  --text:#eaf4f3;--muted:#9eb4b8;--line:#29444a;
-  --primary:#39c8b3;--primary2:#20a48e;--primary3:#59b9d2;--gold:#e0b45c;
-  --danger:#ff7b85;--success:#4bd19d;--shadow:0 22px 55px rgba(0,0,0,.28);
-  --shadow2:0 10px 30px rgba(0,0,0,.22);
+  --bg:#071316;
+  --surface:#0e2024;
+  --surface-2:#122a2f;
+  --surface-3:#17363b;
+  --text:#eaf4f3;
+  --muted:#9eb5b9;
+  --line:#29444a;
+
+  --primary:#41c9b4;
+  --primary-2:#21a58e;
+  --primary-dark:#83e5d6;
+  --blue:#62bfd9;
+  --gold:#e0b45c;
+
+  --success:#4bd19d;
+  --danger:#ff7d86;
+
+  --shadow-sm:0 6px 20px rgba(0,0,0,.18);
+  --shadow:0 17px 45px rgba(0,0,0,.24);
+  --shadow-lg:0 28px 80px rgba(0,0,0,.35);
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:90px;
+}
+
 body{
-  margin:0;color:var(--text);background:
-  radial-gradient(circle at 12% 0,rgba(22,160,133,.13),transparent 30%),
-  radial-gradient(circle at 90% 10%,rgba(21,94,117,.08),transparent 28%),
-  var(--bg);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  margin:0;
+  background:
+    radial-gradient(circle at 8% 0,rgba(22,160,133,.12),transparent 28%),
+    radial-gradient(circle at 94% 8%,rgba(21,94,117,.08),transparent 25%),
+    var(--bg);
+  color:var(--text);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
   line-height:1.58;
 }
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-a{color:inherit}
-.container{width:min(1240px,92%);margin:auto}
-header{
-  position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--surface) 88%,transparent);
-  backdrop-filter:blur(16px);border-bottom:1px solid var(--line)
+
+body.drawer-open{
+  overflow:hidden;
 }
-.header-inner{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:900;letter-spacing:-.025em}
-.logo{
-  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;
-  background:linear-gradient(145deg,var(--primary),var(--primary2));box-shadow:0 10px 22px rgba(11,118,110,.22)
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
 }
-.brand small{display:block;color:var(--muted);font-weight:600;font-size:.72rem;letter-spacing:0}
-.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.btn,.icon-btn{
-  border:1px solid var(--line);background:var(--surface);color:var(--text);
-  border-radius:12px;padding:10px 13px;transition:.16s;box-shadow:var(--shadow2)
+
+button{
+  cursor:pointer;
 }
-.btn:hover,.icon-btn:hover{transform:translateY(-1px)}
-.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary2));border-color:transparent;color:#fff;font-weight:750}
-.btn.soft{background:var(--surface2);box-shadow:none}
-.btn.danger{color:var(--danger)}
-.hero{padding:68px 0 34px}
-.eyebrow{color:var(--primary);font-size:.72rem;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
+
+a{
+  color:inherit;
+}
+
+.container{
+  width:min(1220px,92%);
+  margin-inline:auto;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:var(--header-height);
+  background:color-mix(in srgb,var(--surface) 90%,transparent);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(17px);
+}
+
+.header-inner{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.header-left,
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.menu-btn{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  background:var(--surface);
+  border-radius:12px;
+  color:var(--text);
+  font-size:1.25rem;
+  box-shadow:var(--shadow-sm);
+}
+
+.menu-btn:hover{
+  transform:translateY(-1px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  font-weight:900;
+  letter-spacing:-.025em;
+}
+
+.brand-logo{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  border-radius:13px;
+  background:linear-gradient(145deg,var(--primary),var(--primary-2));
+  box-shadow:0 9px 20px rgba(11,118,110,.20);
+}
+
+.brand-text{
+  line-height:1.05;
+}
+
+.brand-title{
+  font-size:.98rem;
+}
+
+.brand-subtitle{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:.65rem;
+  font-weight:600;
+  letter-spacing:0;
+}
+
+.header-btn{
+  min-height:40px;
+  padding:8px 11px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:var(--shadow-sm);
+}
+
+.header-btn:hover{
+  transform:translateY(-1px);
+}
+
+.header-search{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 10px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--surface);
+  max-width:230px;
+}
+
+.header-search input{
+  min-width:80px;
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  font-size:.82rem;
+}
+
+@media(max-width:760px){
+  .header-search{
+    display:none;
+  }
+
+  .brand-subtitle{
+    display:none;
+  }
+
+  .header-right .tools-btn{
+    display:none;
+  }
+}
+
+/* =========================================================
+   DRAWER
+   ========================================================= */
+
+.drawer-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:rgba(2,9,12,.56);
+  backdrop-filter:blur(4px);
+  opacity:0;
+  pointer-events:none;
+  transition:.2s ease;
+}
+
+.drawer-backdrop.open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.drawer{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:min(360px,89vw);
+  z-index:210;
+  background:var(--surface);
+  border-right:1px solid var(--line);
+  box-shadow:var(--shadow-lg);
+  transform:translateX(-105%);
+  transition:.25s ease;
+  overflow:auto;
+}
+
+.drawer.open{
+  transform:translateX(0);
+}
+
+.drawer-head{
+  position:sticky;
+  top:0;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:18px;
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+
+.drawer-title{
+  font-weight:900;
+}
+
+.drawer-subtitle{
+  color:var(--muted);
+  font-size:.72rem;
+}
+
+.drawer-close{
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:10px;
+  background:var(--surface-2);
+  color:var(--text);
+}
+
+.drawer-body{
+  padding:14px;
+}
+
+.drawer-group{
+  margin-bottom:18px;
+}
+
+.drawer-group-title{
+  margin:0 0 6px;
+  padding:0 9px;
+  color:var(--muted);
+  font-size:.66rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:850;
+}
+
+.drawer-link{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px 10px;
+  margin:2px 0;
+  border:0;
+  border-radius:11px;
+  background:transparent;
+  color:var(--text);
+  text-align:left;
+}
+
+.drawer-link:hover,
+.drawer-link.active{
+  background:var(--surface-2);
+}
+
+.drawer-link.active{
+  color:var(--primary);
+  font-weight:800;
+}
+
+.drawer-link span:last-child{
+  color:var(--muted);
+  font-size:.8rem;
+}
+
+.drawer-footer{
+  margin:8px 0 20px;
+  padding:14px;
+  border-radius:14px;
+  background:var(--surface-2);
+  border:1px solid var(--line);
+}
+
+.drawer-footer strong{
+  display:block;
+  font-size:.8rem;
+}
+
+.drawer-footer p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:.74rem;
+}
+
+/* =========================================================
+   MAIN HERO
+   ========================================================= */
+
+.hero{
+  padding:58px 0 28px;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  gap:26px;
+  align-items:stretch;
+}
+
+.eyebrow{
+  color:var(--primary);
+  font-size:.7rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+
 .hero h1{
-  font-size:clamp(2.45rem,6vw,5.15rem);line-height:.97;letter-spacing:-.055em;
-  max-width:940px;margin:12px 0 18px
+  max-width:880px;
+  margin:12px 0 16px;
+  font-size:clamp(2.5rem,6vw,5rem);
+  line-height:.97;
+  letter-spacing:-.058em;
 }
-.hero p{font-size:1.08rem;max-width:800px;color:var(--muted);margin:0}
-.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}
+
+.hero p{
+  max-width:780px;
+  margin:0;
+  color:var(--muted);
+  font-size:1.08rem;
+}
+
+.hero-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:22px 0;
+}
+
+.hero-panel{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:21px;
+  border-radius:var(--radius-lg);
+  background:
+    linear-gradient(145deg,var(--primary),var(--blue));
+  color:#fff;
+  box-shadow:var(--shadow);
+}
+
+.hero-panel .tag{
+  color:#fff;
+  background:rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.16);
+}
+
+.hero-panel h3{
+  margin:16px 0 6px;
+  font-size:1.2rem;
+}
+
+.hero-panel p{
+  color:rgba(255,255,255,.82);
+  font-size:.83rem;
+}
+
+.hero-stat{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:18px;
+}
+
+.hero-stat-item{
+  padding:12px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.08);
+  border-radius:13px;
+}
+
+.hero-stat-item strong{
+  display:block;
+  font-size:1.35rem;
+}
+
+.hero-stat-item span{
+  font-size:.7rem;
+  color:rgba(255,255,255,.72);
+}
+
+/* =========================================================
+   BUTTONS / SEARCH
+   ========================================================= */
+
+.btn,
+.icon-btn{
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:11px;
+  padding:9px 12px;
+  transition:.16s;
+  box-shadow:var(--shadow-sm);
+}
+
+.btn:hover,
+.icon-btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn.primary{
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  font-weight:800;
+}
+
+.btn.soft{
+  background:var(--surface-2);
+  box-shadow:none;
+}
+
+.search-area{
+  margin-top:10px;
+}
+
 .searchbar{
-  display:flex;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);
-  box-shadow:var(--shadow);padding:8px;border-radius:17px;max-width:930px
+  display:flex;
+  align-items:center;
+  gap:8px;
+  max-width:930px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
 }
-.searchbar input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--text);padding:10px}
+
+.searchbar input{
+  min-width:0;
+  flex:1;
+  border:0;
+  outline:0;
+  padding:9px;
+  background:transparent;
+  color:var(--text);
+}
+
 .search-results{
-  display:none;background:var(--surface);border:1px solid var(--line);border-radius:16px;
-  margin-top:8px;padding:10px;box-shadow:var(--shadow);max-width:930px
+  display:none;
+  max-width:930px;
+  margin-top:7px;
+  padding:9px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
 }
-.search-results.show{display:grid;gap:7px}
+
+.search-results.show{
+  display:grid;
+  gap:7px;
+}
+
 .search-result{
-  padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid var(--line);
-  cursor:pointer
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--surface-2);
+  cursor:pointer;
 }
-.search-result small{display:block;color:var(--muted)}
-.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:18px 0 4px}
-.metric{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow2)}
-.metric-icon{font-size:1.4rem}.metric-label{color:var(--muted);font-size:.78rem;margin-top:5px}.metric-value{font-size:1.55rem;font-weight:900;margin-top:2px}
-.metric-note{color:var(--muted);font-size:.72rem}
-section{padding:58px 0}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
-.section-head h2{margin:4px 0;font-size:clamp(1.45rem,3vw,2.15rem);letter-spacing:-.035em}
-.section-head p{margin:0;color:var(--muted);max-width:760px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.grid4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.card,.panel{
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow2);padding:18px
+
+.search-result:hover{
+  border-color:var(--primary);
 }
-.card:hover{box-shadow:var(--shadow)}
-.card h3{margin:6px 0 7px;font-size:1.04rem}
-.card p{margin:0;color:var(--muted);font-size:.87rem}
-.card.clickable{cursor:pointer}
-.card.clickable:hover{transform:translateY(-2px)}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{
-  display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;
-  background:var(--surface2);border:1px solid var(--line);color:var(--primary);
-  font-size:.68rem;font-weight:800
+
+.search-result small{
+  display:block;
+  color:var(--muted);
 }
-.icon{font-size:1.55rem;margin-top:7px}
+
+/* =========================================================
+   QUICK STATS
+   ========================================================= */
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-top:20px;
+}
+
+.metric{
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--surface);
+  box-shadow:var(--shadow-sm);
+}
+
+.metric-icon{
+  font-size:1.25rem;
+}
+
+.metric-label{
+  margin-top:5px;
+  font-size:.74rem;
+  color:var(--muted);
+}
+
+.metric-value{
+  margin-top:2px;
+  font-size:1.5rem;
+  line-height:1.1;
+  font-weight:900;
+}
+
+.metric-note{
+  margin-top:4px;
+  font-size:.69rem;
+  color:var(--muted);
+}
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+section{
+  padding:48px 0;
+  scroll-margin-top:82px;
+}
+
+.section-divider{
+  border-top:1px solid var(--line);
+}
+
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:18px;
+}
+
+.section-head h2{
+  margin:4px 0;
+  font-size:clamp(1.45rem,3vw,2.05rem);
+  letter-spacing:-.035em;
+}
+
+.section-head p{
+  max-width:740px;
+  margin:0;
+  color:var(--muted);
+  font-size:.84rem;
+}
+
+.section-tools{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.back-hub{
+  white-space:nowrap;
+}
+
+/* =========================================================
+   CARDS / GRID
+   ========================================================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;
+}
+
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid-4{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.card,
+.panel{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
+  box-shadow:var(--shadow-sm);
+}
+
+.card{
+  transition:.17s ease;
+}
+
+.card:hover{
+  box-shadow:var(--shadow);
+}
+
+.card.clickable{
+  cursor:pointer;
+}
+
+.card.clickable:hover{
+  transform:translateY(-2px);
+}
+
+.card h3{
+  margin:6px 0 7px;
+  font-size:1rem;
+}
+
+.card p{
+  margin:0;
+  color:var(--muted);
+  font-size:.84rem;
+}
+
+.card-icon{
+  margin-top:7px;
+  font-size:1.55rem;
+}
+
 .feature{
-  background:linear-gradient(145deg,var(--primary),var(--primary3));color:#fff;border-color:transparent
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(145deg,var(--primary),var(--blue));
 }
-.feature p{color:rgba(255,255,255,.83)}.feature .tag{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.16)}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.input,.select,.textarea{
-  width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;
-  background:var(--surface2);color:var(--text);outline:0
+
+.feature p{
+  color:rgba(255,255,255,.84);
 }
-.controls .input,.controls .select{max-width:280px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.field{display:grid;gap:5px}.field label{font-size:.75rem;color:var(--muted);font-weight:700}
+
+.feature .tag{
+  color:#fff;
+  background:rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.15);
+}
+
+/* =========================================================
+   TAGS / LISTS / FLOW
+   ========================================================= */
+
+.tags{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 8px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--surface-2);
+  color:var(--primary);
+  font-size:.65rem;
+  font-weight:850;
+}
+
+.controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:13px;
+}
+
+.input,
+.select,
+.textarea{
+  width:100%;
+  padding:10px 11px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--surface-2);
+  color:var(--text);
+  outline:0;
+}
+
+.controls .input,
+.controls .select{
+  max-width:285px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+}
+
+.field{
+  display:grid;
+  gap:5px;
+}
+
+.field label{
+  color:var(--muted);
+  font-size:.73rem;
+  font-weight:750;
+}
+
 .result{
-  margin-top:11px;padding:13px;border-radius:14px;border:1px dashed var(--line);
-  background:var(--surface2);line-height:1.55;font-size:.86rem
+  margin-top:10px;
+  padding:12px;
+  border:1px dashed var(--line);
+  border-radius:13px;
+  background:var(--surface-2);
+  font-size:.83rem;
 }
-.list{display:grid;gap:9px}
+
+.list{
+  display:grid;
+  gap:8px;
+}
+
 .list-item{
-  padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);
-  display:flex;justify-content:space-between;align-items:flex-start;gap:12px
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:11px;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--surface-2);
 }
-.list-item strong{display:block}.list-item small{display:block;color:var(--muted);margin-top:3px}
-.flow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:13px 0}
-.flow span{padding:7px 9px;background:var(--surface2);border:1px solid var(--line);border-radius:9px;font-size:.75rem;font-weight:700}
-.arrow{color:var(--primary);font-weight:900}
-.article h3{margin-top:18px}.article p,.article li{color:var(--muted);font-size:.88rem}.article strong{color:var(--text)}
-.formula{padding:12px;border-radius:12px;background:var(--surface2);border:1px solid var(--line);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow:auto}
-.callout{padding:13px 14px;border-left:4px solid var(--primary);border-radius:9px;background:var(--surface2);font-size:.84rem}
-.progress{height:8px;background:var(--surface2);border-radius:999px;overflow:hidden}.progress i{display:block;height:100%;background:var(--primary);width:0}
-.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 13px}.tab{padding:8px 11px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(2,8,11,.68);backdrop-filter:blur(7px);padding:15px}
-.modal.open{display:flex}.modal-box{width:min(930px,100%);max-height:90vh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:23px;padding:22px;box-shadow:0 35px 100px rgba(0,0,0,.3)}
-.modal-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.close{border:0;background:var(--surface2);color:var(--text);border-radius:10px;padding:7px 10px;font-size:1.1rem}
-.quiz-option{width:100%;text-align:left;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);color:var(--text);margin-top:7px}.quiz-option.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 12%,var(--surface2))}.quiz-option.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,var(--surface2))}
-.compare-table{width:100%;border-collapse:collapse;font-size:.8rem}.compare-table th,.compare-table td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}.compare-table th{color:var(--muted);background:var(--surface2)}
-footer{padding:36px 0 52px;border-top:1px solid var(--line);color:var(--muted);font-size:.77rem}
-@media(max-width:1050px){.quick-grid,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:760px){nav a{display:none}.hero{padding-top:45px}.grid,.grid2,.quick-grid,.grid4,.form-grid{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:6px}.searchbar{align-items:stretch;flex-direction:column}.controls .input,.controls .select{max-width:none}}
+
+.list-item strong{
+  display:block;
+}
+
+.list-item small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+}
+
+.flow{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px;
+  margin-top:12px;
+}
+
+.flow span{
+  padding:6px 8px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--surface-2);
+  font-size:.7rem;
+  font-weight:750;
+}
+
+.arrow{
+  color:var(--primary);
+  font-weight:900;
+}
+
+/* =========================================================
+   SPECIAL PANELS
+   ========================================================= */
+
+.callout{
+  padding:13px;
+  border-left:4px solid var(--primary);
+  border-radius:9px;
+  background:var(--surface-2);
+  color:var(--muted);
+  font-size:.8rem;
+}
+
+.formula{
+  overflow:auto;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--surface-2);
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+  font-size:.82rem;
+}
+
+.progress{
+  height:8px;
+  overflow:hidden;
+  border-radius:999px;
+  background:var(--surface-2);
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--primary),var(--primary-2));
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  background:rgba(2,8,11,.69);
+  backdrop-filter:blur(8px);
+}
+
+.modal.open{
+  display:flex;
+}
+
+.modal-box{
+  width:min(920px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:23px;
+  background:var(--surface);
+  box-shadow:0 35px 100px rgba(0,0,0,.32);
+}
+
+.modal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.close{
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:10px;
+  background:var(--surface-2);
+  color:var(--text);
+}
+
+.article h3{
+  margin-top:18px;
+}
+
+.article p,
+.article li{
+  color:var(--muted);
+  font-size:.85rem;
+}
+
+.article strong{
+  color:var(--text);
+}
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+
+.quiz-option{
+  width:100%;
+  margin-top:7px;
+  padding:10px;
+  text-align:left;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--surface-2);
+  color:var(--text);
+}
+
+.quiz-option.correct{
+  border-color:var(--success);
+}
+
+.quiz-option.wrong{
+  border-color:var(--danger);
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.compare-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.78rem;
+}
+
+.compare-table th,
+.compare-table td{
+  padding:9px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  vertical-align:top;
+}
+
+.compare-table th{
+  background:var(--surface-2);
+  color:var(--muted);
+}
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+
+.back-top{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:120;
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:var(--shadow);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(8px);
+  transition:.2s;
+}
+
+.back-top.visible{
+  opacity:1;
+  pointer-events:auto;
+  transform:none;
+}
+
+.back-top:hover{
+  color:#fff;
+  background:var(--primary);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer{
+  margin-top:35px;
+  padding:42px 0 60px;
+  border-top:1px solid var(--line);
+  background:var(--surface);
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.4fr repeat(3,1fr);
+  gap:25px;
+}
+
+.footer-brand{
+  font-weight:900;
+}
+
+.footer-text{
+  max-width:340px;
+  margin-top:7px;
+  color:var(--muted);
+  font-size:.77rem;
+}
+
+.footer-col h4{
+  margin:0 0 8px;
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.footer-col a{
+  display:block;
+  margin:5px 0;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.76rem;
+}
+
+.footer-col a:hover{
+  color:var(--primary);
+}
+
+.footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:30px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:.7rem;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1050px){
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .quick-grid,
+  .grid-4{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .footer-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:760px){
+
+  .hero{
+    padding-top:40px;
+  }
+
+  .quick-grid,
+  .grid,
+  .grid-2,
+  .grid-4,
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-head{
+    display:block;
+  }
+
+  .section-tools{
+    margin-top:10px;
+  }
+
+  .searchbar{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .controls .input,
+  .controls .select{
+    max-width:none;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:430px){
+
+  .container{
+    width:min(94%,1220px);
+  }
+
+  .header-btn{
+    padding:8px 9px;
+  }
+
+  .brand-title{
+    font-size:.9rem;
+  }
+}
 </style>
 </head>
 
 <body>
-<header>
-<div class="container header-inner">
-<a class="brand" href="#home"><span class="logo">🥛</span><span>DairyVerse <small>Dairy Technology Student Hub</small></span></a>
-<div class="top-actions">
-<button class="icon-btn" id="themeBtn">🌙</button>
-<button class="btn" onclick="scrollToId('tools')">🧮 Tools</button>
-</div>
-</div>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <div class="header-left">
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Open navigation"
+        title="Navigation">
+        ☰
+      </button>
+
+      <a class="brand" href="#home">
+        <span class="brand-logo">🥛</span>
+
+        <span class="brand-text">
+          <span class="brand-title">DairyVerse</span>
+          <span class="brand-subtitle">Dairy Technology Student Hub</span>
+        </span>
+      </a>
+
+    </div>
+
+    <div class="header-right">
+
+      <div class="header-search">
+        🔎
+        <input
+          id="headerSearch"
+          placeholder="Search DairyVerse..."
+          aria-label="Search DairyVerse">
+      </div>
+
+      <button
+        class="header-btn tools-btn"
+        onclick="scrollToId('tools')">
+        🧮
+      </button>
+
+      <button
+        class="header-btn"
+        id="themeBtn"
+        title="Toggle dark/light mode">
+        🌙
+      </button>
+
+    </div>
+
+  </div>
 </header>
 
-<main id="home">
+<!-- =========================================================
+     DRAWER
+     ========================================================= -->
 
-<section class="hero">
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<aside class="drawer" id="drawer">
+
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-title">DairyVerse</div>
+      <div class="drawer-subtitle">Navigate the knowledge hub</div>
+    </div>
+
+    <button
+      class="drawer-close"
+      id="drawerClose">
+      ✕
+    </button>
+  </div>
+
+  <div class="drawer-body">
+
+    <div class="drawer-group">
+
+      <div class="drawer-group-title">Home</div>
+
+      <button class="drawer-link" data-target="home">
+        <span>🏠 Dashboard</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+    <div class="drawer-group">
+
+      <div class="drawer-group-title">Learn</div>
+
+      <button class="drawer-link" data-target="curriculum">
+        <span>🗺️ Curriculum Explorer</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="learn">
+        <span>🧠 Concept Library</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="glossary">
+        <span>📖 Glossary</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="resources">
+        <span>📚 Resource Library</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+    <div class="drawer-group">
+
+      <div class="drawer-group-title">Dairy</div>
+
+      <button class="drawer-link" data-target="processes">
+        <span>🥛 Process Library</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="products">
+        <span>🧈 Product Library</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="equipment">
+        <span>⚙️ Equipment</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+    <div class="drawer-group">
+
+      <div class="drawer-group-title">Engineering</div>
+
+      <button class="drawer-link" data-target="tools">
+        <span>🧮 Tools & Calculators</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="compare">
+        <span>⚖️ Compare Equipment</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+    <div class="drawer-group">
+
+      <div class="drawer-group-title">Practice</div>
+
+      <button class="drawer-link" data-target="practicals">
+        <span>🧪 Practical Centre</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="questions">
+        <span>📝 Question Bank</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="quiz">
+        <span>🎯 Practice Quiz</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="assignments">
+        <span>📄 Assignment Help</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+    <div class="drawer-group">
+
+      <div class="drawer-group-title">Build & Career</div>
+
+      <button class="drawer-link" data-target="projects">
+        <span>🔬 Project Centre</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="career">
+        <span>💼 Career Centre</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+    <div class="drawer-group">
+
+      <div class="drawer-group-title">Personal</div>
+
+      <button class="drawer-link" data-target="myspace">
+        <span>📌 My Space</span>
+        <span>→</span>
+      </button>
+
+      <button class="drawer-link" data-target="creator">
+        <span>👨‍💻 Creator</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+    <div class="drawer-footer">
+
+      <strong>Built around one idea</strong>
+
+      <p>
+        Come with a Dairy Technology problem.
+        Leave with a useful next step.
+      </p>
+
+    </div>
+
+  </div>
+
+</aside>
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<main>
+
+<!-- ========================= HOME ========================= -->
+
+<section id="home" class="hero">
+
 <div class="container">
-<div class="eyebrow">Learn • Practice • Calculate • Build • Research</div>
-<h1>A Dairy Technology knowledge system, not a PDF dump.</h1>
-<p>DairyVerse connects curriculum, concepts, processes, equipment, engineering calculations, practicals, questions, projects and trusted sources — with Dairy Technology context throughout.</p>
+
+<div class="hero-grid">
+
+<div>
+
+<div class="eyebrow">
+Learn • Practice • Calculate • Build • Research
+</div>
+
+<h1>
+A Dairy Technology knowledge system,
+not a PDF dump.
+</h1>
+
+<p>
+DairyVerse connects curriculum, concepts, dairy processes,
+equipment, engineering calculations, practicals, questions,
+projects and trusted sources — with Dairy Technology context
+throughout.
+</p>
 
 <div class="hero-actions">
-<button class="btn primary" onclick="scrollToId('curriculum')">Explore Curriculum</button>
-<button class="btn" onclick="scrollToId('learn')">Learn a Concept</button>
-<button class="btn" onclick="scrollToId('tools')">Open Calculators</button>
-<button class="btn" onclick="scrollToId('projects')">Find Projects</button>
+
+<button
+class="btn primary"
+onclick="scrollToId('curriculum')">
+Explore Curriculum
+</button>
+
+<button
+class="btn"
+onclick="scrollToId('learn')">
+Learn a Concept
+</button>
+
+<button
+class="btn"
+onclick="scrollToId('tools')">
+Open Calculators
+</button>
+
+<button
+class="btn"
+onclick="scrollToId('projects')">
+Find Projects
+</button>
+
 </div>
+
+<div class="search-area">
 
 <div class="searchbar">
+
 <span>🔎</span>
-<input id="globalSearch" placeholder="Search Bernoulli, pasteurization, PHE, cheese, Reynolds number...">
-<button class="btn primary" onclick="runSearch()">Search</button>
+
+<input
+id="globalSearch"
+placeholder="Search Bernoulli, pasteurization, PHE, cheese, Reynolds number..."
+aria-label="Search DairyVerse">
+
+<button
+class="btn primary"
+onclick="runSearch()">
+Search
+</button>
+
 </div>
-<div id="searchResults" class="search-results"></div>
+
+<div
+id="searchResults"
+class="search-results">
+</div>
+
+</div>
+
+</div>
+
+<div class="hero-panel">
+
+<span class="tag">
+Featured platform
+</span>
+
+<h3>
+Learn → Practice → Build
+</h3>
+
+<p>
+Use DairyVerse as a starting point for
+your course work, engineering calculations,
+practicals and project research.
+</p>
+
+<div class="hero-stat">
+
+<div class="hero-stat-item">
+<strong id="heroSubjects">0</strong>
+<span>Subjects</span>
+</div>
+
+<div class="hero-stat-item">
+<strong id="heroTopics">0</strong>
+<span>Topics</span>
+</div>
+
+<div class="hero-stat-item">
+<strong id="heroEquipment">0</strong>
+<span>Equipment</span>
+</div>
+
+<div class="hero-stat-item">
+<strong id="heroProcesses">0</strong>
+<span>Processes</span>
+</div>
+
+</div>
+
+<div style="margin-top:18px">
+<button
+class="btn"
+onclick="openResearchMethod()">
+How DairyVerse is structured →
+</button>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- QUICK DASHBOARD -->
+
+<section style="padding-top:10px">
+
+<div class="container">
 
 <div class="quick-grid">
+
 <div class="metric">
 <div class="metric-icon">🗺️</div>
 <div class="metric-label">Curriculum subjects</div>
@@ -191,14 +1569,14 @@ footer{padding:36px 0 52px;border-top:1px solid var(--line);color:var(--muted);f
 <div class="metric-icon">🧠</div>
 <div class="metric-label">Learning topics</div>
 <div class="metric-value" id="metricTopics">0</div>
-<div class="metric-note">Concepts + applications</div>
+<div class="metric-note">Concepts + processes + products</div>
 </div>
 
 <div class="metric">
 <div class="metric-icon">⚙️</div>
 <div class="metric-label">Equipment entries</div>
 <div class="metric-value" id="metricEquipment">0</div>
-<div class="metric-note">Principle to troubleshooting</div>
+<div class="metric-note">Principle to application</div>
 </div>
 
 <div class="metric">
@@ -207,585 +1585,1818 @@ footer{padding:36px 0 52px;border-top:1px solid var(--line);color:var(--muted);f
 <div class="metric-value" id="metricNotes">0</div>
 <div class="metric-note">Stored locally</div>
 </div>
+
 </div>
+
 </div>
+
 </section>
 
+<!-- ========================= FEATURE STRIP ========================= -->
+
 <section>
-<div class="container grid grid2">
+
+<div class="container grid grid-2">
+
 <div class="card feature">
-<span class="tag">Featured portfolio project</span>
-<div class="icon">🧮</div>
+
+<span class="tag">Featured Portfolio Project</span>
+
+<div class="card-icon">🧮</div>
+
 <h3>Dairy Plant Process Calculator</h3>
-<p>A growing engineering toolset for material balances, process calculations, energy, flow, pumping, refrigeration and dairy plant work.</p>
+
+<p>
+The engineering tool at the heart of DairyVerse:
+mass balance, heat, flow, pumping, refrigeration,
+yield and process calculations.
+</p>
+
 <div style="margin-top:12px">
-<button class="btn" onclick="scrollToId('tools')">Open tools →</button>
+
+<button
+class="btn"
+onclick="scrollToId('tools')">
+Open Tools →
+</button>
+
 </div>
+
 </div>
 
 <div class="card">
-<span class="tag">Learning philosophy</span>
-<h3>Come with a problem. Leave with a next step.</h3>
-<p>Find the topic → understand the principle → see the dairy application → practice → connect it to equipment/processes → go deeper using authoritative resources.</p>
+
+<span class="tag">Learning Philosophy</span>
+
+<h3>
+Come with a problem.
+Leave with a next step.
+</h3>
+
+<p>
+Find a topic → understand the principle →
+see the dairy application → practice →
+connect it to equipment/processes →
+go deeper using authoritative resources.
+</p>
+
 </div>
+
 </div>
+
 </section>
 
-<section id="curriculum">
+<!-- ========================= CURRICULUM ========================= -->
+
+<section id="curriculum" class="section-divider">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">01 • Curriculum Explorer</div>
-<h2>Map the degree before opening random resources.</h2>
+
+<div class="eyebrow">
+01 • Curriculum
 </div>
-<p>A research-informed map based on the 4-year, 8-semester B.Tech Dairy Technology structure and course areas published by ICAR–NDRI, while allowing institutional variation.</p>
+
+<h2>
+Curriculum Explorer
+</h2>
+
+</div>
+
+<div class="section-tools">
+
+<button
+class="btn soft back-hub"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+</div>
+
+<div class="section-head">
+
+<p>
+A research-informed map based on the 4-year,
+8-semester B.Tech Dairy Technology structure
+and course areas published by ICAR–NDRI,
+while allowing university-specific variation.
+</p>
+
 </div>
 
 <div class="panel">
+
 <div class="controls">
-<select class="select" id="semFilter">
+
+<select
+class="select"
+id="semFilter">
 <option value="all">All semesters</option>
 </select>
-<input class="input" id="subjectSearch" placeholder="Search subject or topic...">
+
+<input
+class="input"
+id="subjectSearch"
+placeholder="Search subject or topic...">
+
 </div>
 
 <div id="curriculumList" class="list"></div>
+
 </div>
+
 </div>
+
 </section>
 
+<!-- ========================= CONCEPTS ========================= -->
+
 <section id="learn">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">02 • Concept Library</div>
-<h2>Learn the idea, not just the definition.</h2>
-</div>
-<p>Every topic follows a consistent structure: what is it, why study it, core idea, mathematics, dairy application, worked example, common mistakes, exam points, prerequisites and further reading.</p>
+
+<div class="eyebrow">
+02 • Learn
 </div>
 
+<h2>
+Concept Library
+</h2>
+
+</div>
+
+<div class="section-tools">
+
+<button
+class="btn soft back-hub"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+</div>
+
+<p class="section-head">
+Every topic follows the same learning structure:
+concept → mathematics → dairy application →
+mistakes → practice → further reading.
+</p>
+
 <div class="controls">
-<input class="input" id="conceptSearch" placeholder="Search concepts..." style="max-width:420px">
-<select class="select" id="conceptFilter" style="max-width:240px">
-<option value="all">All areas</option>
+
+<input
+class="input"
+id="conceptSearch"
+placeholder="Search concepts..."
+style="max-width:420px">
+
+<select
+class="select"
+id="conceptFilter"
+style="max-width:240px">
+
+<option value="all">
+All areas
+</option>
+
 </select>
+
 </div>
 
 <div id="conceptGrid" class="grid"></div>
+
 </div>
+
 </section>
 
+<!-- ========================= PROCESSES ========================= -->
+
 <section id="processes">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">03 • Dairy Process Library</div>
-<h2>Raw material → process → equipment → quality.</h2>
-</div>
-<p>Process pages cover flow, principle, operating considerations, quality concerns, common problems and connected equipment.</p>
+
+<div class="eyebrow">
+03 • Dairy
 </div>
 
+<h2>
+Dairy Process Library
+</h2>
+
+</div>
+
+<div class="section-tools">
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+</div>
+
+<p class="section-head">
+Raw material → process → equipment → quality →
+common problems → applications.
+</p>
+
 <div class="controls">
-<input class="input" id="processSearch" placeholder="Search milk reception, CIP, cheese, drying..." style="max-width:440px">
+
+<input
+class="input"
+id="processSearch"
+placeholder="Search milk reception, CIP, cheese, drying..."
+style="max-width:440px">
+
 </div>
 
 <div id="processGrid" class="grid"></div>
+
 </div>
+
 </section>
+
+<!-- ========================= PRODUCTS ========================= -->
 
 <section id="products">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">04 • Product Library</div>
-<h2>Understand the product, not just the process.</h2>
+
+<div class="eyebrow">
+04 • Dairy
 </div>
-<p>Product pages connect raw materials, process flow, key quality attributes, common defects, equipment and further learning.</p>
+
+<h2>
+Dairy Product Library
+</h2>
+
 </div>
+
+<div class="section-tools">
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+</div>
+
+<p class="section-head">
+Product technology connects formulation, processing,
+equipment, quality and defects.
+</p>
 
 <div id="productGrid" class="grid"></div>
+
 </div>
+
 </section>
 
+<!-- ========================= EQUIPMENT ========================= -->
+
 <section id="equipment">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">05 • Equipment Encyclopedia</div>
-<h2>Engineering knowledge in dairy context.</h2>
-</div>
-<p>Purpose, principle, construction, working, important components, operating parameters, advantages, limitations, applications, maintenance and safety.</p>
+
+<div class="eyebrow">
+05 • Engineering
 </div>
 
+<h2>
+Equipment Encyclopedia
+</h2>
+
+</div>
+
+<div class="section-tools">
+
+<button
+class="btn soft"
+onclick="scrollToId('compare')">
+Compare
+</button>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+</div>
+
+<p class="section-head">
+Purpose, principle, construction, components,
+operating parameters, advantages, limitations,
+applications and safety.
+</p>
+
 <div class="controls">
-<input class="input" id="equipmentSearch" placeholder="Search separator, homogenizer, PHE, pump..." style="max-width:440px">
+
+<input
+class="input"
+id="equipmentSearch"
+placeholder="Search separator, homogenizer, PHE, pump..."
+style="max-width:440px">
+
 </div>
 
 <div id="equipmentGrid" class="grid"></div>
+
 </div>
+
 </section>
+
+<!-- ========================= TOOLS ========================= -->
 
 <section id="tools">
+
 <div class="container">
 
 <div class="section-head">
+
 <div>
-<div class="eyebrow">06 • Tools & Calculators</div>
-<h2>Inputs → formula → result → interpretation.</h2>
-</div>
-<p>Educational tools are transparent and auditable. Engineering design, plant operation and regulatory decisions require validated data and professional review.</p>
+
+<div class="eyebrow">
+06 • Engineering
 </div>
 
-<div class="grid grid2">
+<h2>
+Tools & Calculators
+</h2>
+
+</div>
+
+<div class="section-tools">
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+</div>
+
+<p class="section-head">
+The calculations are educational and transparent.
+Real plant design requires validated data,
+equipment curves, standards and professional review.
+</p>
+
+<div class="grid grid-2">
 
 <div class="card feature">
-<span class="tag">Featured</span>
-<div class="icon">🧮</div>
-<h3>Dairy Plant Process Calculator</h3>
-<p>Use the calculators below as modules of the larger Dairy Plant Process Calculator project.</p>
+
+<span class="tag">
+Featured tool
+</span>
+
+<div class="card-icon">🧮</div>
+
+<h3>
+Dairy Plant Process Calculator
+</h3>
+
+<p>
+Use these modules as the basis for the larger
+Dairy Plant Process Calculator project.
+</p>
+
 <div style="margin-top:12px">
-<button class="btn" onclick="scrollToId('toolDetails')">Open modules →</button>
-</div>
+
+<button
+class="btn"
+onclick="scrollToId('toolDetails')">
+View roadmap →
+</button>
+
 </div>
 
+</div>
+
+<!-- REVENUE -->
+
 <div class="card">
-<h3>🥛 Milk Revenue</h3>
+
+<h3>
+🥛 Milk Revenue
+</h3>
+
 <div class="form-grid">
+
 <div class="field">
-<label>Milk quantity (L)</label>
-<input class="input calc" id="revL" type="number" value="100">
+
+<label>
+Milk quantity (L)
+</label>
+
+<input
+class="input calc"
+id="revL"
+type="number"
+value="100">
+
 </div>
+
 <div class="field">
-<label>Rate (₹/L)</label>
-<input class="input calc" id="revRate" type="number" value="42">
+
+<label>
+Rate (₹/L)
+</label>
+
+<input
+class="input calc"
+id="revRate"
+type="number"
+value="42">
+
 </div>
+
 </div>
+
 <div id="revResult" class="result"></div>
+
 </div>
 
+<!-- MIXING -->
+
 <div class="card">
-<h3>🧪 Weighted Fat / Milk Mixing</h3>
+
+<h3>
+🧪 Weighted Fat / Milk Mixing
+</h3>
+
 <div class="form-grid">
-<div class="field"><label>Milk A (L)</label><input class="input calc" id="mixA" type="number" value="60"></div>
-<div class="field"><label>Fat A (%)</label><input class="input calc" id="mixFA" type="number" value="3.5"></div>
-<div class="field"><label>Milk B (L)</label><input class="input calc" id="mixB" type="number" value="40"></div>
-<div class="field"><label>Fat B (%)</label><input class="input calc" id="mixFB" type="number" value="6"></div>
+
+<div class="field">
+<label>Milk A (L)</label>
+<input class="input calc" id="mixA" type="number" value="60">
 </div>
+
+<div class="field">
+<label>Fat A (%)</label>
+<input class="input calc" id="mixFA" type="number" value="3.5">
+</div>
+
+<div class="field">
+<label>Milk B (L)</label>
+<input class="input calc" id="mixB" type="number" value="40">
+</div>
+
+<div class="field">
+<label>Fat B (%)</label>
+<input class="input calc" id="mixFB" type="number" value="6">
+</div>
+
+</div>
+
 <div id="mixResult" class="result"></div>
+
 </div>
 
+<!-- STANDARDIZATION -->
+
 <div class="card">
-<h3>⚖️ Target Fat Standardization</h3>
+
+<h3>
+⚖️ Target Fat Standardization
+</h3>
+
 <div class="form-grid">
-<div class="field"><label>Milk A quantity (L)</label><input class="input calc" id="stdA" type="number" value="100"></div>
-<div class="field"><label>Milk A fat (%)</label><input class="input calc" id="stdFA" type="number" value="4.5"></div>
-<div class="field"><label>Milk B fat (%)</label><input class="input calc" id="stdFB" type="number" value="1"></div>
-<div class="field"><label>Target fat (%)</label><input class="input calc" id="stdFT" type="number" value="3.5"></div>
+
+<div class="field">
+<label>Milk A quantity (L)</label>
+<input class="input calc" id="stdA" type="number" value="100">
 </div>
+
+<div class="field">
+<label>Milk A fat (%)</label>
+<input class="input calc" id="stdFA" type="number" value="4.5">
+</div>
+
+<div class="field">
+<label>Milk B fat (%)</label>
+<input class="input calc" id="stdFB" type="number" value="1">
+</div>
+
+<div class="field">
+<label>Target fat (%)</label>
+<input class="input calc" id="stdFT" type="number" value="3.5">
+</div>
+
+</div>
+
 <div id="stdResult" class="result"></div>
+
 </div>
 
+<!-- HEAT -->
+
 <div class="card">
-<h3>🌡️ Sensible Heat</h3>
+
+<h3>
+🌡️ Sensible Heat
+</h3>
+
 <div class="form-grid">
-<div class="field"><label>Mass (kg)</label><input class="input calc" id="heatM" type="number" value="1000"></div>
-<div class="field"><label>Cp (kJ/kg·K)</label><input class="input calc" id="heatCp" type="number" value="3.9"></div>
-<div class="field"><label>ΔT (K)</label><input class="input calc" id="heatDT" type="number" value="10"></div>
+
+<div class="field">
+<label>Mass (kg)</label>
+<input class="input calc" id="heatM" type="number" value="1000">
 </div>
+
+<div class="field">
+<label>Cp (kJ/kg·K)</label>
+<input class="input calc" id="heatCp" type="number" value="3.9">
+</div>
+
+<div class="field">
+<label>ΔT (K)</label>
+<input class="input calc" id="heatDT" type="number" value="10">
+</div>
+
+</div>
+
 <div id="heatResult" class="result"></div>
+
 </div>
 
+<!-- REYNOLDS -->
+
 <div class="card">
-<h3>🌊 Reynolds Number</h3>
+
+<h3>
+🌊 Reynolds Number
+</h3>
+
 <div class="form-grid">
-<div class="field"><label>ρ (kg/m³)</label><input class="input calc" id="reRho" type="number" value="1000"></div>
-<div class="field"><label>v (m/s)</label><input class="input calc" id="reV" type="number" value="1"></div>
-<div class="field"><label>D (m)</label><input class="input calc" id="reD" type="number" value="0.05"></div>
-<div class="field"><label>μ (Pa·s)</label><input class="input calc" id="reMu" type="number" value="0.001"></div>
+
+<div class="field">
+<label>ρ (kg/m³)</label>
+<input class="input calc" id="reRho" type="number" value="1000">
 </div>
+
+<div class="field">
+<label>v (m/s)</label>
+<input class="input calc" id="reV" type="number" value="1">
+</div>
+
+<div class="field">
+<label>D (m)</label>
+<input class="input calc" id="reD" type="number" value="0.05">
+</div>
+
+<div class="field">
+<label>μ (Pa·s)</label>
+<input class="input calc" id="reMu" type="number" value="0.001">
+</div>
+
+</div>
+
 <div id="reResult" class="result"></div>
+
 </div>
 
+<!-- CONTINUITY -->
+
 <div class="card">
-<h3>💨 Continuity</h3>
+
+<h3>
+💨 Continuity
+</h3>
+
 <div class="form-grid">
-<div class="field"><label>A₁ (m²)</label><input class="input calc" id="contA1" type="number" value="0.01"></div>
-<div class="field"><label>v₁ (m/s)</label><input class="input calc" id="contV1" type="number" value="2"></div>
-<div class="field"><label>A₂ (m²)</label><input class="input calc" id="contA2" type="number" value="0.005"></div>
+
+<div class="field">
+<label>A₁ (m²)</label>
+<input class="input calc" id="contA1" type="number" value="0.01">
 </div>
+
+<div class="field">
+<label>v₁ (m/s)</label>
+<input class="input calc" id="contV1" type="number" value="2">
+</div>
+
+<div class="field">
+<label>A₂ (m²)</label>
+<input class="input calc" id="contA2" type="number" value="0.005">
+</div>
+
+</div>
+
 <div id="contResult" class="result"></div>
+
 </div>
 
+<!-- PUMP -->
+
 <div class="card">
-<h3>⚙️ Pump Hydraulic Power</h3>
+
+<h3>
+⚙️ Pump Hydraulic Power
+</h3>
+
 <div class="form-grid">
-<div class="field"><label>Q (m³/s)</label><input class="input calc" id="pumpQ" type="number" step="0.0001" value="0.01"></div>
-<div class="field"><label>ΔP (Pa)</label><input class="input calc" id="pumpDP" type="number" value="200000"></div>
-<div class="field"><label>Efficiency (%)</label><input class="input calc" id="pumpEta" type="number" value="70"></div>
+
+<div class="field">
+<label>Q (m³/s)</label>
+<input class="input calc" id="pumpQ" type="number" step="0.0001" value="0.01">
 </div>
+
+<div class="field">
+<label>ΔP (Pa)</label>
+<input class="input calc" id="pumpDP" type="number" value="200000">
+</div>
+
+<div class="field">
+<label>Efficiency (%)</label>
+<input class="input calc" id="pumpEta" type="number" value="70">
+</div>
+
+</div>
+
 <div id="pumpResult" class="result"></div>
+
 </div>
 
+<!-- COST -->
+
 <div class="card">
-<h3>💰 Product Cost + Margin</h3>
+
+<h3>
+💰 Product Cost + Margin
+</h3>
+
 <div class="form-grid">
-<div class="field"><label>Raw milk cost/L</label><input class="input calc" id="costRaw" type="number" value="34"></div>
-<div class="field"><label>Processing/L</label><input class="input calc" id="costProc" type="number" value="4"></div>
-<div class="field"><label>Packaging/L</label><input class="input calc" id="costPack" type="number" value="3"></div>
-<div class="field"><label>Markup (%)</label><input class="input calc" id="costMargin" type="number" value="12"></div>
+
+<div class="field">
+<label>Raw milk cost/L</label>
+<input class="input calc" id="costRaw" type="number" value="34">
 </div>
+
+<div class="field">
+<label>Processing/L</label>
+<input class="input calc" id="costProc" type="number" value="4">
+</div>
+
+<div class="field">
+<label>Packaging/L</label>
+<input class="input calc" id="costPack" type="number" value="3">
+</div>
+
+<div class="field">
+<label>Markup (%)</label>
+<input class="input calc" id="costMargin" type="number" value="12">
+</div>
+
+</div>
+
 <div id="costResult" class="result"></div>
+
+</div>
+
+<!-- YIELD -->
+
+<div class="card">
+
+<h3>
+📦 Yield Estimator
+</h3>
+
+<div class="form-grid">
+
+<div class="field">
+<label>Input quantity</label>
+<input class="input calc" id="yieldInput" type="number" value="500">
+</div>
+
+<div class="field">
+<label>Yield (%)</label>
+<input class="input calc" id="yieldPct" type="number" value="10">
+</div>
+
+</div>
+
+<div id="yieldResult" class="result"></div>
+
+</div>
+
+</div>
+
+<div
+id="toolDetails"
+class="panel"
+style="margin-top:14px">
+
+<h3>
+Future Calculator Roadmap
+</h3>
+
+<div class="grid grid-4">
+
+<div class="card">
+<strong>Material balance</strong>
+<p>Input/output streams, losses, solids and component tracking.</p>
 </div>
 
 <div class="card">
-<h3>📦 Yield Estimator</h3>
-<div class="form-grid">
-<div class="field"><label>Input quantity</label><input class="input calc" id="yieldInput" type="number" value="500"></div>
-<div class="field"><label>Yield (%)</label><input class="input calc" id="yieldPct" type="number" value="10"></div>
+<strong>Heat exchanger</strong>
+<p>Heat duty, LMTD, energy balance and performance.</p>
 </div>
-<div id="yieldResult" class="result"></div>
+
+<div class="card">
+<strong>Refrigeration load</strong>
+<p>Educational cooling-load estimation with explicit assumptions.</p>
+</div>
+
+<div class="card">
+<strong>CIP</strong>
+<p>Cleaning-cycle planning around time, temperature, chemistry and flow.</p>
 </div>
 
 </div>
 
-<div id="toolDetails" class="panel" style="margin-top:14px">
-<h3>Future calculator roadmap</h3>
-<div class="grid grid4">
-<div class="card"><strong>Material balance</strong><p>Input/output streams, losses, solids, component tracking.</p></div>
-<div class="card"><strong>Heat exchanger</strong><p>Heat duty, LMTD, energy balance and performance indicators.</p></div>
-<div class="card"><strong>Refrigeration load</strong><p>Educational cooling-load estimation with assumptions.</p></div>
-<div class="card"><strong>CIP</strong><p>Cleaning-cycle planning around time, temperature, chemistry and flow.</p></div>
-</div>
 </div>
 
 </div>
+
 </section>
+
+<!-- ========================= PRACTICALS ========================= -->
 
 <section id="practicals">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">07 • Practical Centre</div>
-<h2>Turn theory into laboratory thinking.</h2>
+
+<div class="eyebrow">
+07 • Practice
 </div>
-<p>Each practical follows objective → principle → apparatus → procedure → observation → calculation → result → precautions → viva.</p>
+
+<h2>
+Practical & Laboratory Centre
+</h2>
+
 </div>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+<p class="section-head">
+Objective → principle → apparatus → procedure →
+observation → calculation → result → precautions → viva.
+</p>
+
 <div id="practicalGrid" class="grid"></div>
+
 </div>
+
 </section>
 
+<!-- ========================= QUESTIONS ========================= -->
+
 <section id="questions">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">08 • Question Bank</div>
-<h2>Practice by topic, not randomly.</h2>
-</div>
-<p>MCQ, short answer, numerical, conceptual and viva structures are ready for expansion into semester/unit/topic/PYQ collections.</p>
+
+<div class="eyebrow">
+08 • Practice
 </div>
 
+<h2>
+Question Bank
+</h2>
+
+</div>
+
+<button
+class="btn soft"
+onclick="scrollToId('quiz')">
+Practice Quiz
+</button>
+
+</div>
+
+<p class="section-head">
+MCQ, short answer, numerical and viva structures,
+ready for future semester/unit/topic/PYQ expansion.
+</p>
+
 <div class="controls">
+
 <select class="select" id="qType">
-<option value="all">All types</option>
+
+<option value="all">
+All types
+</option>
+
 <option>MCQ</option>
 <option>Short</option>
 <option>Numerical</option>
 <option>Viva</option>
+
 </select>
 
 <select class="select" id="qTopic">
-<option value="all">All topics</option>
+<option value="all">
+All topics
+</option>
 </select>
+
 </div>
 
 <div id="questionList" class="list"></div>
+
 </div>
+
 </section>
+
+<!-- ========================= QUIZ ========================= -->
 
 <section id="quiz">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">09 • Practice Mode</div>
-<h2>Quick quiz</h2>
+
+<div class="eyebrow">
+09 • Practice
 </div>
-<p>A built-in practice engine for quick concept checks. The full question bank can grow behind the same interface.</p>
+
+<h2>
+Quick Practice Quiz
+</h2>
+
 </div>
-<div class="panel" id="quizBox"></div>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
 </div>
+
+<p class="section-head">
+A small interactive practice engine demonstrating the future
+question-bank experience.
+</p>
+
+<div
+id="quizBox"
+class="panel">
+</div>
+
+</div>
+
 </section>
+
+<!-- ========================= ASSIGNMENTS ========================= -->
 
 <section id="assignments">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">10 • Assignment Help</div>
-<h2>Research → understand → structure → write.</h2>
-</div>
-<p>Designed to support learning and original writing rather than copy-paste submission.</p>
+
+<div class="eyebrow">
+10 • Academic Work
 </div>
 
-<div class="grid grid2">
+<h2>
+Assignment & Essay Help
+</h2>
+
+</div>
+
+<button
+class="btn soft"
+onclick="scrollToId('resources')">
+Resources
+</button>
+
+</div>
+
+<p class="section-head">
+Research → understand → structure → write.
+The tool supports original work rather than copy-paste submission.
+</p>
+
+<div class="grid grid-2">
+
 <div class="card">
-<h3>Assignment structure generator</h3>
+
+<h3>
+Assignment Structure Generator
+</h3>
+
 <div class="field">
-<label>Topic</label>
-<input class="input" id="assignTopic" placeholder="e.g. Pasteurization of milk">
+
+<label>
+Topic
+</label>
+
+<input
+class="input"
+id="assignTopic"
+placeholder="e.g. Pasteurization of milk">
+
 </div>
-<div style="height:10px"></div>
-<button class="btn primary" onclick="generateAssignment()">Generate</button>
-<div id="assignResult" class="result" style="display:none"></div>
+
+<div style="height:9px"></div>
+
+<button
+class="btn primary"
+onclick="generateAssignment()">
+Generate
+</button>
+
+<div
+id="assignResult"
+class="result"
+style="display:none">
+</div>
+
 </div>
 
 <div class="card">
-<h3>Suggested research workflow</h3>
+
+<h3>
+Research Workflow
+</h3>
+
 <div class="list">
-<div class="list-item">1. Define the question</div>
-<div class="list-item">2. Identify authoritative sources</div>
-<div class="list-item">3. Build the conceptual outline</div>
-<div class="list-item">4. Add dairy-process evidence/examples</div>
-<div class="list-item">5. Write in your own words</div>
-<div class="list-item">6. Cite sources and verify technical claims</div>
+
+<div class="list-item">
+1. Define the question
 </div>
+
+<div class="list-item">
+2. Identify authoritative sources
 </div>
+
+<div class="list-item">
+3. Build the conceptual outline
 </div>
+
+<div class="list-item">
+4. Add dairy-process evidence
 </div>
+
+<div class="list-item">
+5. Write in your own words
+</div>
+
+<div class="list-item">
+6. Cite sources and verify claims
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
+
+<!-- ========================= PROJECTS ========================= -->
 
 <section id="projects">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">11 • Project Centre</div>
-<h2>Build things that prove you understood.</h2>
+
+<div class="eyebrow">
+11 • Build
 </div>
-<p>Beginner, engineering, software and research project ideas with a clear problem → method → output → extension structure.</p>
+
+<h2>
+Project Centre
+</h2>
+
 </div>
+
+<button
+class="btn soft"
+onclick="scrollToId('creator')">
+Creator
+</button>
+
+</div>
+
+<p class="section-head">
+Beginner, engineering, software and research project ideas
+with problem → method → output → extension.
+</p>
+
 <div id="projectGrid" class="grid"></div>
+
 </div>
+
 </section>
+
+<!-- ========================= CAREER ========================= -->
 
 <section id="career">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">12 • Career Centre</div>
-<h2>What can Dairy Technology lead to?</h2>
+
+<div class="eyebrow">
+12 • Career
 </div>
-<p>Industry, higher study, research, engineering, quality, technical roles and digital/process skills.</p>
+
+<h2>
+Career Centre
+</h2>
+
 </div>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+<p class="section-head">
+Connect Dairy Technology to industry, higher study,
+research, engineering, quality and digital skills.
+</p>
+
 <div id="careerGrid" class="grid"></div>
+
 </div>
+
 </section>
+
+<!-- ========================= RESOURCES ========================= -->
 
 <section id="resources">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">13 • Resource Library</div>
-<h2>Use DairyVerse as the filter, then go deeper.</h2>
+
+<div class="eyebrow">
+13 • Research
 </div>
-<p>Resources are grouped by authority and purpose. Regulatory details should always be checked against the current official source.</p>
+
+<h2>
+Resource Library
+</h2>
+
 </div>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+<p class="section-head">
+DairyVerse acts as a filter — then directs students toward
+institutional, regulatory and technical sources.
+</p>
+
 <div id="resourceGrid" class="grid"></div>
+
 </div>
+
 </section>
 
+<!-- ========================= GLOSSARY ========================= -->
+
 <section id="glossary">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">14 • Glossary</div>
-<h2>Dairy + engineering terminology.</h2>
+
+<div class="eyebrow">
+14 • Reference
 </div>
-<p>Quick lookup for common terms. The structure is ready for a much larger indexed glossary.</p>
+
+<h2>
+Dairy + Engineering Glossary
+</h2>
+
+</div>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
 </div>
 
 <div class="controls">
-<input class="input" id="glossarySearch" placeholder="Search a term..." style="max-width:450px">
+
+<input
+class="input"
+id="glossarySearch"
+placeholder="Search a term..."
+style="max-width:450px">
+
 </div>
 
 <div id="glossaryList" class="grid"></div>
+
 </div>
+
 </section>
 
+<!-- ========================= COMPARE ========================= -->
+
 <section id="compare">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">15 • Compare</div>
-<h2>Compare processes and equipment.</h2>
+
+<div class="eyebrow">
+15 • Engineering
 </div>
-<p>Comparison helps connect the principle, purpose and application of equipment and processes.</p>
+
+<h2>
+Compare Equipment
+</h2>
+
+</div>
+
+<button
+class="btn soft"
+onclick="scrollToId('equipment')">
+Equipment
+</button>
+
 </div>
 
 <div class="panel">
+
 <div class="controls">
-<select class="select" id="compareA"></select>
-<select class="select" id="compareB"></select>
+
+<select
+class="select"
+id="compareA">
+</select>
+
+<select
+class="select"
+id="compareB">
+</select>
+
 </div>
 
 <div id="compareTable"></div>
+
 </div>
+
 </div>
+
 </section>
+
+<!-- ========================= MY SPACE ========================= -->
 
 <section id="myspace">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">16 • My Space</div>
-<h2>Your local study workspace.</h2>
-</div>
-<p>Bookmarks, progress, notes and tasks are stored in your browser using localStorage.</p>
+
+<div class="eyebrow">
+16 • Personal
 </div>
 
-<div class="grid grid2">
+<h2>
+My Space
+</h2>
+
+</div>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+<p class="section-head">
+Your local study workspace. Notes, tasks and learning progress stay
+in your browser.
+</p>
+
+<div class="grid grid-2">
+
 <div class="card">
-<h3>Learning progress</h3>
-<p id="progressText">0 topics tracked.</p>
-<div class="progress"><i id="progressBar"></i></div>
+
+<h3>
+Learning Progress
+</h3>
+
+<p id="progressText">
+0 topics tracked.
+</p>
+
+<div class="progress">
+<i id="progressBar"></i>
+</div>
+
 <div style="height:9px"></div>
-<button class="btn soft" onclick="clearProgress()">Reset progress</button>
+
+<button
+class="btn soft"
+onclick="clearProgress()">
+Reset Progress
+</button>
+
 </div>
 
 <div class="card">
-<h3>Personal note</h3>
-<textarea class="textarea" id="noteInput" placeholder="Formula, lecture idea, project thought, reminder..."></textarea>
+
+<h3>
+Personal Note
+</h3>
+
+<textarea
+class="textarea"
+id="noteInput"
+placeholder="Formula, lecture idea, project thought, reminder...">
+</textarea>
+
 <div style="height:8px"></div>
-<button class="btn primary" onclick="saveNote()">Save Note</button>
-</div>
+
+<button
+class="btn primary"
+onclick="saveNote()">
+Save Note
+</button>
+
 </div>
 
-<div class="grid grid2" style="margin-top:14px">
+</div>
+
+<div class="grid grid-2" style="margin-top:13px">
+
 <div class="card">
-<h3>Saved notes</h3>
+
+<h3>
+Saved Notes
+</h3>
+
 <div id="notesList" class="list"></div>
+
 </div>
 
 <div class="card">
-<h3>Tasks</h3>
+
+<h3>
+Tasks
+</h3>
+
 <div class="field">
-<label>New task</label>
-<input class="input" id="taskInput" placeholder="e.g. Revise Bernoulli">
+
+<label>
+New task
+</label>
+
+<input
+class="input"
+id="taskInput"
+placeholder="e.g. Revise Bernoulli">
+
 </div>
+
 <div style="height:8px"></div>
-<button class="btn primary" onclick="addTask()">Add task</button>
-<div id="tasksList" class="list" style="margin-top:10px"></div>
+
+<button
+class="btn primary"
+onclick="addTask()">
+Add Task
+</button>
+
+<div
+id="tasksList"
+class="list"
+style="margin-top:10px">
 </div>
+
 </div>
+
 </div>
+
+</div>
+
 </section>
 
+<!-- ========================= CREATOR ========================= -->
+
 <section id="creator">
+
 <div class="container">
+
 <div class="section-head">
+
 <div>
-<div class="eyebrow">17 • Creator</div>
-<h2>Ansuman Anshu</h2>
-</div>
-<p>DairyVerse is also a portfolio project: a student-built attempt to connect Dairy Technology learning, engineering tools and research navigation.</p>
+
+<div class="eyebrow">
+17 • Creator
 </div>
 
-<div class="grid grid4">
+<h2>
+Built by Ansuman Anshu
+</h2>
+
+</div>
+
+<button
+class="btn soft"
+onclick="scrollToId('home')">
+↑ Hub
+</button>
+
+</div>
+
+<p class="section-head">
+DairyVerse is also a portfolio project:
+a student-built attempt to connect Dairy Technology learning,
+engineering tools and research navigation.
+</p>
+
+<div class="grid grid-4">
+
 <div class="card">
-<span class="tag">Portfolio</span>
-<h3>Personal Website</h3>
-<p>Showcase DairyVerse and future projects.</p>
-<a class="btn primary" href="https://anshumaananshu.github.io/" target="_blank">Open website ↗</a>
+
+<span class="tag">
+Portfolio
+</span>
+
+<h3>
+Personal Website
+</h3>
+
+<p>
+Showcase DairyVerse and future projects.
+</p>
+
+<div style="margin-top:10px">
+
+<a
+class="btn primary"
+href="https://anshumaananshu.github.io/"
+target="_blank"
+rel="noopener">
+Open Website ↗
+</a>
+
+</div>
+
 </div>
 
 <div class="card">
-<span class="tag">Featured project</span>
-<h3>Dairy Plant Process Calculator</h3>
-<p>The calculator work is treated as an engineering/software project inside the larger platform.</p>
+
+<span class="tag">
+Featured Project
+</span>
+
+<h3>
+Dairy Plant Process Calculator
+</h3>
+
+<p>
+The calculator work becomes the engineering/software project
+inside the larger DairyVerse ecosystem.
+</p>
+
 </div>
 
 <div class="card">
-<span class="tag">GitHub</span>
-<h3>Open development</h3>
-<p>Keep the code and project history visible as part of your technical portfolio.</p>
-<a class="btn" href="https://github.com/anshumaananshu" target="_blank">GitHub ↗</a>
+
+<span class="tag">
+GitHub
+</span>
+
+<h3>
+Open Development
+</h3>
+
+<p>
+Keep the project visible as part of your technical portfolio.
+</p>
+
+<div style="margin-top:10px">
+
+<a
+class="btn"
+href="https://github.com/anshumaananshu"
+target="_blank"
+rel="noopener">
+GitHub ↗
+</a>
+
+</div>
+
 </div>
 
 <div class="card">
-<span class="tag">Professional</span>
-<h3>LinkedIn</h3>
-<p>Replace this with your actual profile URL when ready.</p>
-<a class="btn" href="https://www.linkedin.com/" target="_blank">LinkedIn ↗</a>
+
+<span class="tag">
+Professional
+</span>
+
+<h3>
+LinkedIn
+</h3>
+
+<p>
+Connect with the creator professionally.
+</p>
+
+<div style="margin-top:10px">
+
+<a
+class="btn"
+href="https://www.linkedin.com/in/anshumaan-anshu-ba5800428?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+target="_blank"
+rel="noopener">
+LinkedIn ↗
+</a>
+
 </div>
+
 </div>
+
 </div>
+
+<div
+class="callout"
+style="margin-top:14px">
+
+<strong>Project positioning:</strong>
+DairyVerse is not intended to be a generic engineering website,
+a PDF dump, a homework-copying platform or a social network.
+Its identity is Dairy Technology + engineering context +
+practical tools + structured learning + research navigation.
+
+</div>
+
+</div>
+
 </section>
 
 </main>
 
-<footer>
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="site-footer">
+
 <div class="container">
-<strong>DairyVerse</strong> • Dairy Technology Student Hub • Portfolio research project.<br>
-Educational reference only. Always verify curriculum, laboratory procedures, food-safety requirements, standards, and industrial operating parameters against current authoritative sources, institutional SOPs and qualified professionals.
+
+<div class="footer-grid">
+
+<div>
+
+<div class="footer-brand">
+🥛 DairyVerse
 </div>
+
+<div class="footer-text">
+
+Dairy Technology Student Hub for learning,
+engineering, practicals, projects and research.
+
+</div>
+
+<div class="hero-actions">
+
+<a
+class="btn"
+href="https://anshumaananshu.github.io/"
+target="_blank"
+rel="noopener">
+Portfolio
+</a>
+
+<a
+class="btn"
+href="https://www.linkedin.com/in/anshumaan-anshu-ba5800428?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+target="_blank"
+rel="noopener">
+LinkedIn
+</a>
+
+</div>
+
+</div>
+
+<div class="footer-col">
+
+<h4>
+Explore
+</h4>
+
+<a href="#curriculum">
+Curriculum
+</a>
+
+<a href="#learn">
+Concepts
+</a>
+
+<a href="#processes">
+Processes
+</a>
+
+<a href="#products">
+Products
+</a>
+
+<a href="#equipment">
+Equipment
+</a>
+
+</div>
+
+<div class="footer-col">
+
+<h4>
+Practice
+</h4>
+
+<a href="#tools">
+Tools
+</a>
+
+<a href="#practicals">
+Practicals
+</a>
+
+<a href="#questions">
+Question Bank
+</a>
+
+<a href="#quiz">
+Quiz
+</a>
+
+<a href="#assignments">
+Assignments
+</a>
+
+</div>
+
+<div class="footer-col">
+
+<h4>
+Build
+</h4>
+
+<a href="#projects">
+Projects
+</a>
+
+<a href="#career">
+Career
+</a>
+
+<a href="#resources">
+Resources
+</a>
+
+<a href="#creator">
+Creator
+</a>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+
+<span>
+© DairyVerse • Portfolio research project
+</span>
+
+<span>
+Educational reference only — verify current standards,
+procedures and operating requirements with authoritative sources.
+</span>
+
+</div>
+
+</div>
+
 </footer>
 
-<div id="modal" class="modal">
-<div class="modal-box">
-<div class="modal-head">
-<div id="modalTitle"></div>
-<button class="close" onclick="closeModal()">✕</button>
-</div>
-<div id="modalBody" class="article"></div>
-</div>
-</div>
+<!-- =========================================================
+     BACK TO TOP
+     ========================================================= -->
+
+<button
+class="back-top"
+id="backTop"
+aria-label="Back to top"
+title="Back to top">
+↑
+</button>
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
 
 <script>
 
 /* =========================================================
-   CURRICULUM DATA
+   DATA
    ========================================================= */
 
 const curriculum=[
-{sem:1,subject:"Engineering Mathematics",topics:["Functions and graphs","Differentiation","Integration","Vectors","Differential equations"]},
-{sem:1,subject:"Engineering Physics",topics:["Units and dimensions","Mechanics","Fluid basics","Thermal physics","Electricity and magnetism"]},
-{sem:1,subject:"Engineering Chemistry",topics:["Atomic structure","Chemical bonding","Solutions","Thermodynamics","Organic chemistry foundations"]},
-{sem:1,subject:"Fluid Mechanics",topics:["Fluid properties","Pressure","Hydrostatics","Continuity","Bernoulli equation","Reynolds number","Pipe flow","Pumps"]},
-{sem:1,subject:"Workshop Practice & Engineering Drawing",topics:["Workshop operations","Orthographic projection","Sections","Technical communication"]},
 
-{sem:2,subject:"Thermodynamics",topics:["Systems","Properties","First law","Second law","Enthalpy","Entropy","Cycles"]},
-{sem:2,subject:"Heat & Mass Transfer",topics:["Conduction","Convection","Radiation","Heat exchangers","Diffusion","Mass transfer"]},
-{sem:2,subject:"Refrigeration & Air Conditioning",topics:["Vapour compression","Compressor","Condenser","Expansion device","Evaporator","COP"]},
-{sem:2,subject:"Dairy Engineering",topics:["Unit operations","Pumps","Pipelines","Dairy equipment","Plant utilities"]},
-{sem:2,subject:"Boilers & Steam Generation",topics:["Steam properties","Boilers","Steam systems","Condensate","Steam economy"]},
-{sem:2,subject:"Instrumentation & Process Control",topics:["Temperature","Pressure","Flow","Sensors","Control loops"]},
+{sem:1,subject:"Engineering Mathematics",topics:[
+"Functions and graphs","Differentiation","Integration","Vectors","Differential equations"
+]},
 
-{sem:3,subject:"Market Milk",topics:["Reception","Testing","Clarification","Separation","Standardization","Pasteurization","Homogenization","Packaging"]},
-{sem:3,subject:"Traditional Indian Dairy Products",topics:["Dahi","Paneer","Chhana","Khoa","Ghee","Traditional sweets"]},
-{sem:3,subject:"Fat Rich Dairy Products",topics:["Cream","Butter","Ghee","Fat separation","Churning"]},
-{sem:3,subject:"Food Technology",topics:["Food preservation","Processing principles","Packaging","Quality attributes"]},
+{sem:1,subject:"Engineering Physics",topics:[
+"Units and dimensions","Mechanics","Fluid basics","Thermal physics","Electricity and magnetism"
+]},
 
-{sem:4,subject:"Cheese Technology",topics:["Milk preparation","Starter culture","Coagulation","Curd cutting","Whey drainage","Pressing","Ripening"]},
-{sem:4,subject:"Ice Cream & Frozen Desserts",topics:["Mix formulation","Homogenization","Freezing","Overrun","Hardening"]},
-{sem:4,subject:"Byproducts Technology",topics:["Whey","Lactose","Casein","Whey proteins","Utilization"]},
+{sem:1,subject:"Engineering Chemistry",topics:[
+"Atomic structure","Chemical bonding","Solutions","Thermodynamics","Organic chemistry foundations"
+]},
 
-{sem:5,subject:"Packaging of Dairy Products",topics:["Packaging materials","Aseptic packaging","Package integrity","Shelf life"]},
-{sem:5,subject:"Condensed & Dried Milks",topics:["Evaporation","Concentration","Spray drying","Powder properties","Instantization"]},
-{sem:5,subject:"Sensory Evaluation",topics:["Attributes","Panel selection","Difference tests","Hedonic testing","Data interpretation"]},
+{sem:1,subject:"Fluid Mechanics",topics:[
+"Fluid properties","Pressure","Hydrostatics","Continuity","Bernoulli equation","Reynolds number","Pipe flow","Pumps"
+]},
 
-{sem:6,subject:"Dairy Process Engineering",topics:["Material balance","Energy balance","Process design","Equipment selection","Piping"]},
-{sem:6,subject:"Energy Conservation & Management",topics:["Energy audit","Heat recovery","Steam economy","Refrigeration efficiency"]},
-{sem:6,subject:"Food Engineering",topics:["Unit operations","Fluid handling","Heat treatment","Drying","Evaporation"]},
+{sem:1,subject:"Workshop Practice & Engineering Drawing",topics:[
+"Workshop operations","Orthographic projection","Sections","Technical communication"
+]},
 
-{sem:7,subject:"Dairy Plant Design & Layout",topics:["Location","Layout","Material flow","Utilities","Hygienic design","Capacity"]},
-{sem:7,subject:"Dairy Plant Management, Waste Disposal & Pollution Abatement",topics:["Production planning","Costing","Maintenance","Effluent","Waste utilization"]},
-{sem:7,subject:"Research & Product Development",topics:["Literature review","Experimental design","Data analysis","Product formulation"]},
+{sem:2,subject:"Thermodynamics",topics:[
+"Systems","Properties","First law","Second law","Enthalpy","Entropy","Cycles"
+]},
 
-{sem:8,subject:"Industrial Training / Experiential Learning",topics:["Plant operations","Quality systems","Troubleshooting","Technical reporting","Project work"]}
+{sem:2,subject:"Heat & Mass Transfer",topics:[
+"Conduction","Convection","Radiation","Heat exchangers","Diffusion","Mass transfer"
+]},
+
+{sem:2,subject:"Refrigeration & Air Conditioning",topics:[
+"Vapour compression","Compressor","Condenser","Expansion device","Evaporator","COP"
+]},
+
+{sem:2,subject:"Dairy Engineering",topics:[
+"Unit operations","Pumps","Pipelines","Dairy equipment","Plant utilities"
+]},
+
+{sem:2,subject:"Boilers & Steam Generation",topics:[
+"Steam properties","Boilers","Steam systems","Condensate","Steam economy"
+]},
+
+{sem:2,subject:"Instrumentation & Process Control",topics:[
+"Temperature","Pressure","Flow","Sensors","Control loops"
+]},
+
+{sem:3,subject:"Market Milk",topics:[
+"Reception","Testing","Clarification","Separation","Standardization","Pasteurization","Homogenization","Packaging"
+]},
+
+{sem:3,subject:"Traditional Indian Dairy Products",topics:[
+"Dahi","Paneer","Chhana","Khoa","Ghee","Traditional sweets"
+]},
+
+{sem:3,subject:"Fat Rich Dairy Products",topics:[
+"Cream","Butter","Ghee","Fat separation","Churning"
+]},
+
+{sem:3,subject:"Food Technology",topics:[
+"Food preservation","Processing principles","Packaging","Quality attributes"
+]},
+
+{sem:4,subject:"Cheese Technology",topics:[
+"Milk preparation","Starter culture","Coagulation","Curd cutting","Whey drainage","Pressing","Ripening"
+]},
+
+{sem:4,subject:"Ice Cream & Frozen Desserts",topics:[
+"Mix formulation","Homogenization","Freezing","Overrun","Hardening"
+]},
+
+{sem:4,subject:"Byproducts Technology",topics:[
+"Whey","Lactose","Casein","Whey proteins","Utilization"
+]},
+
+{sem:5,subject:"Packaging of Dairy Products",topics:[
+"Packaging materials","Aseptic packaging","Package integrity","Shelf life"
+]},
+
+{sem:5,subject:"Condensed & Dried Milks",topics:[
+"Evaporation","Concentration","Spray drying","Powder properties","Instantization"
+]},
+
+{sem:5,subject:"Sensory Evaluation",topics:[
+"Attributes","Panel selection","Difference tests","Hedonic testing","Data interpretation"
+]},
+
+{sem:6,subject:"Dairy Process Engineering",topics:[
+"Material balance","Energy balance","Process design","Equipment selection","Piping"
+]},
+
+{sem:6,subject:"Energy Conservation & Management",topics:[
+"Energy audit","Heat recovery","Steam economy","Refrigeration efficiency"
+]},
+
+{sem:6,subject:"Food Engineering",topics:[
+"Unit operations","Fluid handling","Heat treatment","Drying","Evaporation"
+]},
+
+{sem:7,subject:"Dairy Plant Design & Layout",topics:[
+"Location","Layout","Material flow","Utilities","Hygienic design","Capacity"
+]},
+
+{sem:7,subject:"Dairy Plant Management, Waste Disposal & Pollution Abatement",topics:[
+"Production planning","Costing","Maintenance","Effluent","Waste utilization"
+]},
+
+{sem:7,subject:"Research & Product Development",topics:[
+"Literature review","Experimental design","Data analysis","Product formulation"
+]},
+
+{sem:8,subject:"Industrial Training / Experiential Learning",topics:[
+"Plant operations","Quality systems","Troubleshooting","Technical reporting","Project work"
+]}
+
 ];
 
-/* =========================================================
-   CONCEPT DATA
-   ========================================================= */
-
 const concepts=[
+
 {
 title:"Fluid and Continuum",
 area:"Fluid Mechanics",
@@ -796,6 +3407,7 @@ dairy:"Milk transfer, pipe sizing, valves, pumps and cleaning circuits.",
 mistakes:["Confusing density and viscosity","Mixing dynamic and kinematic viscosity units"],
 practice:["Define viscosity.","Why can temperature affect milk flow behavior?"]
 },
+
 {
 title:"Pressure & Hydrostatics",
 area:"Fluid Mechanics",
@@ -806,6 +3418,7 @@ dairy:"Storage tanks, pressure gauges and pump systems.",
 mistakes:["Confusing absolute and gauge pressure","Ignoring elevation differences"],
 practice:["Why does pressure increase with liquid depth?"]
 },
+
 {
 title:"Continuity Equation",
 area:"Fluid Mechanics",
@@ -816,6 +3429,7 @@ dairy:"Velocity changes in reducers, branches and process lines.",
 mistakes:["Using diameter in place of area","Ignoring density when compressibility matters"],
 practice:["If area halves, what happens to velocity for constant incompressible flow?"]
 },
+
 {
 title:"Bernoulli Equation",
 area:"Fluid Mechanics",
@@ -826,6 +3440,7 @@ dairy:"Pump head, pressure changes, pipe networks.",
 mistakes:["Applying the ideal equation without losses","Mixing pressure and head units"],
 practice:["What extra terms must be considered in a real plant?"]
 },
+
 {
 title:"Reynolds Number",
 area:"Fluid Mechanics",
@@ -836,6 +3451,7 @@ dairy:"Milk pipelines, cleaning flow and process equipment.",
 mistakes:["Wrong viscosity units","Using an inappropriate characteristic length"],
 practice:["Calculate Re for ρ=1000, v=1, D=0.05, μ=0.001."]
 },
+
 {
 title:"First Law of Thermodynamics",
 area:"Thermodynamics",
@@ -846,6 +3462,7 @@ dairy:"Pasteurizers, boilers, refrigeration and process heating.",
 mistakes:["Changing sign convention mid-solution","Confusing U and H"],
 practice:["What is the role of an energy balance in a pasteurizer?"]
 },
+
 {
 title:"Heat Transfer",
 area:"Heat & Mass Transfer",
@@ -856,6 +3473,7 @@ dairy:"Plate heat exchangers, pasteurization, chilling and evaporation.",
 mistakes:["Mixing kJ and J","Confusing heat and temperature"],
 practice:["Why is counter-current exchange useful?"]
 },
+
 {
 title:"Heat Exchanger",
 area:"Heat & Mass Transfer",
@@ -866,16 +3484,18 @@ dairy:"Pasteurization, regeneration, preheating and cooling.",
 mistakes:["Ignoring fouling","Using inconsistent stream-side energy balances"],
 practice:["Why can regeneration reduce plant energy demand?"]
 },
+
 {
 title:"Pasteurization",
 area:"Dairy Processing",
 simple:"Pasteurization is a controlled heat treatment intended to achieve a defined microbial reduction while preserving desired quality.",
 why:"It is a core dairy safety and quality operation.",
-formula:"A process must be specified by the applicable product and standard; a generic time-temperature pair should not be treated as universal.",
+formula:"The specific time-temperature schedule depends on the applicable product and standard.",
 dairy:"Market milk and other liquid dairy products.",
 mistakes:["Calling pasteurization sterilization","Using outdated parameters without checking the current standard"],
 practice:["Why is a holding section used?"]
 },
+
 {
 title:"Homogenization",
 area:"Dairy Processing",
@@ -886,6 +3506,7 @@ dairy:"Market milk and flavored/emulsified dairy drinks.",
 mistakes:["Treating it as a microbial kill step","Ignoring product temperature"],
 practice:["How does smaller fat-globule size affect creaming?"]
 },
+
 {
 title:"Cleaning-in-Place",
 area:"Dairy Hygiene",
@@ -896,6 +3517,7 @@ dairy:"Pipelines, tanks, PHEs, fillers and process circuits.",
 mistakes:["Assuming longer is always better","Ignoring flow velocity or solution concentration"],
 practice:["What variables should a CIP study monitor?"]
 },
+
 {
 title:"Material Balance",
 area:"Dairy Process Engineering",
@@ -906,6 +3528,7 @@ dairy:"Standardization, concentration, drying, cheese and whey flows.",
 mistakes:["Mixing mass and volume balances incorrectly","Losing track of component basis"],
 practice:["Why is a component balance useful in standardization?"]
 },
+
 {
 title:"Refrigeration COP",
 area:"Refrigeration",
@@ -916,6 +3539,7 @@ dairy:"Milk chilling, cold rooms and frozen desserts.",
 mistakes:["Confusing COP with efficiency in the thermodynamic sense","Mixing refrigeration and heat-pump COP definitions"],
 practice:["What increases useful refrigeration performance?"]
 },
+
 {
 title:"Spray Drying",
 area:"Dairy Engineering",
@@ -926,13 +3550,11 @@ dairy:"Milk powder, whey powder and dairy ingredients.",
 mistakes:["Ignoring feed solids","Confusing inlet air temperature with product temperature"],
 practice:["Why does atomization help drying?"]
 }
+
 ];
 
-/* =========================================================
-   PROCESS DATA
-   ========================================================= */
-
 const processes=[
+
 {
 title:"Milk Reception & Chilling",
 icon:"🥛",
@@ -943,6 +3565,7 @@ quality:"Temperature, sensory condition, composition, adulteration screening, ac
 problems:["Delayed chilling","Poor tank hygiene","Unrepresentative sampling"],
 app:"Foundation of controlled milk processing."
 },
+
 {
 title:"Clarification",
 icon:"🌀",
@@ -953,6 +3576,7 @@ quality:"Temperature, flow, solids removal and sanitation.",
 problems:["Overloading","Poor cleaning","Unstable flow"],
 app:"Improves physical cleanliness and protects downstream equipment."
 },
+
 {
 title:"Separation & Standardization",
 icon:"⚖️",
@@ -963,6 +3587,7 @@ quality:"Fat, SNF, flow, temperature, mixing accuracy.",
 problems:["Incorrect target","Poor separation","Flow instability"],
 app:"Consistent composition of market milk and products."
 },
+
 {
 title:"Pasteurization",
 icon:"🔥",
@@ -973,6 +3598,7 @@ quality:"Time-temperature history, flow, hygiene and current regulatory requirem
 problems:["Insufficient treatment","Overheating","Poor regeneration balance"],
 app:"Core liquid-milk safety operation."
 },
+
 {
 title:"Homogenization",
 icon:"⚙️",
@@ -983,6 +3609,7 @@ quality:"Pressure, temperature, feed condition and formulation.",
 problems:["Valve wear","Wrong pressure","Poor feed condition"],
 app:"Stable milk and dairy beverages."
 },
+
 {
 title:"CIP",
 icon:"🧼",
@@ -993,6 +3620,7 @@ quality:"Time, temperature, chemistry, flow and rinse verification.",
 problems:["Insufficient flow","Wrong concentration","Poor coverage"],
 app:"Hygienic operation of plant circuits."
 },
+
 {
 title:"Yogurt / Dahi",
 icon:"🥣",
@@ -1003,6 +3631,7 @@ quality:"Culture activity, incubation conditions, acidity, texture and post-proc
 problems:["Weak starter","Incorrect incubation","Contamination"],
 app:"Fermented dairy product manufacture."
 },
+
 {
 title:"Butter",
 icon:"🧈",
@@ -1013,6 +3642,7 @@ quality:"Cream fat, temperature, churning and moisture distribution.",
 problems:["Poor churnability","Uneven moisture","Overworking"],
 app:"Fat-rich dairy product manufacturing."
 },
+
 {
 title:"Cheese",
 icon:"🧀",
@@ -1023,6 +3653,7 @@ quality:"Culture, coagulation, moisture, salt, acidity and ripening conditions."
 problems:["Weak curd","Poor acid development","Moisture imbalance"],
 app:"Value-added dairy product technology."
 },
+
 {
 title:"Condensation / Evaporation",
 icon:"💧",
@@ -1033,6 +3664,7 @@ quality:"Feed solids, temperature, residence time, viscosity and fouling.",
 problems:["Fouling","Scorching","Poor vapor economy"],
 app:"Condensed milk and pre-concentration before drying."
 },
+
 {
 title:"Spray Drying",
 icon:"🌬️",
@@ -1043,6 +3675,7 @@ quality:"Feed solids, atomization, air conditions, powder moisture and flowabili
 problems:["Wall deposition","High moisture","Poor powder properties"],
 app:"Milk and whey powder production."
 },
+
 {
 title:"Refrigeration",
 icon:"❄️",
@@ -1053,74 +3686,78 @@ quality:"Load, evaporating/condensing conditions, refrigerant and efficiency.",
 problems:["Poor heat transfer","Compressor problems","Incorrect system conditions"],
 app:"Milk chilling, cold storage and frozen products."
 }
+
 ];
 
-/* =========================================================
-   PRODUCT DATA
-   ========================================================= */
-
 const products=[
+
 {
 title:"Fluid Milk",
 flow:["Raw milk","Clarify","Separate","Standardize","Heat treat","Homogenize","Pack"],
 quality:"Composition, microbiological quality, heat-treatment history, package integrity and shelf-life conditions.",
 defects:["Off-flavor","Sedimentation","Creaming instability","Microbial spoilage"]
 },
+
 {
 title:"Curd / Yogurt",
 flow:["Milk","Standardize","Heat treat","Cool","Culture","Incubate","Cool"],
 quality:"Acidity, texture, culture performance, syneresis and contamination control.",
 defects:["Weak gel","Excess syneresis","Off-flavor","Poor culture activity"]
 },
+
 {
 title:"Butter",
 flow:["Cream","Prepare","Churn","Drain","Work","Pack"],
 quality:"Fat content, moisture distribution, flavor, texture and storage.",
 defects:["Free moisture","Poor spreadability","Rancid flavor"]
 },
+
 {
 title:"Ghee",
 flow:["Milk/cream route","Butter/cream","Clarify","Heat","Separate solids","Filter","Pack"],
 quality:"Flavor, moisture, clarity, oxidation and storage.",
 defects:["Burnt flavor","Excess moisture","Sediment"]
 },
+
 {
 title:"Cheese",
 flow:["Milk","Culture","Coagulate","Cut","Drain","Press","Ripen"],
 quality:"Moisture, salt, acidity, texture, microbial quality and ripening.",
 defects:["Weak body","Poor flavor development","Uneven moisture"]
 },
+
 {
 title:"Ice Cream",
 flow:["Mix","Pasteurize","Homogenize","Age","Freeze","Harden","Store"],
 quality:"Overrun, body, texture, melting behavior, flavor and microbiological quality.",
 defects:["Icy texture","Low overrun","Shrinkage","Heat-shock damage"]
 },
+
 {
 title:"Milk Powder",
 flow:["Milk","Pre-treat","Concentrate","Spray dry","Cool","Pack"],
 quality:"Moisture, solubility, flowability, bulk density and storage stability.",
 defects:["Poor solubility","Caking","High moisture"]
 },
+
 {
 title:"Whey Products",
 flow:["Whey","Clarify","Concentrate","Fractionate/dry","Pack"],
 quality:"Composition, contamination control, concentration and powder performance.",
 defects:["Fouling","Poor solubility","Flavor deterioration"]
 },
+
 {
 title:"Condensed Milk",
 flow:["Milk","Standardize","Heat treat","Evaporate","Cool","Pack"],
 quality:"Solids, viscosity, color, flavor and microbial stability.",
 defects:["Crystallization problems","Scorching","Phase instability"]
 }
+
 ];
 
-/* =========================================================
-   EQUIPMENT DATA
-   ========================================================= */
-
 const equipment=[
+
 {
 name:"Cream Separator",
 category:"Separation",
@@ -1132,6 +3769,7 @@ advantages:"Fast continuous separation.",
 limitations:"Sensitive to feed condition and hygiene.",
 applications:"Cream production and standardization."
 },
+
 {
 name:"Plate Heat Exchanger",
 category:"Heat Transfer",
@@ -1143,6 +3781,7 @@ advantages:"Compact and efficient.",
 limitations:"Fouling/pressure constraints.",
 applications:"Pasteurization, regeneration, heating and cooling."
 },
+
 {
 name:"Homogenizer",
 category:"Process Equipment",
@@ -1154,6 +3793,7 @@ advantages:"Improves emulsion stability.",
 limitations:"Power demand and wear.",
 applications:"Milk and dairy beverages."
 },
+
 {
 name:"Pasteurizer",
 category:"Heat Treatment",
@@ -1165,6 +3805,7 @@ advantages:"Continuous controlled treatment.",
 limitations:"Requires precise instrumentation and hygiene.",
 applications:"Market milk and liquid dairy products."
 },
+
 {
 name:"Milk Pump",
 category:"Fluid Handling",
@@ -1176,6 +3817,7 @@ advantages:"Continuous transfer.",
 limitations:"Can suffer wear, cavitation or poor sizing.",
 applications:"Tank transfer and circulation."
 },
+
 {
 name:"Evaporator",
 category:"Concentration",
@@ -1187,6 +3829,7 @@ advantages:"High-throughput concentration.",
 limitations:"Fouling and heat sensitivity.",
 applications:"Condensed milk and pre-concentration."
 },
+
 {
 name:"Spray Dryer",
 category:"Drying",
@@ -1198,6 +3841,7 @@ advantages:"Rapid drying and continuous operation.",
 limitations:"Energy intensive and sensitive to operating conditions.",
 applications:"Milk and whey powders."
 },
+
 {
 name:"Butter Churn",
 category:"Fat Processing",
@@ -1209,6 +3853,7 @@ advantages:"Straightforward core operation.",
 limitations:"Sensitive to process conditions.",
 applications:"Butter manufacture."
 },
+
 {
 name:"Ice Cream Freezer",
 category:"Frozen Products",
@@ -1220,6 +3865,7 @@ advantages:"Controls texture and overrun.",
 limitations:"Requires tight process control.",
 applications:"Ice cream and frozen desserts."
 },
+
 {
 name:"CIP System",
 category:"Hygiene",
@@ -1231,6 +3877,7 @@ advantages:"Repeatable hygienic cleaning.",
 limitations:"Consumes water, energy and chemicals.",
 applications:"Pipelines, tanks, PHEs and fillers."
 },
+
 {
 name:"Refrigeration System",
 category:"Refrigeration",
@@ -1242,6 +3889,7 @@ advantages:"Supports cold-chain control.",
 limitations:"Energy consumption and maintenance.",
 applications:"Milk chilling, cold rooms, frozen products."
 },
+
 {
 name:"Storage Tank",
 category:"Process Storage",
@@ -1253,13 +3901,11 @@ advantages:"Controlled buffer between process stages.",
 limitations:"Requires strong hygienic design and cleaning.",
 applications:"Milk storage, culture tanks, product holding."
 }
+
 ];
 
-/* =========================================================
-   PRACTICAL DATA
-   ========================================================= */
-
 const practicals=[
+
 {
 title:"Milk Acidity Determination",
 subject:"Dairy Chemistry",
@@ -1273,6 +3919,7 @@ result:"Report acidity in the required units.",
 precautions:["Use representative sample","Read burette correctly","Follow laboratory chemical-safety SOP"],
 viva:["What is titratable acidity?","Why does acidity matter in milk quality?"]
 },
+
 {
 title:"Milk Fat by Gerber Principle",
 subject:"Dairy Chemistry",
@@ -1286,6 +3933,7 @@ result:"Milk fat percentage.",
 precautions:["Handle corrosive reagents only under supervision","Use proper balancing in centrifuge"],
 viva:["Why is centrifugation needed?","What does the butyrometer measure?"]
 },
+
 {
 title:"Reynolds Number Study",
 subject:"Fluid Mechanics",
@@ -1299,6 +3947,7 @@ result:"Report Reynolds number and discuss likely regime within the chosen geome
 precautions:["Use consistent units","State geometry and assumptions"],
 viva:["What does Re represent?","What variables increase Re?"]
 },
+
 {
 title:"Heat Exchanger Performance",
 subject:"Dairy Engineering",
@@ -1312,32 +3961,89 @@ result:"Heat-transfer duty and discussion of balance.",
 precautions:["Allow stable readings","Verify sensor placement"],
 viva:["What is fouling?","Why can counter-current flow help?"]
 }
-];
 
-/* =========================================================
-   QUESTION DATA
-   ========================================================= */
+];
 
 const questions=[
-{type:"Short",topic:"Fluid Mechanics",q:"Define viscosity and explain why it matters in dairy pipelines."},
-{type:"Numerical",topic:"Fluid Mechanics",q:"For ρ=1000 kg/m³, v=1 m/s, D=0.05 m and μ=0.001 Pa·s, calculate Re."},
-{type:"Short",topic:"Fluid Mechanics",q:"State the continuity equation for steady incompressible flow."},
-{type:"Viva",topic:"Dairy Processing",q:"Why is raw milk chilled rapidly after reception?"},
-{type:"Short",topic:"Dairy Processing",q:"What is the main purpose of homogenization?"},
-{type:"Viva",topic:"Dairy Engineering",q:"Why are plate heat exchangers useful in dairy plants?"},
-{type:"Numerical",topic:"Heat & Mass Transfer",q:"Calculate Q for 1000 kg product, Cp=3.9 kJ/kg·K and ΔT=10 K."},
-{type:"Short",topic:"Food Safety",q:"Distinguish cleaning from sanitization."},
-{type:"MCQ",topic:"Thermodynamics",q:"Which is a state property? A) Heat B) Work C) Enthalpy D) Path length",answer:"C"},
-{type:"MCQ",topic:"Fluid Mechanics",q:"For steady incompressible flow, which is correct? A) Av=constant B) A/v=constant C) A+v=constant D) A-v=constant",answer:"A"},
-{type:"Viva",topic:"Milk Chemistry",q:"Why is milk considered a complex food system?"},
-{type:"Short",topic:"Refrigeration",q:"What does COP represent in a refrigeration system?"}
+
+{
+type:"Short",
+topic:"Fluid Mechanics",
+q:"Define viscosity and explain why it matters in dairy pipelines."
+},
+
+{
+type:"Numerical",
+topic:"Fluid Mechanics",
+q:"For ρ=1000 kg/m³, v=1 m/s, D=0.05 m and μ=0.001 Pa·s, calculate Re."
+},
+
+{
+type:"Short",
+topic:"Fluid Mechanics",
+q:"State the continuity equation for steady incompressible flow."
+},
+
+{
+type:"Viva",
+topic:"Dairy Processing",
+q:"Why is raw milk chilled rapidly after reception?"
+},
+
+{
+type:"Short",
+topic:"Dairy Processing",
+q:"What is the main purpose of homogenization?"
+},
+
+{
+type:"Viva",
+topic:"Dairy Engineering",
+q:"Why are plate heat exchangers useful in dairy plants?"
+},
+
+{
+type:"Numerical",
+topic:"Heat & Mass Transfer",
+q:"Calculate Q for 1000 kg product, Cp=3.9 kJ/kg·K and ΔT=10 K."
+},
+
+{
+type:"Short",
+topic:"Food Safety",
+q:"Distinguish cleaning from sanitization."
+},
+
+{
+type:"MCQ",
+topic:"Thermodynamics",
+q:"Which is a state property? A) Heat B) Work C) Enthalpy D) Path length",
+answer:"C"
+},
+
+{
+type:"MCQ",
+topic:"Fluid Mechanics",
+q:"For steady incompressible flow, which is correct? A) Av=constant B) A/v=constant C) A+v=constant D) A-v=constant",
+answer:"A"
+},
+
+{
+type:"Viva",
+topic:"Milk Chemistry",
+q:"Why is milk considered a complex food system?"
+},
+
+{
+type:"Short",
+topic:"Refrigeration",
+q:"What does COP represent in a refrigeration system?"
+}
+
 ];
 
-/* =========================================================
-   PROJECT DATA
-   ========================================================= */
-
 const projects=[
+
 {
 title:"Dairy Plant Process Calculator",
 level:"Engineering + Software",
@@ -1346,6 +4052,7 @@ method:"Build modular, unit-aware calculations for balances, heat, flow, pumping
 output:"A deployable calculator with formulas, assumptions and test cases.",
 extension:"Add validation datasets, downloadable reports and process-flow integration."
 },
+
 {
 title:"Milk Standardization Study",
 level:"Beginner Engineering",
@@ -1354,6 +4061,7 @@ method:"Create a mass/component balance model for target fat and SNF.",
 output:"Calculator + worked case study.",
 extension:"Add uncertainty and density/composition handling."
 },
+
 {
 title:"Pasteurizer Energy Study",
 level:"Engineering Research",
@@ -1362,6 +4070,7 @@ method:"Build a simplified energy balance and compare configurations.",
 output:"Analysis and dashboard.",
 extension:"Compare heat-recovery assumptions."
 },
+
 {
 title:"CIP Monitoring Assistant",
 level:"Software + Process",
@@ -1370,6 +4079,7 @@ method:"Create a structured logging/checklist system around time, temperature, c
 output:"Digital CIP record and trend view.",
 extension:"Add anomaly flags."
 },
+
 {
 title:"Dairy Knowledge Graph",
 level:"Software + Research",
@@ -1378,6 +4088,7 @@ method:"Connect concepts ↔ processes ↔ equipment ↔ calculators ↔ questio
 output:"Searchable linked knowledge model.",
 extension:"Add contributor workflow and citations."
 },
+
 {
 title:"Dairy Plant Energy Audit",
 level:"Advanced Research",
@@ -1386,78 +4097,122 @@ method:"Map energy users and opportunities for heat recovery/efficiency.",
 output:"Energy Sankey-style summary and recommendations.",
 extension:"Add real plant measurements."
 }
-];
 
-/* =========================================================
-   CAREER DATA
-   ========================================================= */
+];
 
 const careers=[
-{title:"Production & Plant Operations",icon:"🏭",text:"Production planning, process control, troubleshooting, shift operations and continuous improvement."},
-{title:"Quality Assurance / Quality Control",icon:"🧪",text:"Laboratory analysis, specifications, food-safety systems, documentation and process quality."},
-{title:"R&D / Product Development",icon:"🔬",text:"Product formulation, process development, shelf-life, ingredient interactions and innovation."},
-{title:"Dairy Engineering",icon:"⚙️",text:"Fluid mechanics, heat transfer, refrigeration, utilities, process equipment and plant design."},
-{title:"Packaging & Technical Roles",icon:"📦",text:"Packaging systems, technical service, applications, material selection and product-package interaction."},
-{title:"Higher Education & Research",icon:"🎓",text:"Postgraduate study, research projects, specialized engineering/food science and PhD pathways."},
-{title:"Data & Digital Dairy",icon:"💻",text:"Programming, data analysis, dashboards, automation and digital process improvement."},
-{title:"Entrepreneurship",icon:"🚀",text:"Dairy products, services, engineering tools, process consulting and technology ventures."},
-{title:"Core Professional Skills",icon:"🧰",text:"Excel, statistics, coding, CAD/process simulation, technical writing, communication and industrial safety."}
+
+{
+title:"Production & Plant Operations",
+icon:"🏭",
+text:"Production planning, process control, troubleshooting, shift operations and continuous improvement."
+},
+
+{
+title:"Quality Assurance / Quality Control",
+icon:"🧪",
+text:"Laboratory analysis, specifications, food-safety systems, documentation and process quality."
+},
+
+{
+title:"R&D / Product Development",
+icon:"🔬",
+text:"Product formulation, process development, shelf-life, ingredient interactions and innovation."
+},
+
+{
+title:"Dairy Engineering",
+icon:"⚙️",
+text:"Fluid mechanics, heat transfer, refrigeration, utilities, process equipment and plant design."
+},
+
+{
+title:"Packaging & Technical Roles",
+icon:"📦",
+text:"Packaging systems, technical service, applications, material selection and product-package interaction."
+},
+
+{
+title:"Higher Education & Research",
+icon:"🎓",
+text:"Postgraduate study, research projects, specialized engineering/food science and PhD pathways."
+},
+
+{
+title:"Data & Digital Dairy",
+icon:"💻",
+text:"Programming, data analysis, dashboards, automation and digital process improvement."
+},
+
+{
+title:"Entrepreneurship",
+icon:"🚀",
+text:"Dairy products, services, engineering tools, process consulting and technology ventures."
+},
+
+{
+title:"Core Professional Skills",
+icon:"🧰",
+text:"Excel, statistics, coding, CAD/process simulation, technical writing, communication and industrial safety."
+}
+
 ];
 
-/* =========================================================
-   RESOURCE DATA
-   ========================================================= */
-
 const resources=[
+
 {
 title:"ICAR–NDRI Academic Rules & B.Tech Dairy Technology",
 type:"Primary institutional source",
 desc:"Current programme scope, duration and academic structure.",
 url:"https://www.ndri.res.in/academic-rules-regulations"
 },
+
 {
 title:"ICAR–NDRI Dairy Technology",
 type:"Primary institutional source",
 desc:"Current B.Tech Dairy Technology course nomenclature and credits.",
 url:"https://www.ndri.res.in/dairy-technology"
 },
+
 {
 title:"ICAR–NDRI Dairy Engineering",
 type:"Primary institutional source",
 desc:"Current Dairy Engineering course areas including Fluid Mechanics, Thermodynamics, Heat & Mass Transfer, Refrigeration, Process Engineering, Process Control, Energy Conservation and Plant Design.",
 url:"https://www.ndri.res.in/dairy-engineering"
 },
+
 {
 title:"ICAR–NDRI B.Tech Programme",
 type:"Primary institutional source",
 desc:"Programme overview and in-plant training information.",
 url:"https://www.ndri.res.in/b-tech-programme-dairy-technology-biotechnology-food-technology"
 },
+
 {
 title:"FAO Milk Processing",
 type:"International technical source",
 desc:"Milk-processing principles including chilling and major processing operations.",
 url:"https://www.fao.org/dairy-production-products/processing/milk-processing/en"
 },
+
 {
 title:"FSSAI Dairy Product Standards",
 type:"Regulatory source",
 desc:"Current Indian regulatory framework for milk and dairy products. Always open the official current document before using a standard value.",
 url:"https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf"
 },
+
 {
 title:"FSSAI Food Standards",
 type:"Regulatory index",
 desc:"Official standards and regulations portal.",
 url:"https://www.fssai.gov.in/food-standards.php"
 }
+
 ];
 
-/* =========================================================
-   GLOSSARY DATA
-   ========================================================= */
-
 const glossary=[
+
 ["CIP","Cleaning-in-place: cleaning of process systems without dismantling the equipment."],
 ["SNF","Solids-not-fat; all milk solids other than milk fat."],
 ["Homogenization","High-pressure treatment used to reduce fat-globule size and improve physical stability."],
@@ -1478,22 +4233,42 @@ const glossary=[
    STATE
    ========================================================= */
 
-const compareItems=["Plate Heat Exchanger","Homogenizer","Cream Separator","Pasteurizer"];
+const compareItems=[
+"Plate Heat Exchanger",
+"Homogenizer",
+"Cream Separator",
+"Pasteurizer"
+];
 
 const state={
+
 theme:localStorage.getItem("dv_theme")||"light",
-notes:JSON.parse(localStorage.getItem("dv_notes")||"[]"),
-tasks:JSON.parse(localStorage.getItem("dv_tasks")||"[]"),
-progress:JSON.parse(localStorage.getItem("dv_progress")||"[]")
+
+notes:
+JSON.parse(
+localStorage.getItem("dv_notes")||"[]"
+),
+
+tasks:
+JSON.parse(
+localStorage.getItem("dv_tasks")||"[]"
+),
+
+progress:
+JSON.parse(
+localStorage.getItem("dv_progress")||"[]"
+)
+
 };
 
 /* =========================================================
-   UTILITIES
+   HELPERS
    ========================================================= */
 
 const $=id=>document.getElementById(id);
 
-const esc=s=>String(s)
+const esc=s=>
+String(s)
 .replaceAll("&","&amp;")
 .replaceAll("<","&lt;")
 .replaceAll(">","&gt;")
@@ -1501,36 +4276,128 @@ const esc=s=>String(s)
 .replaceAll("'","&#039;");
 
 function money(v){
-return "₹"+Number(v||0).toLocaleString("en-IN",{
+
+return "₹"+
+Number(v||0).toLocaleString("en-IN",{
 minimumFractionDigits:2,
 maximumFractionDigits:2
 });
+
 }
 
 function save(){
-localStorage.setItem("dv_theme",state.theme);
-localStorage.setItem("dv_notes",JSON.stringify(state.notes));
-localStorage.setItem("dv_tasks",JSON.stringify(state.tasks));
-localStorage.setItem("dv_progress",JSON.stringify(state.progress));
+
+localStorage.setItem(
+"dv_theme",
+state.theme
+);
+
+localStorage.setItem(
+"dv_notes",
+JSON.stringify(state.notes)
+);
+
+localStorage.setItem(
+"dv_tasks",
+JSON.stringify(state.tasks)
+);
+
+localStorage.setItem(
+"dv_progress",
+JSON.stringify(state.progress)
+);
+
 }
 
 function scrollToId(id){
-$(id)?.scrollIntoView({behavior:"smooth",block:"start"});
+
+const el=$(id);
+
+if(el){
+el.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
 }
+
+closeDrawer();
+
+}
+
+/* =========================================================
+   DRAWER
+   ========================================================= */
+
+const drawer=$("drawer");
+const backdrop=$("drawerBackdrop");
+
+function openDrawer(){
+
+drawer.classList.add("open");
+backdrop.classList.add("open");
+document.body.classList.add("drawer-open");
+
+}
+
+function closeDrawer(){
+
+drawer.classList.remove("open");
+backdrop.classList.remove("open");
+document.body.classList.remove("drawer-open");
+
+}
+
+$("menuBtn").onclick=openDrawer;
+$("drawerClose").onclick=closeDrawer;
+backdrop.onclick=closeDrawer;
+
+document.querySelectorAll(".drawer-link")
+.forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+const target=btn.dataset.target;
+
+scrollToId(target);
+
+document.querySelectorAll(".drawer-link")
+.forEach(x=>x.classList.remove("active"));
+
+btn.classList.add("active");
+
+});
+
+});
 
 /* =========================================================
    THEME
    ========================================================= */
 
 function applyTheme(){
-$("themeBtn").textContent=state.theme==="dark"?"☀️":"🌙";
-document.documentElement.setAttribute("data-theme",state.theme);
+
+document.documentElement.setAttribute(
+"data-theme",
+state.theme
+);
+
+$("themeBtn").textContent=
+state.theme==="dark"
+?"☀️"
+:"🌙";
+
 save();
+
 }
 
 $("themeBtn").onclick=()=>{
-state.theme=state.theme==="dark"?"light":"dark";
+
+state.theme=
+state.theme==="dark"
+?"light"
+:"dark";
+
 applyTheme();
+
 };
 
 /* =========================================================
@@ -1538,136 +4405,417 @@ applyTheme();
    ========================================================= */
 
 function openModal(title,body){
+
 $("modalTitle").innerHTML=title;
 $("modalBody").innerHTML=body;
+
 $("modal").classList.add("open");
+
 document.body.style.overflow="hidden";
+
 }
 
 function closeModal(){
+
 $("modal").classList.remove("open");
+
 document.body.style.overflow="";
+
 }
 
 $("modal").onclick=e=>{
-if(e.target===$("modal"))closeModal();
+
+if(e.target===$("modal")){
+closeModal();
+}
+
 };
 
 document.addEventListener("keydown",e=>{
-if(e.key==="Escape")closeModal();
+
+if(e.key==="Escape"){
+closeModal();
+closeDrawer();
+}
+
 });
+
+/* =========================================================
+   ACTIVE NAVIGATION WHILE SCROLLING
+   ========================================================= */
+
+const navSections=[
+"home",
+"curriculum",
+"learn",
+"processes",
+"products",
+"equipment",
+"tools",
+"practicals",
+"questions",
+"quiz",
+"assignments",
+"projects",
+"career",
+"resources",
+"glossary",
+"compare",
+"myspace",
+"creator"
+];
+
+function updateActiveNavigation(){
+
+const scrollPos=
+window.scrollY+
+window.innerHeight*.25;
+
+let active="home";
+
+navSections.forEach(id=>{
+
+const section=$(id);
+
+if(
+section &&
+section.offsetTop<=scrollPos
+){
+active=id;
+}
+
+});
+
+document.querySelectorAll(".drawer-link")
+.forEach(btn=>{
+
+btn.classList.toggle(
+"active",
+btn.dataset.target===active
+);
+
+});
+
+}
+
+window.addEventListener(
+"scroll",
+updateActiveNavigation,
+{passive:true}
+);
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+
+const backTop=$("backTop");
+
+window.addEventListener(
+"scroll",
+()=>{
+
+if(window.scrollY>500){
+
+backTop.classList.add("visible");
+
+}else{
+
+backTop.classList.remove("visible");
+
+}
+
+},
+{passive:true}
+);
+
+backTop.onclick=()=>{
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+};
+
+/* =========================================================
+   RESEARCH METHOD
+   ========================================================= */
+
+function openResearchMethod(){
+
+openModal(
+
+`<h2>How DairyVerse is structured</h2>`,
+
+`
+
+<div class="callout">
+
+DairyVerse is designed as a learning-navigation system,
+not a replacement for textbooks, laboratory manuals,
+standards or university teaching.
+
+</div>
+
+<h3>1. Curriculum</h3>
+
+<p>
+Start from the subject and topic instead of browsing random content.
+</p>
+
+<h3>2. Concept</h3>
+
+<p>
+Understand definitions, principles, mathematics and common mistakes.
+</p>
+
+<h3>3. Dairy context</h3>
+
+<p>
+Connect engineering and science to actual dairy processing.
+</p>
+
+<h3>4. Practice</h3>
+
+<p>
+Use numericals, questions, practicals and quiz mode.
+</p>
+
+<h3>5. Build</h3>
+
+<p>
+Apply knowledge to calculators, process studies and projects.
+</p>
+
+<h3>6. Verify</h3>
+
+<p>
+Move toward authoritative institutional, technical and regulatory sources.
+</p>
+
+`
+
+);
+
+}
 
 /* =========================================================
    CURRICULUM
    ========================================================= */
 
 function initCurriculum(){
-const sems=[...new Set(curriculum.map(x=>x.sem))];
+
+const sems=
+[...new Set(
+curriculum.map(x=>x.sem)
+)];
+
 $("semFilter").innerHTML=
 '<option value="all">All semesters</option>'+
-sems.map(s=>`<option value="${s}">Semester ${s}</option>`).join("");
+sems.map(
+s=>`<option value="${s}">Semester ${s}</option>`
+).join("");
 
 renderCurriculum();
+
 }
 
 function renderCurriculum(){
-const sem=$("semFilter").value;
-const q=$("subjectSearch").value.toLowerCase().trim();
 
-const filtered=curriculum.filter(x=>
+const sem=$("semFilter").value;
+
+const q=
+$("subjectSearch")
+.value
+.toLowerCase()
+.trim();
+
+const filtered=
+curriculum.filter(x=>
 (sem==="all"||String(x.sem)===sem)&&
-((x.subject+" "+x.topics.join(" ")).toLowerCase().includes(q))
+(
+x.subject+" "+x.topics.join(" ")
+)
+.toLowerCase()
+.includes(q)
 );
 
-$("curriculumList").innerHTML=filtered.length
-?filtered.map(x=>`
+$("curriculumList").innerHTML=
+filtered.length
+
+?
+
+filtered.map(x=>`
+
 <div class="list-item">
+
 <div>
-<span class="tag">Semester ${x.sem}</span>
-<strong>${esc(x.subject)}</strong>
-<small>${x.topics.map(esc).join(" • ")}</small>
+
+<span class="tag">
+Semester ${x.sem}
+</span>
+
+<strong>
+${esc(x.subject)}
+</strong>
+
+<small>
+${x.topics.map(esc).join(" • ")}
+</small>
+
 </div>
-<button class="btn soft" onclick="openCurriculum(${curriculum.indexOf(x)})">Explore</button>
+
+<button
+class="btn soft"
+onclick="openCurriculum(${curriculum.indexOf(x)})">
+Explore
+</button>
+
 </div>
+
 `).join("")
-:'<div class="callout">No matching subject.</div>';
+
+:
+
+'<div class="callout">No matching subject.</div>';
+
 }
 
 function openCurriculum(i){
+
 const x=curriculum[i];
 
 openModal(
+
 `<h2>${esc(x.subject)}</h2>`,
+
 `
+
 <div class="tags">
-<span class="tag">Semester ${x.sem}</span>
-<span class="tag">${x.topics.length} topic groups</span>
+
+<span class="tag">
+Semester ${x.sem}
+</span>
+
+<span class="tag">
+${x.topics.length} topic groups
+</span>
+
 </div>
 
 <h3>Topic map</h3>
-<ul>${x.topics.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
 
-<h3>Recommended study path</h3>
+<ul>
+${x.topics.map(t=>`<li>${esc(t)}</li>`).join("")}
+</ul>
+
+<h3>Recommended learning path</h3>
 
 <div class="flow">
+
 <span>Prerequisites</span>
 <b class="arrow">→</b>
+
 <span>Concepts</span>
 <b class="arrow">→</b>
+
 <span>Dairy application</span>
 <b class="arrow">→</b>
+
 <span>Numericals / practical</span>
 <b class="arrow">→</b>
-<span>Further resources</span>
+
+<span>Resources</span>
+
 </div>
 
 <div class="callout">
-<strong>Important:</strong>
-exact semester placement and nomenclature can differ among institutions.
-Use this as a structured exploration map, then compare it with your own university syllabus.
+
+Exact semester placement and course nomenclature
+can differ among institutions.
+Use this as a structured exploration map,
+then compare it with your own university syllabus.
+
 </div>
+
 `
+
 );
+
 }
+
+$("semFilter").onchange=renderCurriculum;
+$("subjectSearch").oninput=renderCurriculum;
 
 /* =========================================================
    CONCEPTS
    ========================================================= */
 
 function initConceptFilters(){
-const areas=[...new Set(concepts.map(x=>x.area))];
+
+const areas=
+[...new Set(
+concepts.map(x=>x.area)
+)];
 
 $("conceptFilter").innerHTML=
 '<option value="all">All areas</option>'+
-areas.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+areas.map(
+x=>`<option value="${esc(x)}">${esc(x)}</option>`
+).join("");
 
 renderConcepts();
+
 }
 
 function renderConcepts(){
-const q=$("conceptSearch").value.toLowerCase().trim();
-const a=$("conceptFilter").value;
 
-const filtered=concepts.filter(x=>
-(a==="all"||x.area===a)&&
-(x.title+" "+x.simple+" "+x.dairy).toLowerCase().includes(q)
+const q=
+$("conceptSearch")
+.value
+.toLowerCase()
+.trim();
+
+const area=
+$("conceptFilter").value;
+
+const filtered=
+concepts.filter(x=>
+(area==="all"||x.area===area)&&
+(
+x.title+" "+x.simple+" "+x.dairy
+)
+.toLowerCase()
+.includes(q)
 );
 
 $("conceptGrid").innerHTML=
 filtered.map(x=>`
-<article class="card clickable" onclick="openConcept(${concepts.indexOf(x)})">
+
+<article
+class="card clickable"
+onclick="openConcept(${concepts.indexOf(x)})">
 
 <div class="tags">
-<span class="tag">${esc(x.area)}</span>
+<span class="tag">
+${esc(x.area)}
+</span>
 </div>
 
-<div class="icon">🧠</div>
+<div class="card-icon">
+🧠
+</div>
 
-<h3>${esc(x.title)}</h3>
+<h3>
+${esc(x.title)}
+</h3>
 
-<p>${esc(x.simple)}</p>
+<p>
+${esc(x.simple)}
+</p>
 
-<div class="divider"></div>
+<div class="divider">
+</div>
 
 <small style="color:var(--muted)">
 <strong>Dairy application:</strong>
@@ -1675,55 +4823,102 @@ ${esc(x.dairy)}
 </small>
 
 </article>
+
 `).join("")
-||'<div class="callout">No matching concepts.</div>';
+||
+'<div class="callout">No matching concepts.</div>';
+
 }
 
 function openConcept(i){
+
 const x=concepts[i];
 
 markProgress("concept:"+x.title);
 
 openModal(
+
 `<h2>${esc(x.title)}</h2>`,
+
 `
+
 <div class="tags">
-<span class="tag">${esc(x.area)}</span>
-<span class="tag">Concept</span>
+
+<span class="tag">
+${esc(x.area)}
+</span>
+
+<span class="tag">
+Concept
+</span>
+
 </div>
 
 <h3>What is it?</h3>
-<p>${esc(x.simple)}</p>
+
+<p>
+${esc(x.simple)}
+</p>
 
 <h3>Why study it?</h3>
-<p>${esc(x.why)}</p>
+
+<p>
+${esc(x.why)}
+</p>
 
 <h3>Core mathematics</h3>
-<div class="formula">${esc(x.formula)}</div>
+
+<div class="formula">
+${esc(x.formula)}
+</div>
 
 <h3>Dairy application</h3>
-<p>${esc(x.dairy)}</p>
+
+<p>
+${esc(x.dairy)}
+</p>
 
 <h3>Common mistakes</h3>
-<ul>${x.mistakes.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+
+<ul>
+${x.mistakes.map(t=>`<li>${esc(t)}</li>`).join("")}
+</ul>
 
 <h3>Practice</h3>
-<ul>${x.practice.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+
+<ul>
+${x.practice.map(t=>`<li>${esc(t)}</li>`).join("")}
+</ul>
 
 <h3>Exam points</h3>
+
 <ul>
-<li>Know the definition and units.</li>
-<li>State assumptions when using equations.</li>
-<li>Connect the equation to a dairy-process example.</li>
+
+<li>
+Know the definition and units.
+</li>
+
+<li>
+State assumptions when using equations.
+</li>
+
+<li>
+Connect the equation to a dairy-process example.
+</li>
+
 </ul>
 
 <h3>Further reading</h3>
+
 <p>
-Use the Resource Library to move from this structured introduction
-to institutional, regulatory and technical sources.
+Use the Resource Library to move from this structured
+introduction to institutional, regulatory and technical sources.
 </p>
+
 `
+
 );
+
 }
 
 $("conceptSearch").oninput=renderConcepts;
@@ -1734,65 +4929,132 @@ $("conceptFilter").onchange=renderConcepts;
    ========================================================= */
 
 function renderProcesses(){
-const q=$("processSearch").value.toLowerCase();
+
+const q=
+$("processSearch")
+.value
+.toLowerCase();
 
 $("processGrid").innerHTML=
-processes.filter(p=>
-(p.title+" "+p.principle+" "+p.app).toLowerCase().includes(q)
-).map(p=>`
-<article class="card clickable" onclick="openProcess(${processes.indexOf(p)})">
 
-<div class="icon">${p.icon}</div>
+processes
+.filter(p=>
+(
+p.title+" "+
+p.principle+" "+
+p.app
+)
+.toLowerCase()
+.includes(q)
+)
+.map(p=>`
 
-<h3>${esc(p.title)}</h3>
+<article
+class="card clickable"
+onclick="openProcess(${processes.indexOf(p)})">
 
-<p>${esc(p.principle)}</p>
+<div class="card-icon">
+${p.icon}
+</div>
+
+<h3>
+${esc(p.title)}
+</h3>
+
+<p>
+${esc(p.principle)}
+</p>
 
 <div class="flow">
+
 ${p.flow.map((s,i)=>
 `<span>${esc(s)}</span>`+
-(i<p.flow.length-1?'<b class="arrow">→</b>':'')
+(i<p.flow.length-1
+?'<b class="arrow">→</b>'
+:"")
 ).join("")}
+
 </div>
 
 </article>
+
 `).join("")
-||'<div class="callout">No matching processes.</div>';
+||
+'<div class="callout">No matching processes.</div>';
+
 }
 
 function openProcess(i){
+
 const p=processes[i];
 
 markProgress("process:"+p.title);
 
 openModal(
+
 `<h2>${esc(p.title)}</h2>`,
+
 `
-<h3>Process flow</h3>
+
+<h3>
+Process Flow
+</h3>
 
 <div class="flow">
+
 ${p.flow.map((s,j)=>
 `<span>${esc(s)}</span>`+
-(j<p.flow.length-1?'<b class="arrow">→</b>':'')
+(j<p.flow.length-1
+?'<b class="arrow">→</b>'
+:"")
 ).join("")}
+
 </div>
 
-<h3>Principle</h3>
-<p>${esc(p.principle)}</p>
+<h3>
+Principle
+</h3>
 
-<h3>Equipment</h3>
-<ul>${p.equipment.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+<p>
+${esc(p.principle)}
+</p>
 
-<h3>Quality considerations</h3>
-<p>${esc(p.quality)}</p>
+<h3>
+Equipment
+</h3>
 
-<h3>Common problems</h3>
-<ul>${p.problems.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+<ul>
+${p.equipment.map(x=>`<li>${esc(x)}</li>`).join("")}
+</ul>
 
-<h3>Dairy application</h3>
-<p>${esc(p.app)}</p>
+<h3>
+Quality considerations
+</h3>
+
+<p>
+${esc(p.quality)}
+</p>
+
+<h3>
+Common problems
+</h3>
+
+<ul>
+${p.problems.map(x=>`<li>${esc(x)}</li>`).join("")}
+</ul>
+
+<h3>
+Dairy application
+</h3>
+
+<p>
+${esc(p.app)}
+</p>
+
 `
+
 );
+
 }
 
 $("processSearch").oninput=renderProcesses;
@@ -1804,7 +5066,9 @@ $("processSearch").oninput=renderProcesses;
 function renderProducts(){
 
 $("productGrid").innerHTML=
+
 products.map(p=>`
+
 <article
 class="card clickable"
 onclick="openProduct(${products.indexOf(p)})">
@@ -1813,48 +5077,80 @@ onclick="openProduct(${products.indexOf(p)})">
 <span class="tag">Product</span>
 </div>
 
-<div class="icon">🥛</div>
+<div class="card-icon">
+🥛
+</div>
 
-<h3>${esc(p.title)}</h3>
+<h3>
+${esc(p.title)}
+</h3>
 
 <p>
 Process flow, quality attributes and common defects.
 </p>
 
 </article>
+
 `).join("");
+
 }
 
 function openProduct(i){
+
 const p=products[i];
 
 markProgress("product:"+p.title);
 
 openModal(
+
 `<h2>${esc(p.title)}</h2>`,
+
 `
-<h3>Typical process path</h3>
+
+<h3>
+Typical process path
+</h3>
 
 <div class="flow">
+
 ${p.flow.map((s,j)=>
 `<span>${esc(s)}</span>`+
-(j<p.flow.length-1?'<b class="arrow">→</b>':'')
+(j<p.flow.length-1
+?'<b class="arrow">→</b>'
+:"")
 ).join("")}
+
 </div>
 
-<h3>Key quality attributes</h3>
-<p>${esc(p.quality)}</p>
+<h3>
+Key quality attributes
+</h3>
 
-<h3>Common defects / problems</h3>
-<ul>${p.defects.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+<p>
+${esc(p.quality)}
+</p>
 
-<h3>Study approach</h3>
+<h3>
+Common defects / problems
+</h3>
+
+<ul>
+${p.defects.map(x=>`<li>${esc(x)}</li>`).join("")}
+</ul>
+
+<h3>
+Study approach
+</h3>
+
 <p>
 Connect product formulation → processing → equipment →
 quality control → packaging → storage → standards and further reading.
 </p>
+
 `
+
 );
+
 }
 
 /* =========================================================
@@ -1863,31 +5159,54 @@ quality control → packaging → storage → standards and further reading.
 
 function renderEquipment(){
 
-const q=$("equipmentSearch").value.toLowerCase();
+const q=
+$("equipmentSearch")
+.value
+.toLowerCase();
 
 $("equipmentGrid").innerHTML=
-equipment.filter(x=>
-(x.name+" "+x.category+" "+x.purpose+" "+x.principle)
+
+equipment
+.filter(x=>
+(
+x.name+" "+
+x.category+" "+
+x.purpose+" "+
+x.principle
+)
 .toLowerCase()
 .includes(q)
-).map(x=>`
+)
+.map(x=>`
+
 <article
 class="card clickable"
 onclick="openEquipment(${equipment.indexOf(x)})">
 
 <div class="tags">
-<span class="tag">${esc(x.category)}</span>
+<span class="tag">
+${esc(x.category)}
+</span>
 </div>
 
-<div class="icon">⚙️</div>
+<div class="card-icon">
+⚙️
+</div>
 
-<h3>${esc(x.name)}</h3>
+<h3>
+${esc(x.name)}
+</h3>
 
-<p>${esc(x.purpose)}</p>
+<p>
+${esc(x.purpose)}
+</p>
 
 </article>
+
 `).join("")
-||'<div class="callout">No matching equipment.</div>';
+||
+'<div class="callout">No matching equipment.</div>';
+
 }
 
 function openEquipment(i){
@@ -1897,42 +5216,95 @@ const x=equipment[i];
 markProgress("equipment:"+x.name);
 
 openModal(
+
 `<h2>${esc(x.name)}</h2>`,
+
 `
+
 <div class="tags">
-<span class="tag">${esc(x.category)}</span>
-<span class="tag">Equipment</span>
+
+<span class="tag">
+${esc(x.category)}
+</span>
+
+<span class="tag">
+Equipment
+</span>
+
 </div>
 
-<h3>Purpose</h3>
-<p>${esc(x.purpose)}</p>
+<h3>
+Purpose
+</h3>
 
-<h3>Working principle</h3>
-<p>${esc(x.principle)}</p>
-
-<h3>Important components</h3>
-<ul>${x.components.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
-
-<h3>Operating parameters</h3>
-<p>${esc(x.parameters)}</p>
-
-<h3>Advantages</h3>
-<p>${esc(x.advantages)}</p>
-
-<h3>Limitations</h3>
-<p>${esc(x.limitations)}</p>
-
-<h3>Applications</h3>
-<p>${esc(x.applications)}</p>
-
-<h3>Maintenance / safety</h3>
 <p>
-Follow manufacturer instructions, plant SOPs, hygienic-design requirements,
-lockout/tagout practices and supervised training.
-This page is an educational reference, not equipment-specific operating instruction.
+${esc(x.purpose)}
 </p>
+
+<h3>
+Working principle
+</h3>
+
+<p>
+${esc(x.principle)}
+</p>
+
+<h3>
+Important components
+</h3>
+
+<ul>
+${x.components.map(t=>`<li>${esc(t)}</li>`).join("")}
+</ul>
+
+<h3>
+Operating parameters
+</h3>
+
+<p>
+${esc(x.parameters)}
+</p>
+
+<h3>
+Advantages
+</h3>
+
+<p>
+${esc(x.advantages)}
+</p>
+
+<h3>
+Limitations
+</h3>
+
+<p>
+${esc(x.limitations)}
+</p>
+
+<h3>
+Applications
+</h3>
+
+<p>
+${esc(x.applications)}
+</p>
+
+<h3>
+Maintenance / safety
+</h3>
+
+<p>
+Follow manufacturer instructions, plant SOPs,
+hygienic-design requirements, lockout/tagout
+practices and supervised training.
+This page is an educational reference,
+not equipment-specific operating instruction.
+</p>
+
 `
+
 );
+
 }
 
 $("equipmentSearch").oninput=renderEquipment;
@@ -1947,9 +5319,14 @@ const revL=+($("revL").value||0);
 const revRate=+($("revRate").value||0);
 
 $("revResult").innerHTML=
-`<strong>Revenue:</strong> ${money(revL*revRate)}
+`
+<strong>Revenue:</strong>
+${money(revL*revRate)}
 <br>
-<span class="muted">Formula: quantity × rate.</span>`;
+<span class="muted">
+Formula: quantity × rate.
+</span>
+`;
 
 
 const a=+($("mixA").value||0);
@@ -1959,15 +5336,25 @@ const fb=+($("mixFB").value||0);
 
 const tot=a+b;
 
-const fat=tot?
-((a*fa+b*fb)/tot):0;
+const fat=
+tot
+?
+((a*fa+b*fb)/tot)
+:
+0;
 
 $("mixResult").innerHTML=
-`<strong>Total:</strong> ${tot.toFixed(2)} L
+`
+<strong>Total:</strong>
+${tot.toFixed(2)} L
 <br>
-<strong>Weighted fat:</strong> ${fat.toFixed(3)}%
+<strong>Weighted fat:</strong>
+${fat.toFixed(3)}%
 <br>
-<span class="muted">Simple mixture calculation.</span>`;
+<span class="muted">
+Simple mixture calculation.
+</span>
+`;
 
 
 const qa=+($("stdA").value||0);
@@ -1975,27 +5362,34 @@ const fa1=+($("stdFA").value||0);
 const fb1=+($("stdFB").value||0);
 const ft=+($("stdFT").value||0);
 
-const den=fb1-fa1;
-
 let qB=NaN;
 
-if(den!==0){
+if(ft!==fb1){
 qB=qa*(fa1-ft)/(ft-fb1);
 }
 
 $("stdResult").innerHTML=
 Number.isFinite(qB)&&qB>=0
 ?
-`<strong>Estimated Milk B:</strong> ${qB.toFixed(2)} L
+`
+<strong>Estimated Milk B:</strong>
+${qB.toFixed(2)} L
 <br>
-<strong>Total:</strong> ${(qa+qB).toFixed(2)} L
+<strong>Total:</strong>
+${(qa+qB).toFixed(2)} L
 <br>
 <span class="muted">
-Uses a simplified two-stream fat balance.
-Check feasibility and full composition before real use.
-</span>`
+Simplified two-stream fat balance.
+Check full composition and feasibility
+before real use.
+</span>
+`
 :
-"<strong>Set a feasible target between the two fat values.</strong>";
+`
+<strong>
+Set a feasible target between the two fat values.
+</strong>
+`;
 
 
 const m=+($("heatM").value||0);
@@ -2005,9 +5399,14 @@ const dt=+($("heatDT").value||0);
 const q=m*cp*dt;
 
 $("heatResult").innerHTML=
-`<strong>Q:</strong> ${q.toFixed(2)} kJ
+`
+<strong>Q:</strong>
+${q.toFixed(2)} kJ
 <br>
-<span class="muted">Q = mCpΔT.</span>`;
+<span class="muted">
+Q = mCpΔT.
+</span>
+`;
 
 
 const rho=+($("reRho").value||0);
@@ -2015,16 +5414,24 @@ const v=+($("reV").value||0);
 const D=+($("reD").value||0);
 const mu=+($("reMu").value||0);
 
-const re=mu?rho*v*D/mu:NaN;
+const re=
+mu
+?
+rho*v*D/mu
+:
+NaN;
 
 $("reResult").innerHTML=
 Number.isFinite(re)
 ?
-`<strong>Re:</strong> ${re.toLocaleString("en-IN",{maximumFractionDigits:2})}
+`
+<strong>Re:</strong>
+${re.toLocaleString("en-IN",{maximumFractionDigits:2})}
 <br>
 <span class="muted">
 Interpret with geometry and appropriate flow-regime criteria.
-</span>`
+</span>
+`
 :
 "Enter positive values.";
 
@@ -2033,16 +5440,24 @@ const A1=+($("contA1").value||0);
 const V1=+($("contV1").value||0);
 const A2=+($("contA2").value||0);
 
-const V2=A2?A1*V1/A2:NaN;
+const V2=
+A2
+?
+A1*V1/A2
+:
+NaN;
 
 $("contResult").innerHTML=
 Number.isFinite(V2)
 ?
-`<strong>v₂:</strong> ${V2.toFixed(4)} m/s
+`
+<strong>v₂:</strong>
+${V2.toFixed(4)} m/s
 <br>
 <span class="muted">
 A₁v₁ = A₂v₂ for steady incompressible flow.
-</span>`
+</span>
+`
 :
 "Enter positive areas.";
 
@@ -2052,16 +5467,30 @@ const dP=+($("pumpDP").value||0);
 const eta=(+($("pumpEta").value||0))/100;
 
 const hyd=Q*dP;
-const shaft=eta?hyd/eta:NaN;
+const shaft=
+eta
+?
+hyd/eta
+:
+NaN;
 
 $("pumpResult").innerHTML=
-`<strong>Hydraulic power:</strong> ${hyd.toFixed(2)} W
+`
+<strong>
+Hydraulic power:
+</strong>
+${hyd.toFixed(2)} W
 <br>
-<strong>Approx. shaft power:</strong> ${Number.isFinite(shaft)?shaft.toFixed(2):"—"} W
+<strong>
+Approx. shaft power:
+</strong>
+${Number.isFinite(shaft)?shaft.toFixed(2):"—"} W
 <br>
 <span class="muted">
-P = QΔP; real design requires losses, pump curve and system analysis.
-</span>`;
+P = QΔP; real design requires losses,
+pump curve and system analysis.
+</span>
+`;
 
 
 const raw=+($("costRaw").value||0);
@@ -2070,46 +5499,84 @@ const pack=+($("costPack").value||0);
 const margin=+($("costMargin").value||0);
 
 const base=raw+proc+pack;
-const sell=base*(1+margin/100);
+
+const sell=
+base*(1+margin/100);
 
 $("costResult").innerHTML=
-`<strong>Base cost:</strong> ${money(base)}/L
+`
+<strong>
+Base cost:
+</strong>
+${money(base)}/L
 <br>
-<strong>Price with markup:</strong> ${money(sell)}/L`;
+<strong>
+Price with markup:
+</strong>
+${money(sell)}/L
+`;
 
 
 const yi=+($("yieldInput").value||0);
 const yp=+($("yieldPct").value||0);
 
 $("yieldResult").innerHTML=
-`<strong>Estimated output:</strong> ${(yi*yp/100).toFixed(2)} units`;
+`
+<strong>
+Estimated output:
+</strong>
+${(yi*yp/100).toFixed(2)} units
+`;
+
 }
 
-document.querySelectorAll(".calc")
-.forEach(el=>el.addEventListener("input",updateCalculators));
+document
+.querySelectorAll(".calc")
+.forEach(el=>
+el.addEventListener(
+"input",
+updateCalculators
+)
+);
 
 /* =========================================================
    PRACTICALS
    ========================================================= */
 
 $("practicalGrid").innerHTML=
+
 practicals.map((p,i)=>`
+
 <article
 class="card clickable"
 onclick="openPractical(${i})">
 
 <div class="tags">
-<span class="tag">${esc(p.subject)}</span>
-<span class="tag">Practical</span>
+
+<span class="tag">
+${esc(p.subject)}
+</span>
+
+<span class="tag">
+Practical
+</span>
+
 </div>
 
-<div class="icon">🧪</div>
+<div class="card-icon">
+🧪
+</div>
 
-<h3>${esc(p.title)}</h3>
+<h3>
+${esc(p.title)}
+</h3>
 
-<p>${esc(p.objective)}</p>
+<p>
+${esc(p.objective)}
+</p>
 
 </article>
+
 `).join("");
 
 function openPractical(i){
@@ -2119,40 +5586,73 @@ const p=practicals[i];
 markProgress("practical:"+p.title);
 
 openModal(
+
 `<h2>${esc(p.title)}</h2>`,
+
 `
+
 <div class="tags">
 <span class="tag">${esc(p.subject)}</span>
 </div>
 
 <h3>Objective</h3>
-<p>${esc(p.objective)}</p>
+
+<p>
+${esc(p.objective)}
+</p>
 
 <h3>Principle</h3>
-<p>${esc(p.principle)}</p>
+
+<p>
+${esc(p.principle)}
+</p>
 
 <h3>Apparatus / requirements</h3>
-<p>${esc(p.apparatus)}</p>
+
+<p>
+${esc(p.apparatus)}
+</p>
 
 <h3>Procedure</h3>
-<p>${esc(p.procedure)}</p>
+
+<p>
+${esc(p.procedure)}
+</p>
 
 <h3>Observation</h3>
-<p>${esc(p.observation)}</p>
+
+<p>
+${esc(p.observation)}
+</p>
 
 <h3>Calculation</h3>
-<p>${esc(p.calculation)}</p>
+
+<p>
+${esc(p.calculation)}
+</p>
 
 <h3>Result</h3>
-<p>${esc(p.result)}</p>
+
+<p>
+${esc(p.result)}
+</p>
 
 <h3>Precautions</h3>
-<ul>${p.precautions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+
+<ul>
+${p.precautions.map(x=>`<li>${esc(x)}</li>`).join("")}
+</ul>
 
 <h3>Viva</h3>
-<ul>${p.viva.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+
+<ul>
+${p.viva.map(x=>`<li>${esc(x)}</li>`).join("")}
+</ul>
+
 `
+
 );
+
 }
 
 /* =========================================================
@@ -2161,13 +5661,19 @@ openModal(
 
 function initQuestions(){
 
-const topics=[...new Set(questions.map(q=>q.topic))];
+const topics=
+[...new Set(
+questions.map(q=>q.topic)
+)];
 
 $("qTopic").innerHTML=
 '<option value="all">All topics</option>'+
-topics.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join("");
+topics.map(
+t=>`<option value="${esc(t)}">${esc(t)}</option>`
+).join("");
 
 renderQuestions();
+
 }
 
 function renderQuestions(){
@@ -2175,22 +5681,39 @@ function renderQuestions(){
 const type=$("qType").value;
 const topic=$("qTopic").value;
 
-const list=questions.filter(q=>
+const list=
+questions.filter(q=>
 (type==="all"||q.type===type)&&
 (topic==="all"||q.topic===topic)
 );
 
 $("questionList").innerHTML=
 list.map(q=>`
+
 <div class="list-item">
+
 <div>
-<span class="tag">${esc(q.type)}</span>
-<strong>${esc(q.q)}</strong>
-<small>${esc(q.topic)}</small>
+
+<span class="tag">
+${esc(q.type)}
+</span>
+
+<strong>
+${esc(q.q)}
+</strong>
+
+<small>
+${esc(q.topic)}
+</small>
+
 </div>
+
 </div>
+
 `).join("")
-||'<div class="callout">No questions match.</div>';
+||
+'<div class="callout">No questions match.</div>';
+
 }
 
 $("qType").onchange=renderQuestions;
@@ -2201,24 +5724,43 @@ $("qTopic").onchange=renderQuestions;
    ========================================================= */
 
 const quizQuestions=[
+
 {
 q:"For steady incompressible flow, which relation is correct?",
-opts:["A₁v₁=A₂v₂","A₁/v₁=A₂/v₂","A₁+v₁=A₂+v₂","A₁−v₁=A₂−v₂"],
+opts:[
+"A₁v₁=A₂v₂",
+"A₁/v₁=A₂/v₂",
+"A₁+v₁=A₂+v₂",
+"A₁−v₁=A₂−v₂"
+],
 ans:0,
 why:"The continuity equation conserves mass flow; for constant density, A·v is constant."
 },
+
 {
 q:"Which quantity is a state property?",
-opts:["Heat","Work","Enthalpy","Path length"],
+opts:[
+"Heat",
+"Work",
+"Enthalpy",
+"Path length"
+],
 ans:2,
 why:"Enthalpy is a state function; heat and work depend on the path."
 },
+
 {
 q:"Why is homogenization used in milk processing?",
-opts:["To sterilize milk","To reduce fat-globule size","To remove all minerals","To freeze milk"],
+opts:[
+"To sterilize milk",
+"To reduce fat-globule size",
+"To remove all minerals",
+"To freeze milk"
+],
 ans:1,
 why:"Homogenization changes the size and dispersion of fat globules; it is not a sterilization step."
 }
+
 ];
 
 let quizIndex=0;
@@ -2229,101 +5771,195 @@ function renderQuiz(){
 const q=quizQuestions[quizIndex];
 
 $("quizBox").innerHTML=
+
 `
 <div class="tags">
-<span class="tag">Question ${quizIndex+1} / ${quizQuestions.length}</span>
-<span class="tag">Score ${quizScore}</span>
+
+<span class="tag">
+Question ${quizIndex+1} / ${quizQuestions.length}
+</span>
+
+<span class="tag">
+Score ${quizScore}
+</span>
+
 </div>
 
-<h3>${esc(q.q)}</h3>
+<h3>
+${esc(q.q)}
+</h3>
 
 <div>
+
 ${q.opts.map((x,i)=>
-`<button class="quiz-option" onclick="answerQuiz(${i})">${esc(x)}</button>`
+`
+<button
+class="quiz-option"
+onclick="answerQuiz(${i})">
+
+${esc(x)}
+
+</button>
+`
 ).join("")}
+
 </div>
 
 <div id="quizFeedback"></div>
 `;
+
 }
 
 function answerQuiz(i){
 
 const q=quizQuestions[quizIndex];
-const fb=$("quizFeedback");
 
-document.querySelectorAll(".quiz-option").forEach((b,n)=>{
+document
+.querySelectorAll(".quiz-option")
+.forEach((b,n)=>{
+
 b.disabled=true;
 
-if(n===q.ans)b.classList.add("correct");
-if(n===i&&n!==q.ans)b.classList.add("wrong");
+if(n===q.ans)
+b.classList.add("correct");
+
+if(n===i && n!==q.ans)
+b.classList.add("wrong");
+
 });
 
-if(i===q.ans)quizScore++;
+if(i===q.ans)
+quizScore++;
 
-fb.innerHTML=
+$("quizFeedback").innerHTML=
+
 `
 <div class="result">
-<strong>${i===q.ans?"Correct.":"Not quite."}</strong>
+
+<strong>
+${i===q.ans?"Correct.":"Not quite."}
+</strong>
+
 ${esc(q.why)}
+
 <br>
-<button class="btn soft" style="margin-top:8px" onclick="nextQuiz">
-${quizIndex===quizQuestions.length-1?"Restart":"Next"}
+
+<button
+class="btn soft"
+style="margin-top:8px">
+
+${quizIndex===quizQuestions.length-1
+?"Restart"
+:"Next"}
+
 </button>
+
 </div>
 `;
 
-fb.querySelector("button").onclick=nextQuiz;
+$("quizFeedback").querySelector("button").onclick=nextQuiz;
+
 }
 
 function nextQuiz(){
 
-if(quizIndex===quizQuestions.length-1){
+if(
+quizIndex===
+quizQuestions.length-1
+){
+
 quizIndex=0;
 quizScore=0;
+
 }else{
+
 quizIndex++;
+
 }
 
 renderQuiz();
+
 }
 
 /* =========================================================
-   ASSIGNMENT
+   ASSIGNMENTS
    ========================================================= */
 
 function generateAssignment(){
 
-const topic=$("assignTopic").value.trim();
+const topic=
+$("assignTopic")
+.value
+.trim();
 
 if(!topic){
+
 $("assignResult").style.display="block";
-$("assignResult").innerHTML="Enter a topic first.";
+
+$("assignResult").innerHTML=
+"Enter a topic first.";
+
 return;
+
 }
 
 $("assignResult").style.display="block";
 
 $("assignResult").innerHTML=
+
 `
-<strong>Suggested structure: ${esc(topic)}</strong>
+<strong>
+Suggested structure: ${esc(topic)}
+</strong>
 
 <ol>
-<li>Introduction and relevance to Dairy Technology</li>
-<li>Definitions and key terminology</li>
-<li>Scientific / engineering principle</li>
-<li>Process flow or equipment</li>
-<li>Dairy application</li>
-<li>Quality and safety considerations</li>
-<li>Example / calculation where relevant</li>
-<li>Current evidence and references</li>
-<li>Conclusion</li>
+
+<li>
+Introduction and relevance to Dairy Technology
+</li>
+
+<li>
+Definitions and key terminology
+</li>
+
+<li>
+Scientific / engineering principle
+</li>
+
+<li>
+Process flow or equipment
+</li>
+
+<li>
+Dairy application
+</li>
+
+<li>
+Quality and safety considerations
+</li>
+
+<li>
+Example / calculation where relevant
+</li>
+
+<li>
+Current evidence and references
+</li>
+
+<li>
+Conclusion
+</li>
+
 </ol>
 
 <span style="color:var(--muted)">
-Write the final assignment in your own words and cite the sources you actually used.
+
+Write the final assignment in your own words
+and cite the sources you actually used.
+
 </span>
 `;
+
 }
 
 /* =========================================================
@@ -2333,21 +5969,33 @@ Write the final assignment in your own words and cite the sources you actually u
 function renderProjects(){
 
 $("projectGrid").innerHTML=
+
 projects.map((p,i)=>`
+
 <article
 class="card clickable"
 onclick="openProject(${i})">
 
-<span class="tag">${esc(p.level)}</span>
+<span class="tag">
+${esc(p.level)}
+</span>
 
-<div class="icon">🔬</div>
+<div class="card-icon">
+🔬
+</div>
 
-<h3>${esc(p.title)}</h3>
+<h3>
+${esc(p.title)}
+</h3>
 
-<p>${esc(p.problem)}</p>
+<p>
+${esc(p.problem)}
+</p>
 
 </article>
+
 `).join("");
+
 }
 
 function openProject(i){
@@ -2355,31 +6003,63 @@ function openProject(i){
 const p=projects[i];
 
 openModal(
+
 `<h2>${esc(p.title)}</h2>`,
+
 `
+
 <div class="tags">
 <span class="tag">${esc(p.level)}</span>
 </div>
 
-<h3>Problem</h3>
-<p>${esc(p.problem)}</p>
+<h3>
+Problem
+</h3>
 
-<h3>Method</h3>
-<p>${esc(p.method)}</p>
-
-<h3>Expected output</h3>
-<p>${esc(p.output)}</p>
-
-<h3>Possible extension</h3>
-<p>${esc(p.extension)}</p>
-
-<h3>Portfolio value</h3>
 <p>
-Document your assumptions, data, validation, limitations and what you learned.
-That turns the project from “I made an app” into a demonstrable engineering/research artifact.
+${esc(p.problem)}
 </p>
+
+<h3>
+Method
+</h3>
+
+<p>
+${esc(p.method)}
+</p>
+
+<h3>
+Expected output
+</h3>
+
+<p>
+${esc(p.output)}
+</p>
+
+<h3>
+Possible extension
+</h3>
+
+<p>
+${esc(p.extension)}
+</p>
+
+<h3>
+Portfolio value
+</h3>
+
+<p>
+Document assumptions, data, validation,
+limitations and what you learned.
+That turns the project from
+“I made an app” into a demonstrable
+engineering/research artifact.
+</p>
+
 `
+
 );
+
 }
 
 /* =========================================================
@@ -2389,13 +6069,27 @@ That turns the project from “I made an app” into a demonstrable engineering/
 function renderCareers(){
 
 $("careerGrid").innerHTML=
+
 careers.map(c=>`
+
 <article class="card">
-<div class="icon">${c.icon}</div>
-<h3>${esc(c.title)}</h3>
-<p>${esc(c.text)}</p>
+
+<div class="card-icon">
+${c.icon}
+</div>
+
+<h3>
+${esc(c.title)}
+</h3>
+
+<p>
+${esc(c.text)}
+</p>
+
 </article>
+
 `).join("");
+
 }
 
 /* =========================================================
@@ -2405,27 +6099,41 @@ careers.map(c=>`
 function renderResources(){
 
 $("resourceGrid").innerHTML=
+
 resources.map(r=>`
+
 <article class="card">
 
-<span class="tag">${esc(r.type)}</span>
+<span class="tag">
+${esc(r.type)}
+</span>
 
-<h3>${esc(r.title)}</h3>
+<h3>
+${esc(r.title)}
+</h3>
 
-<p>${esc(r.desc)}</p>
+<p>
+${esc(r.desc)}
+</p>
 
 <div style="margin-top:10px">
+
 <a
 class="btn primary"
 target="_blank"
 rel="noopener"
 href="${esc(r.url)}">
+
 Open source ↗
+
 </a>
+
 </div>
 
 </article>
+
 `).join("");
+
 }
 
 /* =========================================================
@@ -2434,33 +6142,56 @@ Open source ↗
 
 function renderGlossary(){
 
-const q=$("glossarySearch").value.toLowerCase();
+const q=
+$("glossarySearch")
+.value
+.toLowerCase();
 
 $("glossaryList").innerHTML=
+
 glossary
-.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q))
+.filter(x=>
+(x[0]+" "+x[1])
+.toLowerCase()
+.includes(q)
+)
 .map(x=>`
+
 <article class="card">
-<span class="tag">${esc(x[0])}</span>
-<p style="margin-top:10px">${esc(x[1])}</p>
+
+<span class="tag">
+${esc(x[0])}
+</span>
+
+<p style="margin-top:10px">
+${esc(x[1])}
+</p>
+
 </article>
+
 `).join("")
-||'<div class="callout">No term found.</div>';
+||
+'<div class="callout">No term found.</div>';
+
 }
 
 $("glossarySearch").oninput=renderGlossary;
 
 /* =========================================================
-   COMPARISON
+   COMPARE
    ========================================================= */
 
 function initCompare(){
 
 $("compareA").innerHTML=
-compareItems.map(x=>`<option>${x}</option>`).join("");
+compareItems.map(
+x=>`<option>${x}</option>`
+).join("");
 
 $("compareB").innerHTML=
-compareItems.map(x=>`<option>${x}</option>`).join("");
+compareItems.map(
+x=>`<option>${x}</option>`
+).join("");
 
 $("compareB").selectedIndex=1;
 
@@ -2468,18 +6199,31 @@ renderCompare();
 
 $("compareA").onchange=renderCompare;
 $("compareB").onchange=renderCompare;
+
 }
 
 function findEquipment(name){
-return equipment.find(x=>x.name===name);
+
+return equipment.find(
+x=>x.name===name
+);
+
 }
 
 function renderCompare(){
 
-const a=findEquipment($("compareA").value);
-const b=findEquipment($("compareB").value);
+const a=
+findEquipment(
+$("compareA").value
+);
+
+const b=
+findEquipment(
+$("compareB").value
+);
 
 $("compareTable").innerHTML=
+
 `
 <table class="compare-table">
 
@@ -2502,7 +6246,7 @@ $("compareTable").innerHTML=
 </tr>
 
 <tr>
-<td>Key components</td>
+<td>Components</td>
 <td>${a.components.map(esc).join(", ")}</td>
 <td>${b.components.map(esc).join(", ")}</td>
 </tr>
@@ -2521,6 +6265,7 @@ $("compareTable").innerHTML=
 
 </table>
 `;
+
 }
 
 /* =========================================================
@@ -2529,11 +6274,18 @@ $("compareTable").innerHTML=
 
 function markProgress(key){
 
-if(!state.progress.includes(key)){
+if(
+!state.progress.includes(key)
+){
+
 state.progress.push(key);
+
 save();
+
 renderProgress();
+
 }
+
 }
 
 function renderProgress(){
@@ -2557,9 +6309,12 @@ Math.max(1,total)*100
 $("progressText").textContent=
 `${state.progress.length} learning items tracked (${pct}% of the current starter library).`;
 
-$("progressBar").style.width=pct+"%";
+$("progressBar").style.width=
+pct+"%";
 
-$("metricNotes").textContent=state.notes.length;
+$("metricNotes").textContent=
+state.notes.length;
+
 }
 
 function clearProgress(){
@@ -2567,12 +6322,17 @@ function clearProgress(){
 state.progress=[];
 
 save();
+
 renderProgress();
+
 }
 
 function saveNote(){
 
-const t=$("noteInput").value.trim();
+const t=
+$("noteInput")
+.value
+.trim();
 
 if(!t)return;
 
@@ -2584,13 +6344,19 @@ time:new Date().toISOString()
 $("noteInput").value="";
 
 save();
+
 renderNotesTasks();
+
 renderProgress();
+
 }
 
 function addTask(){
 
-const t=$("taskInput").value.trim();
+const t=
+$("taskInput")
+.value
+.trim();
 
 if(!t)return;
 
@@ -2602,20 +6368,33 @@ done:false
 $("taskInput").value="";
 
 save();
+
 renderNotesTasks();
+
 }
 
 function renderNotesTasks(){
 
 $("notesList").innerHTML=
+
 state.notes.length
+
 ?
+
 state.notes.map((n,i)=>`
+
 <div class="list-item">
 
 <div>
-<strong>${esc(n.text)}</strong>
-<small>${new Date(n.time).toLocaleString()}</small>
+
+<strong>
+${esc(n.text)}
+</strong>
+
+<small>
+${new Date(n.time).toLocaleString()}
+</small>
+
 </div>
 
 <button
@@ -2625,34 +6404,51 @@ onclick="deleteNote(${i})">
 </button>
 
 </div>
+
 `).join("")
+
 :
+
 '<div class="callout">No notes saved.</div>';
 
+
 $("tasksList").innerHTML=
+
 state.tasks.length
+
 ?
+
 state.tasks.map((t,i)=>`
+
 <div class="list-item">
 
 <label>
+
 <input
 type="checkbox"
 ${t.done?"checked":""}
 onchange="toggleTask(${i},this.checked)">
+
 ${esc(t.text)}
+
 </label>
 
 <button
 class="icon-btn"
 onclick="deleteTask(${i})">
+
 ✕
+
 </button>
 
 </div>
+
 `).join("")
+
 :
+
 '<div class="callout">No tasks saved.</div>';
+
 }
 
 function deleteNote(i){
@@ -2660,8 +6456,11 @@ function deleteNote(i){
 state.notes.splice(i,1);
 
 save();
+
 renderNotesTasks();
+
 renderProgress();
+
 }
 
 function deleteTask(i){
@@ -2669,7 +6468,9 @@ function deleteTask(i){
 state.tasks.splice(i,1);
 
 save();
+
 renderNotesTasks();
+
 }
 
 function toggleTask(i,v){
@@ -2677,142 +6478,256 @@ function toggleTask(i,v){
 state.tasks[i].done=v;
 
 save();
+
 }
 
 /* =========================================================
-   SEARCH
+   GLOBAL SEARCH
    ========================================================= */
 
 function runSearch(){
 
-const q=$("globalSearch").value.toLowerCase().trim();
+const q=
+$("globalSearch")
+.value
+.toLowerCase()
+.trim();
 
 if(!q){
-$("searchResults").classList.remove("show");
+
+$("searchResults")
+.classList
+.remove("show");
+
 return;
+
 }
 
 const hits=[];
 
 curriculum.forEach((x,i)=>{
+
 if(
-(x.subject+" "+x.topics.join(" "))
+(
+x.subject+
+" "+
+x.topics.join(" ")
+)
 .toLowerCase()
 .includes(q)
 ){
+
 hits.push({
 type:"Curriculum",
 title:x.subject,
 action:()=>openCurriculum(i)
 });
+
 }
+
 });
 
 concepts.forEach((x,i)=>{
+
 if(
-(x.title+" "+x.area+" "+x.simple+" "+x.dairy)
+(
+x.title+
+" "+
+x.area+
+" "+
+x.simple+
+" "+
+x.dairy
+)
 .toLowerCase()
 .includes(q)
 ){
+
 hits.push({
 type:"Concept",
 title:x.title,
 action:()=>openConcept(i)
 });
+
 }
+
 });
 
 processes.forEach((x,i)=>{
+
 if(
-(x.title+" "+x.principle+" "+x.app)
+(
+x.title+
+" "+
+x.principle+
+" "+
+x.app
+)
 .toLowerCase()
 .includes(q)
 ){
+
 hits.push({
 type:"Process",
 title:x.title,
 action:()=>openProcess(i)
 });
+
 }
+
 });
 
 products.forEach((x,i)=>{
+
 if(
-(x.title+" "+x.flow.join(" "))
+(
+x.title+
+" "+
+x.flow.join(" ")
+)
 .toLowerCase()
 .includes(q)
 ){
+
 hits.push({
 type:"Product",
 title:x.title,
 action:()=>openProduct(i)
 });
+
 }
+
 });
 
 equipment.forEach((x,i)=>{
+
 if(
-(x.name+" "+x.category+" "+x.purpose+" "+x.principle)
+(
+x.name+
+" "+
+x.category+
+" "+
+x.purpose+
+" "+
+x.principle
+)
 .toLowerCase()
 .includes(q)
 ){
+
 hits.push({
 type:"Equipment",
 title:x.name,
 action:()=>openEquipment(i)
 });
+
 }
+
 });
 
 projects.forEach((x,i)=>{
+
 if(
-(x.title+" "+x.problem+" "+x.method)
+(
+x.title+
+" "+
+x.problem+
+" "+
+x.method
+)
 .toLowerCase()
 .includes(q)
 ){
+
 hits.push({
 type:"Project",
 title:x.title,
 action:()=>openProject(i)
 });
+
 }
+
 });
 
 const box=$("searchResults");
 
 box.innerHTML=
-hits.slice(0,12)
+
+hits
+.slice(0,12)
 .map((h,i)=>`
+
 <div
 class="search-result"
 onclick="searchPick(${i})">
 
-<strong>${esc(h.title)}</strong>
-<small>${esc(h.type)}</small>
+<strong>
+${esc(h.title)}
+</strong>
+
+<small>
+${esc(h.type)}
+</small>
 
 </div>
+
 `).join("")
+
 ||
-'<div class="search-result">No match found. Try a subject, process, equipment name or concept.</div>';
+
+`
+<div class="search-result">
+No match found.
+Try a subject, process, equipment name or concept.
+</div>
+`;
 
 box.classList.add("show");
 
-window.__hits=hits.slice(0,12);
+window.__hits=
+hits.slice(0,12);
+
 }
 
 function searchPick(i){
 
-const h=window.__hits?.[i];
+const h=
+window.__hits?.[i];
 
-$("searchResults").classList.remove("show");
+$("searchResults")
+.classList
+.remove("show");
 
-if(h)h.action();
+if(h)
+h.action();
+
 }
 
-$("globalSearch").addEventListener(
+$("globalSearch")
+.addEventListener(
 "keydown",
 e=>{
-if(e.key==="Enter")runSearch();
+if(e.key==="Enter")
+runSearch();
+}
+);
+
+$("headerSearch")
+.addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Enter"){
+
+$("globalSearch").value=
+$("headerSearch").value;
+
+scrollToId("home");
+
+runSearch();
+
+}
+
 }
 );
 
@@ -2854,18 +6769,36 @@ renderProgress();
 
 updateCalculators();
 
-$("metricSubjects").textContent=curriculum.length;
+$("metricSubjects").textContent=
+curriculum.length;
 
 $("metricTopics").textContent=
 concepts.length+
 processes.length+
 products.length;
 
-$("metricEquipment").textContent=equipment.length;
+$("metricEquipment").textContent=
+equipment.length;
+
+$("heroSubjects").textContent=
+curriculum.length;
+
+$("heroTopics").textContent=
+concepts.length;
+
+$("heroEquipment").textContent=
+equipment.length;
+
+$("heroProcesses").textContent=
+processes.length;
+
+updateActiveNavigation();
+
 }
 
 init();
 
 </script>
+
 </body>
   </html>
