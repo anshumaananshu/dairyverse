@@ -1,1 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>DairyVerse AI</title>
+
+  <meta
+    name="description"
+    content="DairyVerse AI — a web-connected educational and research assistant for Dairy Technology and related subjects."
+  >
+
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --surface: #ffffff;
+      --surface-soft: #f8fafb;
+      --text: #172126;
+      --muted: #69777d;
+      --border: #dce4e7;
+      --accent: #176b5b;
+      --accent-dark: #0f4d42;
+      --accent-soft: #e8f3f0;
+      --shadow: 0 18px 50px rgba(18, 37, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- HEADER ---------- */
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+
+      height: 70px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 24px;
+
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 11px;
+
+      background: var(--accent-soft);
+
+      font-size: 19px;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 15px;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-text span {
+      display: block;
+      margin-top: 1px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .back-link {
+      text-decoration: none;
+
+      padding: 9px 13px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--surface);
+
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      border-color: #b8c8cd;
+      background: var(--surface-soft);
+    }
+
+    /* ---------- MAIN ---------- */
+
+    .main {
+      width: min(980px, calc(100% - 32px));
+
+      margin: 0 auto;
+
+      padding: 62px 0 100px;
+    }
+
+    .hero {
+      text-align: center;
+
+      max-width: 760px;
+
+      margin: 0 auto 38px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      padding: 7px 11px;
+
+      border-radius: 999px;
+
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      margin: 18px 0 12px;
+
+      font-size: clamp(36px, 7vw, 64px);
+      line-height: 1.02;
+
+      letter-spacing: -2.5px;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 650px;
+
+      margin: 0 auto;
+
+      color: var(--muted);
+
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ---------- CHAT ---------- */
+
+    .chat-card {
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+      border-radius: 24px;
+
+      box-shadow: var(--shadow);
+
+      overflow: hidden;
+    }
+
+    .chat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 15px 19px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: var(--surface-soft);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+
+      border-radius: 50%;
+
+      background: #39a67f;
+
+      box-shadow: 0 0 0 4px #e5f4ee;
+    }
+
+    .status-note {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .chat-body {
+      min-height: 330px;
+
+      padding: 25px;
+    }
+
+    .welcome {
+      max-width: 670px;
+    }
+
+    .welcome h2 {
+      margin: 0 0 9px;
+
+      font-size: 21px;
+    }
+
+    .welcome p {
+      margin: 0;
+
+      color: var(--muted);
+
+      line-height: 1.65;
+    }
+
+    .suggestions {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 10px;
+
+      margin-top: 22px;
+    }
+
+    .suggestion {
+      padding: 14px;
+
+      text-align: left;
+
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      cursor: pointer;
+
+      transition:
+        transform .15s ease,
+        border-color .15s ease,
+        background .15s ease;
+    }
+
+    .suggestion:hover {
+      transform: translateY(-2px);
+
+      border-color: #b7c9c6;
+
+      background: var(--surface-soft);
+    }
+
+    .suggestion strong {
+      display: block;
+
+      margin-bottom: 4px;
+
+      font-size: 13px;
+    }
+
+    .suggestion span {
+      color: var(--muted);
+
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* ---------- ANSWER ---------- */
+
+    .answer {
+      display: none;
+
+      padding: 25px;
+
+      border-top: 1px solid var(--border);
+
+      background: #fff;
+
+      white-space: pre-wrap;
+
+      overflow-wrap: anywhere;
+
+      line-height: 1.75;
+
+      font-size: 15px;
+    }
+
+    .answer-label {
+      display: inline-block;
+
+      margin-bottom: 13px;
+
+      padding: 5px 9px;
+
+      border-radius: 7px;
+
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+
+      font-size: 11px;
+      font-weight: 800;
+
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+
+    /* ---------- LOADING ---------- */
+
+    .loading {
+      display: none;
+
+      padding: 18px 25px;
+
+      border-top: 1px solid var(--border);
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    .loading::before {
+      content: "";
+
+      display: inline-block;
+
+      width: 8px;
+      height: 8px;
+
+      margin-right: 9px;
+
+      border-radius: 50%;
+
+      background: var(--accent);
+
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        opacity: .3;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* ---------- COMPOSER ---------- */
+
+    .composer {
+      padding: 16px;
+
+      border-top: 1px solid var(--border);
+
+      background: var(--surface-soft);
+    }
+
+    .input-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+
+      padding: 9px;
+
+      background: var(--surface);
+
+      border: 1px solid #cbd6da;
+      border-radius: 17px;
+    }
+
+    textarea {
+      flex: 1;
+
+      min-height: 48px;
+      max-height: 160px;
+
+      resize: none;
+
+      padding: 11px;
+
+      border: 0;
+      outline: 0;
+
+      background: transparent;
+
+      color: var(--text);
+
+      line-height: 1.5;
+    }
+
+    textarea::placeholder {
+      color: #8a989d;
+    }
+
+    .ask {
+      flex-shrink: 0;
+
+      padding: 12px 18px;
+
+      border: 0;
+      border-radius: 12px;
+
+      background: var(--accent);
+      color: white;
+
+      cursor: pointer;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      transition:
+        background .15s ease,
+        transform .15s ease;
+    }
+
+    .ask:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .ask:disabled {
+      opacity: .55;
+      cursor: wait;
+      transform: none;
+    }
+
+    .hint {
+      margin: 9px 4px 0;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    /* ---------- INFO ---------- */
+
+    .info-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 13px;
+
+      margin-top: 24px;
+    }
+
+    .info {
+      padding: 18px;
+
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+    }
+
+    .info-icon {
+      font-size: 20px;
+    }
+
+    .info h3 {
+      margin: 11px 0 6px;
+
+      font-size: 14px;
+    }
+
+    .info p {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.55;
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    .footer {
+      margin-top: auto;
+
+      padding: 25px;
+
+      border-top: 1px solid var(--border);
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    /* ---------- BACK TO TOP ---------- */
+
+    .top-button {
+      position: fixed;
+
+      right: 20px;
+      bottom: 20px;
+
+      width: 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border);
+      border-radius: 50%;
+
+      background: rgba(255,255,255,.94);
+
+      box-shadow: 0 8px 25px rgba(0,0,0,.10);
+
+      cursor: pointer;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transform: translateY(10px);
+
+      transition:
+        opacity .2s ease,
+        visibility .2s ease,
+        transform .2s ease;
+    }
+
+    .top-button.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* ---------- MOBILE ---------- */
+
+    @media (max-width: 700px) {
+
+      .header {
+        padding: 0 15px;
+      }
+
+      .back-link {
+        padding: 8px 10px;
+      }
+
+      .main {
+        width: min(100% - 20px, 980px);
+
+        padding-top: 40px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.7px;
+      }
+
+      .suggestions {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-body {
+        padding: 20px;
+      }
+
+      .answer {
+        padding: 20px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .input-wrap {
+        align-items: stretch;
+      }
+
+      .ask {
+        padding: 10px 14px;
+      }
+
+      .hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+
+  <header class="header">
+
+    <a class="brand" href="index.html">
+
+      <div class="brand-mark">
+        🥛
+      </div>
+
+      <div class="brand-text">
+        <strong>DairyVerse</strong>
+        <span>Student Technology Hub</span>
+      </div>
+
+    </a>
+
+    <a class="back-link" href="index.html">
+      ← Back to DairyVerse
+    </a>
+
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <section class="hero">
+
+      <div class="eyebrow">
+        ✦ Web-connected research assistant
+      </div>
+
+      <h1>
+        Meet <span>DairyVerse AI</span>
+      </h1>
+
+      <p>
+        Ask questions about Dairy Technology, engineering, science,
+        mathematics and much more. When useful, the assistant can
+        research information from the web instead of being limited
+        to the content published on DairyVerse.
+      </p>
+
+    </section>
+
+
+    <!-- CHAT CARD -->
+
+    <section class="chat-card">
+
+      <div class="chat-top">
+
+        <div class="status">
+          <span class="status-dot"></span>
+          AI Assistant
+        </div>
+
+        <div class="status-note">
+          Research mode available
+        </div>
+
+      </div>
+
+
+      <div class="chat-body">
+
+        <div class="welcome" id="welcome">
+
+          <h2>
+            What do you want to understand?
+          </h2>
+
+          <p>
+            Ask a conceptual question, solve a numerical problem,
+            explore a dairy process, or research a technical subject.
+          </p>
+
+
+          <div class="suggestions">
+
+            <button
+              class="suggestion"
+              onclick="useSuggestion(
+                'Explain Reynolds number simply and then explain its importance in dairy pipelines.'
+              )"
+            >
+              <strong>Fluid Mechanics</strong>
+              <span>
+                Explain Reynolds number and its dairy application.
+              </span>
+            </button>
+
+
+            <button
+              class="suggestion"
+              onclick="useSuggestion(
+                'How does a plate heat exchanger work during milk pasteurization? Explain the heat transfer principle and important design considerations.'
+              )"
+            >
+              <strong>Dairy Processing</strong>
+              <span>
+                Understand a plate heat exchanger.
+              </span>
+            </button>
+
+
+            <button
+              class="suggestion"
+              onclick="useSuggestion(
+                'Explain milk homogenization from the basic principle to the industrial process and explain why it is important.'
+              )"
+            >
+              <strong>Milk Technology</strong>
+              <span>
+                Understand homogenization.
+              </span>
+            </button>
+
+
+            <button
+              class="suggestion"
+              onclick="useSuggestion(
+                'Explain the Bernoulli equation step by step and give a practical example related to a dairy processing plant.'
+              )"
+            >
+              <strong>Engineering</strong>
+              <span>
+                Learn Bernoulli equation through dairy engineering.
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- LOADING -->
+
+      <div
+        class="loading"
+        id="loading"
+      >
+        DairyVerse AI is researching and preparing your answer…
+      </div>
+
+
+      <!-- ANSWER -->
+
+      <div
+        class="answer"
+        id="answer"
+      >
+        <div class="answer-label">
+          DairyVerse AI
+        </div>
+
+        <div id="answerText"></div>
+      </div>
+
+
+      <!-- INPUT -->
+
+      <div class="composer">
+
+        <div class="input-wrap">
+
+          <textarea
+            id="question"
+            rows="1"
+            placeholder="Ask DairyVerse AI anything…"
+          ></textarea>
+
+          <button
+            class="ask"
+            id="askButton"
+            onclick="askQuestion()"
+          >
+            Ask
+          </button>
+
+        </div>
+
+        <div class="hint">
+          Press Enter to ask • Shift + Enter for a new line
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- INFORMATION CARDS -->
+
+    <section class="info-grid">
+
+      <div class="info">
+
+        <div class="info-icon">🌐</div>
+
+        <h3>
+          Web-connected
+        </h3>
+
+        <p>
+          The assistant can research relevant information
+          beyond the material already published on DairyVerse.
+        </p>
+
+      </div>
+
+
+      <div class="info">
+
+        <div class="info-icon">🥛</div>
+
+        <h3>
+          Dairy-focused
+        </h3>
+
+        <p>
+          Its instructions prioritize Dairy Science,
+          Dairy Technology and related engineering subjects.
+        </p>
+
+      </div>
+
+
+      <div class="info">
+
+        <div class="info-icon">🧠</div>
+
+        <h3>
+          Learn, don't just copy
+        </h3>
+
+        <p>
+          Answers are designed to explain concepts,
+          formulas, applications and reasoning.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="footer">
+
+    DairyVerse AI · An educational project by
+    <strong>Ansuman Anshu</strong>
+
+  </footer>
+
+
+  <!-- BACK TO TOP -->
+
+  <button
+    class="top-button"
+    id="topButton"
+    onclick="window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })"
+    aria-label="Back to top"
+  >
+    ↑
+  </button>
+
+</div>
+
+
+<script src="ai.js"></script>
+
+
+<script>
+
+  const questionBox =
+    document.getElementById("question");
+
+  const askButton =
+    document.getElementById("askButton");
+
+  const loading =
+    document.getElementById("loading");
+
+  const answer =
+    document.getElementById("answer");
+
+  const answerText =
+    document.getElementById("answerText");
+
+  const welcome =
+    document.getElementById("welcome");
+
+
+  function useSuggestion(text) {
+
+    questionBox.value = text;
+
+    questionBox.focus();
+
+  }
+
+
+  async function askQuestion() {
+
+    const question =
+      questionBox.value.trim();
+
+
+    if (!question) {
+
+      questionBox.focus();
+
+      return;
+
+    }
+
+
+    askButton.disabled = true;
+
+    loading.style.display = "block";
+
+    answer.style.display = "none";
+
+    welcome.style.display = "none";
+
+
+    try {
+
+      const result =
+        await askDairyVerse(question);
+
+
+      answerText.textContent =
+        result;
+
+      answer.style.display = "block";
+
+
+    } catch (error) {
+
+      answerText.textContent =
+        "Sorry, DairyVerse AI could not complete the request.\n\n" +
+        error.message;
+
+      answer.style.display = "block";
+
+    }
+
+
+    loading.style.display = "none";
+
+    askButton.disabled = false;
+
+  }
+
+
+  questionBox.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        askQuestion();
+
+      }
+
+    }
+  );
+
+
+  window.addEventListener(
+    "scroll",
+    function() {
+
+      const topButton =
+        document.getElementById("topButton");
+
+      if (window.scrollY > 350) {
+
+        topButton.classList.add("visible");
+
+      } else {
+
+        topButton.classList.remove("visible");
+
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+  </html>
